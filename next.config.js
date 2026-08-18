@@ -32,12 +32,27 @@ const nextConfig = {
   images: {
     unoptimized: isStatic,
     formats: ['image/avif', 'image/webp'],
+    // Only YouTube poster frames are remote — the video gallery renders a
+    // thumbnail facade instead of eager iframes (CLAUDE.md §5.6).
+    remotePatterns: [
+      { protocol: 'https', hostname: 'i.ytimg.com', pathname: '/vi/**' },
+    ],
     deviceSizes: [360, 480, 640, 768, 1024, 1280, 1536, 1920],
     imageSizes: [64, 96, 128, 200, 256, 384],
   },
 
   // Static hosts (Apache/cPanel) serve /path/index.html most reliably.
   trailingSlash: isStatic,
+
+  /**
+   * Route handlers are named `route.node.ts` and only registered when that
+   * extension is listed here. Mode A picks them up; Mode B (static export)
+   * omits the extension, so the POST handlers are excluded from the build
+   * instead of failing it — static export cannot serve them. In Mode B the
+   * forms post to NEXT_PUBLIC_CONTACT_ENDPOINT / NEXT_PUBLIC_CAREER_ENDPOINT
+   * (e.g. a small PHP handler on the same cPanel). See README.md.
+   */
+  pageExtensions: isStatic ? ['tsx', 'ts'] : ['tsx', 'ts', 'node.ts'],
 
   experimental: {
     // Keeps the client bundle lean: only the icons actually used get bundled.

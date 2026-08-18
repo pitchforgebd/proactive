@@ -55,7 +55,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
   };
 
   return (
-    <nav ref={navRef} aria-label="Primary" className="hidden xl:block">
+    <nav ref={navRef} aria-label="Primary" className="hidden shrink-0 xl:block">
       <ul className="flex items-center gap-0.5">
         {items.map((item, i) => {
           const active = isActive(item.href);
@@ -68,7 +68,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   href={item.href}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'relative block px-3 py-2 text-sm transition-colors hover:text-magenta',
+                    'relative block whitespace-nowrap px-2.5 py-2 text-sm transition-colors hover:text-magenta',
                     active ? 'text-ink' : 'text-graphite',
                   )}
                 >
@@ -76,7 +76,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   <span
                     aria-hidden="true"
                     className={cn(
-                      'absolute inset-x-3 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
+                      'absolute inset-x-2.5 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
                       active ? 'scale-x-100' : 'scale-x-0',
                     )}
                   />
@@ -108,7 +108,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   }
                 }}
                 className={cn(
-                  'relative flex items-center gap-1 px-3 py-2 text-sm transition-colors hover:text-magenta',
+                  'relative flex items-center gap-1 whitespace-nowrap px-2.5 py-2 text-sm transition-colors hover:text-magenta',
                   active ? 'text-ink' : 'text-graphite',
                 )}
               >
@@ -123,7 +123,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                 <span
                   aria-hidden="true"
                   className={cn(
-                    'absolute inset-x-3 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
+                    'absolute inset-x-2.5 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
                     active ? 'scale-x-100' : 'scale-x-0',
                   )}
                 />
@@ -147,7 +147,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                         <Link
                           href={child.href}
                           className={cn(
-                            'block px-4 py-2.5 text-sm transition-colors hover:bg-paper hover:text-magenta',
+                            'block whitespace-nowrap px-4 py-2.5 text-sm transition-colors hover:bg-paper hover:text-magenta',
                             pathname === child.href ? 'text-ink' : 'text-graphite',
                           )}
                         >

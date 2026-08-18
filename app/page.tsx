@@ -202,7 +202,6 @@ export default async function HomePage() {
                 key={v.title}
                 delay={i * 50}
                 className="border-t-2 border-ink pt-6"
-                style={undefined}
               >
                 <Icon
                   aria-hidden="true"
