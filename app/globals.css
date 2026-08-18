@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Design tokens — "CMYK Precision"
+   Single source of truth. tailwind.config.ts only maps names onto these.
+   ========================================================================== */
+:root {
+  --ink: #0e1116; /* rich near-black "key" */
+  --ink-2: #171b21; /* elevated dark surface */
+  --paper: #f4f6f8; /* cool paper stock */
+  --paper-2: #ffffff;
+  --graphite: #3a4048; /* muted UI text / borders */
+  --cyan: #00aeef; /* process cyan — signature accent 1 */
+  --magenta: #ec008c; /* process magenta — signature accent 2 */
+  --yellow: #ffd400; /* process yellow — rare highlight only */
+  --line: rgba(255, 255, 255, 0.08); /* hairline on dark */
+  --line-ink: rgba(14, 17, 22, 0.12); /* hairline on paper */
+
+  --header-h: 72px;
+  --radius: 3px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--line-ink);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  /* Visible, high-contrast focus ring on both surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--cyan);
+    color: var(--ink);
+  }
+
+  /* Reserve space for media so nothing shifts (CLS). */
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ==========================================================================
+   Components / identity utilities
+   ========================================================================== */
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Mono "press-sheet annotation" label — part of the identity. */
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* Halftone dot field — background of dark sections. */
+  .halftone {
+    background-image: radial-gradient(
+      var(--halftone-color, rgba(255, 255, 255, 0.11)) 1px,
+      transparent 1.15px
+    );
+    background-size: var(--halftone-size, 7px) var(--halftone-size, 7px);
+  }
+
+  .halftone-ink {
+    --halftone-color: rgba(14, 17, 22, 0.1);
+  }
+
+  /* Faint registration grid used behind hero / feature bands. */
+  .reg-grid {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* ---- CMYK registration snap (signature element) ----------------------
+     Three decorative process channels start off-register and converge onto
+     the key channel once, ~700ms, then hold still. CSS-only so the hero text
+     paints without waiting on JavaScript. */
+  .reg-channel {
+    opacity: 0.85;
+    animation: reg-snap 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .reg-channel--c {
+    --reg-x: -14px;
+    --reg-y: 6px;
+  }
+
+  .reg-channel--m {
+    --reg-x: 12px;
+    --reg-y: -7px;
+    animation-delay: 60ms;
+  }
+
+  .reg-channel--y {
+    --reg-x: 4px;
+    --reg-y: 12px;
+    animation-delay: 120ms;
+    opacity: 0.6;
+  }
+
+  /* Ink-spread scroll reveal, driven by the RevealOnView wrapper. */
+  .ink-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+
+  .ink-reveal[data-revealed='true'] {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ---- Rich text (Summernote HTML from the future dashboard) ------------ */
+  .prose {
+    max-width: 68ch;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--ink) 86%, transparent);
+  }
+
+  .prose > * + * {
+    margin-top: 1.1em;
+  }
+
+  .prose h2 {
+    font-size: 1.75rem;
+    letter-spacing: -0.015em;
+    margin-top: 2em;
+    color: var(--ink);
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    margin-top: 1.6em;
+    color: var(--ink);
+  }
+
+  .prose a {
+    color: color-mix(in srgb, var(--cyan) 78%, var(--ink));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.35em;
+  }
+
+  .prose ul {
+    list-style: none;
+  }
+
+  .prose ul > li {
+    position: relative;
+  }
+
+  .prose ul > li::before {
+    content: '';
+    position: absolute;
+    left: -1.1em;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    background: var(--magenta);
+  }
+
+  .prose ol {
+    list-style: decimal;
+  }
+
+  .prose li + li {
+    margin-top: 0.45em;
+  }
+
+  .prose strong {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .prose blockquote {
+    border-left: 2px solid var(--cyan);
+    padding-left: 1.1em;
+    font-style: normal;
+    color: var(--graphite);
+  }
+
+  .prose img {
+    width: 100%;
+    height: auto;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid var(--line-ink);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  /* Inverted prose for dark sections. */
+  .prose-invert {
+    color: rgba(244, 246, 248, 0.78);
+  }
+
+  .prose-invert h2,
+  .prose-invert h3,
+  .prose-invert strong {
+    color: var(--paper-2);
+  }
+
+  .prose-invert a {
+    color: var(--cyan);
+  }
+
+  .prose-invert th,
+  .prose-invert td {
+    border-color: var(--line);
+  }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+@keyframes reg-snap {
+  0% {
+    transform: translate3d(var(--reg-x), var(--reg-y), 0);
+    filter: blur(2px);
+  }
+  70% {
+    filter: blur(0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* Fast print-sweep wipe on route change — purely visual, never blocks nav. */
+@keyframes print-sweep {
+  from {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — global degrade to opacity-only / none
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ink-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Channels sit in perfect register from the start — no convergence. */
+  .reg-channel {
+    animation: none !important;
+    transform: none;
+    filter: none;
+  }
+}
