@@ -75,7 +75,7 @@ export default function VisionMissionPage() {
                 as="li"
                 key={v.title}
                 delay={i * 60}
-                className="bg-ink p-8"
+                className="bg-band p-8"
               >
                 <div className="flex items-start justify-between gap-4">
                   <Icon
@@ -84,14 +84,14 @@ export default function VisionMissionPage() {
                       i % 2 === 0 ? 'h-6 w-6 text-cyan' : 'h-6 w-6 text-magenta'
                     }
                   />
-                  <span className="font-mono text-xs text-paper/25">
+                  <span className="font-mono text-xs text-onband/25">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="mt-6 text-base font-semibold leading-snug text-paper">
+                <h3 className="mt-6 text-base font-semibold leading-snug text-onband">
                   {v.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-paper/55">
+                <p className="mt-3 text-sm leading-relaxed text-onband/55">
                   {v.description}
                 </p>
               </RevealOnView>

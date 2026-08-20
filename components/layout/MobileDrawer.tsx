@@ -64,7 +64,7 @@ export default function MobileDrawer({ items }: { items: NavItem[] }) {
         onClick={() => setOpen(false)}
         aria-hidden="true"
         className={cn(
-          'fixed inset-0 z-[70] bg-ink/60 transition-opacity duration-300 xl:hidden',
+          'fixed inset-0 z-[70] bg-band/60 transition-opacity duration-300 xl:hidden',
           open ? 'opacity-100' : 'pointer-events-none opacity-0',
         )}
       />
@@ -150,7 +150,7 @@ export default function MobileDrawer({ items }: { items: NavItem[] }) {
         <div className="border-t border-ink/10 p-5">
           <Link
             href="/contact"
-            className="flex w-full items-center justify-center rounded-sm bg-cyan px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:bg-magenta hover:text-white"
+            className="flex w-full items-center justify-center rounded-sm bg-cyan px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white"
           >
             Get in Touch
           </Link>

@@ -55,7 +55,7 @@ export default async function NewsListPage() {
                 href={`/media/news/${lead.slug}`}
                 className="group grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center"
               >
-                <div className="relative aspect-[16/10] overflow-hidden border border-ink/10 bg-ink">
+                <div className="relative aspect-[16/10] overflow-hidden border border-ink/10 bg-band">
                   <Image
                     src={lead.coverImage}
                     alt={lead.title}

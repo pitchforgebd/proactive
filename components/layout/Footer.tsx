@@ -20,7 +20,7 @@ export default async function Footer() {
   ]);
 
   return (
-    <footer className="relative overflow-hidden bg-ink text-paper">
+    <footer className="relative overflow-hidden bg-band text-onband">
       <HalftoneBg grid fade={false} className="opacity-60" />
 
       {/* CMYK rule across the top edge. */}
@@ -38,7 +38,7 @@ export default async function Footer() {
           {/* Identity + socials */}
           <div className="lg:col-span-4">
             <Logo invert />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/60">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-onband/60">
               One-stop printing &amp; packaging solutions — machineries, press room
               chemicals, inks, coatings and consumables, backed by dedicated
               technical support across Bangladesh.
@@ -54,7 +54,7 @@ export default async function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="inline-flex h-10 w-10 items-center justify-center border border-line text-paper/70 transition-colors hover:border-cyan hover:text-cyan"
+                      className="inline-flex h-10 w-10 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
                     >
                       <Icon aria-hidden="true" className="h-4 w-4" />
                     </a>
@@ -72,7 +72,7 @@ export default async function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-sm text-paper/60 transition-colors hover:text-paper"
+                    className="text-sm text-onband/60 transition-colors hover:text-onband"
                   >
                     {l.label}
                   </Link>
@@ -89,7 +89,7 @@ export default async function Footer() {
                 <li key={c.slug}>
                   <Link
                     href={`/products/${c.slug}`}
-                    className="text-sm text-paper/60 transition-colors hover:text-paper"
+                    className="text-sm text-onband/60 transition-colors hover:text-onband"
                   >
                     {c.name}
                   </Link>
@@ -101,7 +101,7 @@ export default async function Footer() {
           {/* Contact + map */}
           <div className="lg:col-span-3">
             <h2 className="eyebrow text-cyan">Contact</h2>
-            <ul className="mt-5 space-y-4 text-sm text-paper/60">
+            <ul className="mt-5 space-y-4 text-sm text-onband/60">
               <li className="flex gap-3">
                 <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <address className="not-italic leading-relaxed">{settings.address}</address>
@@ -110,7 +110,7 @@ export default async function Footer() {
                 <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <a
                   href={`tel:${settings.phone.replace(/\s/g, '')}`}
-                  className="transition-colors hover:text-paper"
+                  className="transition-colors hover:text-onband"
                 >
                   {settings.phone}
                 </a>
@@ -119,7 +119,7 @@ export default async function Footer() {
                 <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <a
                   href={`mailto:${settings.email}`}
-                  className="transition-colors hover:text-paper"
+                  className="transition-colors hover:text-onband"
                 >
                   {settings.email}
                 </a>
@@ -135,7 +135,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-paper/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Proactive Trade International. All rights reserved.</p>
           <p className="tracking-[0.16em]">DHAKA · BANGLADESH</p>
         </div>

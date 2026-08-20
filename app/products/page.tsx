@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import Card from '@/components/ui/Card';
 import RichText from '@/components/ui/RichText';
 import RevealOnView from '@/components/motion/RevealOnView';
+import InkStagger from '@/components/motion/InkStagger';
 import CTABand from '@/components/ui/CTABand';
 import { stripHtml } from '@/lib/utils';
 
@@ -44,11 +45,11 @@ export default async function ProductsPage() {
       </Section>
 
       <Section tone="paper">
-        <ul className="grid gap-6 sm:grid-cols-2">
+        <InkStagger as="ul" className="grid gap-6 sm:grid-cols-2" stagger={0.1} y={34}>
           {categories.map((c, i) => {
             const count = countFor(c.slug);
             return (
-              <RevealOnView as="li" key={c.slug} delay={i * 70}>
+              <li data-ink-item key={c.slug}>
                 <Card
                   href={`/products/${c.slug}`}
                   title={c.name}
@@ -59,10 +60,10 @@ export default async function ProductsPage() {
                   sizes="(min-width: 640px) 45vw, 92vw"
                   className="h-full"
                 />
-              </RevealOnView>
+              </li>
             );
           })}
-        </ul>
+        </InkStagger>
       </Section>
 
       <CTABand

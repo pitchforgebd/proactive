@@ -301,6 +301,7 @@ const GALLERY = [1200, 900];
 const PORTRAIT = [900, 1125];
 const OG = [1200, 630];
 const PARTNER = [320, 120];
+const SOLUTION = [900, 900];
 
 const files = [];
 const add = (path, dims, kind = 'plate') =>
@@ -316,6 +317,18 @@ const add = (path, dims, kind = 'plate') =>
   'inks-and-coatings-solutions',
   'blankets-plates-adhesives-papers-solutions',
 ].forEach((n) => add(`categories/${n}.png`, WIDE));
+
+// Solutions (matches `solutions` in lib/data/mock/content.ts)
+[
+  'commercial-printing',
+  'packaging',
+  'label-printing',
+  'corrugation',
+  'newspaper-printing',
+  'publishing',
+  'digital-printing',
+  'consumables',
+].forEach((n) => add(`solutions/${n}.png`, SOLUTION));
 
 // Products (matches lib/data/mock/products.ts)
 [
@@ -357,6 +370,7 @@ add('about/founder-portrait.png', PORTRAIT);
 add('about/global-sourcing.png', WIDE);
 add('about/our-story.png', WIDE);
 add('about/company-profile.png', WIDE);
+add('about/parent-company-logo.png', [480, 160], 'partner');
 add('about/vision-mission.png', WIDE);
 add('about/career.png', WIDE);
 add('og/og-default.png', OG);

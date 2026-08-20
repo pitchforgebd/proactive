@@ -33,7 +33,7 @@ export default function Breadcrumbs({
         aria-label="Breadcrumb"
         className={cn(
           'eyebrow flex flex-wrap items-center gap-x-2 gap-y-1',
-          invert ? 'text-paper/55' : 'text-graphite',
+          invert ? 'text-onband/55' : 'text-graphite',
           className,
         )}
       >
@@ -54,7 +54,7 @@ export default function Breadcrumbs({
               ) : (
                 <span
                   aria-current={isLast ? 'page' : undefined}
-                  className={invert ? 'text-paper' : 'text-ink'}
+                  className={invert ? 'text-onband' : 'text-ink'}
                 >
                   {item.label}
                 </span>

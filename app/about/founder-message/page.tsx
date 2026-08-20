@@ -32,7 +32,7 @@ export default function FounderMessagePage() {
           {/* Portrait */}
           <RevealOnView>
             <figure className="lg:sticky lg:top-[110px]">
-              <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+              <div className="relative aspect-[4/5] overflow-hidden bg-band">
                 <Image
                   src="/images/about/founder-portrait.png"
                   alt="Portrait of Mr. Billal Hossain Bappi, Founder & CEO"

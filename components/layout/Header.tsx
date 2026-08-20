@@ -4,6 +4,7 @@ import { buildNav } from '@/lib/nav';
 import Logo from '@/components/layout/Logo';
 import Nav from '@/components/layout/Nav';
 import MobileDrawer from '@/components/layout/MobileDrawer';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 
 /**
  * Server component — the category list for the "What We Offer" dropdown is read
@@ -37,6 +38,8 @@ export default async function Header() {
         <Nav items={nav} />
 
         <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle />
+
           <Link
             href="/contact"
             className="hidden rounded-sm bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-paper transition-colors hover:bg-magenta sm:inline-flex"

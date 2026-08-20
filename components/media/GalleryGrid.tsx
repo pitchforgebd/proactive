@@ -77,7 +77,7 @@ export default function GalleryGrid({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               onClick={() => setOpenIndex(i)}
-              className="group relative block w-full overflow-hidden border border-ink/10 bg-ink"
+              className="group relative block w-full overflow-hidden border border-ink/10 bg-band"
             >
               {/* Dimensions are reserved by the aspect box — no shift on load. */}
               <span
@@ -97,7 +97,7 @@ export default function GalleryGrid({ images }: { images: GalleryImage[] }) {
               </span>
 
               {img.caption && (
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-4 text-left text-sm text-paper opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-band/90 to-transparent p-4 text-left text-sm text-onband opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   {img.caption}
                 </span>
               )}

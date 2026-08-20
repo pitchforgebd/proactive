@@ -255,6 +255,23 @@ export const companyProfile = {
   ],
 };
 
+/**
+ * Parent / mother company block on /company.
+ *
+ * FOR CLIENT REVIEW — the group name and URL are taken from the old site, whose
+ * "Company" menu item pointed at zexora.com.bd. The wording of the relationship
+ * (ownership vs. affiliation) and the legal entity name must be confirmed before
+ * launch, and the logo is a placeholder.
+ */
+export const parentCompany = {
+  name: 'Zexora',
+  url: 'https://zexora.com.bd',
+  logo: '/images/about/parent-company-logo.png',
+  role: 'Parent group',
+  description:
+    'Proactive Trade International operates as part of Zexora, the parent group behind its sourcing relationships and shared corporate services. The group connection is what gives us direct manufacturer agreements, the working capital to hold consumable stock locally, and the operational backing of a larger organisation behind every supply commitment.',
+};
+
 /** What We Offer intro paragraph, used on /products. */
 export const whatWeOfferIntro = `
   <p>Proactive Trade International supplies the full production chain for printing
@@ -268,3 +285,88 @@ export const whatWeOfferIntro = `
   sheetfed, UV, LED and Flexo inks, coatings and varnishes, rubber blankets,
   thermal CTP and UV-CTCP plates, adhesives, specialty papers and spare parts.</p>
 `;
+
+/* ------------------------------ Our Solutions ----------------------------- */
+
+export interface SolutionItem {
+  slug: string;
+  title: string;
+  image: string;
+}
+
+export const solutionsIntro =
+  'Eight production disciplines — from commercial print and packaging to corrugation, publishing and the consumables that keep them running.';
+
+/**
+ * The eight solution disciplines shown on the home page. Presentational for
+ * now: image + title only, no detail route. When the dashboard owns these,
+ * this array becomes `getSolutions()` in `lib/data` and gains a `slug` route.
+ */
+export const solutions: SolutionItem[] = [
+  {
+    slug: 'commercial-printing',
+    title: 'Commercial Printing Solutions',
+    image: '/images/solutions/commercial-printing.png',
+  },
+  {
+    slug: 'packaging',
+    title: 'Packaging Solutions',
+    image: '/images/solutions/packaging.png',
+  },
+  {
+    slug: 'label-printing',
+    title: 'Label Printing Solutions',
+    image: '/images/solutions/label-printing.png',
+  },
+  {
+    slug: 'corrugation',
+    title: 'Corrugation Solutions',
+    image: '/images/solutions/corrugation.png',
+  },
+  {
+    slug: 'newspaper-printing',
+    title: 'Newspaper Printing Solutions',
+    image: '/images/solutions/newspaper-printing.png',
+  },
+  {
+    slug: 'publishing',
+    title: 'Publishing Solutions',
+    image: '/images/solutions/publishing.png',
+  },
+  {
+    slug: 'digital-printing',
+    title: 'Digital Printing Solutions',
+    image: '/images/solutions/digital-printing.png',
+  },
+  {
+    slug: 'consumables',
+    title: 'Consumables Solutions',
+    image: '/images/solutions/consumables.png',
+  },
+];
+
+/* ---------------------------- Our Capabilities ---------------------------- */
+
+export const capabilities = {
+  title: 'Technical Expertise. Reliable Supply. Responsive Support.',
+  lede: 'We combine industry knowledge, technical expertise, and supply capabilities to support our customers throughout the product and solution lifecycle.',
+  body: 'From product selection and application guidance to supply coordination, technical assistance, installation, training, troubleshooting, and after-sales support where applicable, our team is focused on helping customers achieve reliable performance and uninterrupted operations.',
+  /** The support surface, pulled out of `body` so it can be scanned. */
+  services: [
+    'Product selection',
+    'Application guidance',
+    'Supply coordination',
+    'Technical assistance',
+    'Installation',
+    'Training',
+    'Troubleshooting',
+    'After-sales support',
+  ],
+  /** "Our approach is simple:" — the four steps, in order. */
+  approach: [
+    { step: 'Understand', detail: 'the requirement' },
+    { step: 'Recommend', detail: 'the right solution' },
+    { step: 'Deliver', detail: 'reliably' },
+    { step: 'Remain available', detail: 'when support is needed' },
+  ],
+};

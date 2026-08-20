@@ -55,7 +55,7 @@ export default function ContactForm() {
   if (status === 'sent') {
     return (
       <div className="border border-cyan/40 bg-paper-2 p-8">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cyan text-ink">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cyan text-band">
           <Check aria-hidden="true" className="h-5 w-5" />
         </span>
         <h3 className="mt-6 text-lg font-bold">Message received.</h3>

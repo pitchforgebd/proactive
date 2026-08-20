@@ -17,7 +17,7 @@ export default async function CTABand({
   const settings = await getSiteSettings();
 
   return (
-    <section className="relative overflow-hidden bg-ink text-paper">
+    <section className="relative overflow-hidden bg-band text-onband">
       <HalftoneBg grid fade={false} className="opacity-70" />
 
       <div className="container-page relative py-16 md:py-20">
@@ -30,13 +30,13 @@ export default async function CTABand({
             <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">
               {title}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-paper/65">{lede}</p>
+            <p className="mt-4 text-base leading-relaxed text-onband/65">{lede}</p>
           </div>
 
           <div className="flex flex-col gap-4">
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 rounded-sm bg-cyan px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:bg-magenta hover:text-white"
+              className="group inline-flex items-center justify-center gap-2 rounded-sm bg-cyan px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white"
             >
               Contact Us
               <ArrowRight
@@ -45,7 +45,7 @@ export default async function CTABand({
               />
             </Link>
 
-            <div className="flex flex-col gap-2 font-mono text-xs text-paper/55">
+            <div className="flex flex-col gap-2 font-mono text-xs text-onband/55">
               <a
                 href={`tel:${settings.phone.replace(/\s/g, '')}`}
                 className="inline-flex items-center gap-2 transition-colors hover:text-cyan"

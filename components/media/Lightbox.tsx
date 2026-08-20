@@ -69,19 +69,19 @@ export default function Lightbox({
           role="dialog"
           aria-modal="true"
           aria-label={current.caption ?? 'Gallery image'}
-          className="fixed inset-0 z-[90] flex flex-col bg-ink/95 backdrop-blur-sm"
+          className="fixed inset-0 z-[90] flex flex-col bg-band/95 backdrop-blur-sm"
           onClick={onClose}
         >
           {/* Top bar */}
           <div className="flex items-center justify-between px-5 py-4">
-            <p className="eyebrow text-paper/50">
+            <p className="eyebrow text-onband/50">
               {String((index ?? 0) + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
             </p>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close gallery"
-              className="inline-flex h-10 w-10 items-center justify-center text-paper/70 transition-colors hover:text-cyan"
+              className="inline-flex h-10 w-10 items-center justify-center text-onband/70 transition-colors hover:text-cyan"
             >
               <X aria-hidden="true" className="h-5 w-5" />
             </button>
@@ -96,7 +96,7 @@ export default function Lightbox({
                 step(-1);
               }}
               aria-label="Previous image"
-              className="absolute left-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-paper/70 transition-colors hover:border-cyan hover:text-cyan md:left-6"
+              className="absolute left-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:left-6"
             >
               <ChevronLeft aria-hidden="true" className="h-5 w-5" />
             </button>
@@ -125,7 +125,7 @@ export default function Lightbox({
                 step(1);
               }}
               aria-label="Next image"
-              className="absolute right-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-paper/70 transition-colors hover:border-cyan hover:text-cyan md:right-6"
+              className="absolute right-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:right-6"
             >
               <ChevronRight aria-hidden="true" className="h-5 w-5" />
             </button>
@@ -133,10 +133,10 @@ export default function Lightbox({
 
           {/* Caption */}
           {current.caption && (
-            <p className="px-6 pb-8 text-center text-sm text-paper/60">
+            <p className="px-6 pb-8 text-center text-sm text-onband/60">
               {current.caption}
               {current.album && (
-                <span className="ml-3 font-mono text-xs uppercase tracking-[0.16em] text-paper/35">
+                <span className="ml-3 font-mono text-xs uppercase tracking-[0.16em] text-onband/35">
                   {current.album}
                 </span>
               )}

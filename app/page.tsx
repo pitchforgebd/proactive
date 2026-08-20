@@ -21,12 +21,15 @@ import {
   whyChooseUs,
 } from '@/lib/data/mock/content';
 import Hero from '@/components/home/Hero';
+import Solutions from '@/components/home/Solutions';
+import Capabilities from '@/components/home/Capabilities';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Card from '@/components/ui/Card';
 import Eyebrow from '@/components/ui/Eyebrow';
 import CTABand from '@/components/ui/CTABand';
 import RevealOnView from '@/components/motion/RevealOnView';
+import RollerLine from '@/components/motion/RollerLine';
 import HalftoneBg from '@/components/motion/HalftoneBg';
 import PartnerMarquee from '@/components/media/PartnerMarquee';
 import { stripHtml } from '@/lib/utils';
@@ -79,7 +82,7 @@ export default async function HomePage() {
           </RevealOnView>
 
           <RevealOnView delay={80} className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden bg-ink">
+            <div className="relative aspect-[4/3] overflow-hidden bg-band">
               <Image
                 src="/images/about/about-company.png"
                 alt="Proactive Trade International supplying printing and packaging production"
@@ -90,25 +93,30 @@ export default async function HomePage() {
               />
             </div>
             {/* Registration stat plate overlapping the image edge. */}
-            <div className="absolute -bottom-6 -left-4 hidden bg-ink px-6 py-5 text-paper sm:block">
+            <div className="absolute -bottom-6 -left-4 hidden bg-band px-6 py-5 text-onband sm:block">
               <p className="font-display text-2xl font-bold leading-none">100+</p>
-              <p className="eyebrow mt-2 text-paper/50">Companies served</p>
+              <p className="eyebrow mt-2 text-onband/50">Companies served</p>
             </div>
           </RevealOnView>
         </div>
       </Section>
 
-      {/* 3 — Featured categories ------------------------------------------- */}
+      {/* 3 — Our Solutions -------------------------------------------------- */}
+      <Solutions />
+
+      {/* 4 — Featured categories ------------------------------------------- */}
       <Section tone="paper">
         <SectionHeading
           eyebrow="What We Offer"
-          index="02"
+          index="03"
           title="Four solution lines, one point of accountability."
           lede="Machineries, press room chemicals, inks and coatings, and the consumables that decide print quality on the sheet."
           link={{ href: '/products', label: 'View More' }}
         />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <RollerLine className="mt-10" />
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((c, i) => (
             <RevealOnView key={c.slug} delay={i * 60}>
               <Card
@@ -126,11 +134,11 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* 4 — Why choose us -------------------------------------------------- */}
+      {/* 5 — Why choose us -------------------------------------------------- */}
       <Section tone="ink" halftone>
         <SectionHeading
           eyebrow="Why Choose Us"
-          index="03"
+          index="04"
           title="Anyone can quote a machine. Fewer can keep it running."
           invert
         />
@@ -143,13 +151,13 @@ export default async function HomePage() {
                 as="li"
                 key={item.title}
                 delay={i * 60}
-                className="bg-ink p-7"
+                className="bg-band p-7"
               >
                 <Icon aria-hidden="true" className="h-6 w-6 text-cyan" />
-                <h3 className="mt-6 text-base font-semibold text-paper">
+                <h3 className="mt-6 text-base font-semibold text-onband">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-paper/55">
+                <p className="mt-3 text-sm leading-relaxed text-onband/55">
                   {item.description}
                 </p>
               </RevealOnView>
@@ -158,8 +166,11 @@ export default async function HomePage() {
         </ul>
       </Section>
 
-      {/* 5 — Vision & Mission strip ----------------------------------------- */}
-      <Section tone="paper-2" cropMarks>
+      {/* 6 — Our Capabilities ----------------------------------------------- */}
+      <Capabilities />
+
+      {/* 7 — Vision & Mission strip ----------------------------------------- */}
+      <Section tone="paper">
         <div className="grid gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-2">
           <RevealOnView className="bg-paper-2 p-8 md:p-12">
             <Eyebrow tone="cyan">Vision</Eyebrow>
@@ -185,11 +196,11 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* 6 — Core values ---------------------------------------------------- */}
-      <Section tone="paper">
+      {/* 8 — Core values ---------------------------------------------------- */}
+      <Section tone="paper-2">
         <SectionHeading
           eyebrow="Core Values"
-          index="04"
+          index="06"
           title="Five commitments we are willing to be held to."
         />
 
@@ -217,12 +228,12 @@ export default async function HomePage() {
         </ul>
       </Section>
 
-      {/* 7 — Gallery preview ------------------------------------------------ */}
+      {/* 9 — Gallery preview ------------------------------------------------ */}
       <Section tone="ink" className="overflow-hidden">
         <HalftoneBg fade className="opacity-50" />
         <SectionHeading
           eyebrow="Photo Gallery"
-          index="05"
+          index="07"
           title="Installations, press rooms and the people behind them."
           link={{ href: '/media/photo-gallery', label: 'View Gallery' }}
           invert
@@ -243,14 +254,14 @@ export default async function HomePage() {
                   loading="lazy"
                   className="object-cover transition-transform duration-500 ease-press group-hover:scale-105"
                 />
-                <span className="absolute inset-0 bg-ink/30 transition-opacity duration-300 group-hover:opacity-0" />
+                <span className="absolute inset-0 bg-band/30 transition-opacity duration-300 group-hover:opacity-0" />
               </Link>
             </RevealOnView>
           ))}
         </ul>
       </Section>
 
-      {/* 8 — Partners ------------------------------------------------------- */}
+      {/* 10 — Partners ------------------------------------------------------ */}
       <Section tone="paper-2" className="py-14 md:py-16">
         <p className="eyebrow text-center text-graphite">
           Sourcing partners &amp; manufacturers
@@ -260,7 +271,7 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* 9 — Contact band --------------------------------------------------- */}
+      {/* 11 — Contact band -------------------------------------------------- */}
       <CTABand />
     </>
   );

@@ -27,7 +27,7 @@ export default function YouTubeFacade({
   return (
     <div
       className={cn(
-        'relative aspect-video overflow-hidden border border-line bg-ink',
+        'relative aspect-video overflow-hidden border border-line bg-band',
         className,
       )}
     >
@@ -62,7 +62,7 @@ export default function YouTubeFacade({
               <span className="absolute inset-0 translate-x-1 rounded-full border border-magenta transition-transform duration-300 ease-press group-hover:translate-x-0" />
               <Play
                 aria-hidden="true"
-                className="relative h-5 w-5 translate-x-[1px] fill-paper text-paper"
+                className="relative h-5 w-5 translate-x-[1px] fill-paper text-onband"
               />
             </span>
           </span>

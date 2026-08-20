@@ -18,8 +18,43 @@
   --line: rgba(255, 255, 255, 0.08); /* hairline on dark */
   --line-ink: rgba(14, 17, 22, 0.12); /* hairline on paper */
 
+  /* Always-dark band. `--ink` doubles as primary TEXT, so it flips with the
+     theme; these do not. An ink section stays an ink section in dark mode. */
+  --band: #0e1116;
+  --band-2: #171b21;
+  --onband: #f4f6f8;
+
+  --halftone-on-paper: rgba(14, 17, 22, 0.1);
+
+  color-scheme: light;
+
   --header-h: 72px;
   --radius: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme. Set by the no-flash script in app/layout.tsx as
+   `data-theme="dark"` on <html>; the toggle in the header writes it too.
+
+   Only the ADAPTIVE tokens move: surfaces darken, text lightens, hairlines
+   invert. The band family stays dark so the page keeps its rhythm of light
+   and dark sections instead of turning into a photographic negative.
+   -------------------------------------------------------------------------- */
+:root[data-theme='dark'] {
+  --ink: #edf1f5; /* now the primary TEXT colour */
+  --ink-2: #f4f6f8;
+  --paper: #0c0f13; /* page surface */
+  --paper-2: #12171d; /* elevated surface — cards, panels, inputs */
+  --graphite: #98a2ad; /* muted text, still AA on --paper */
+  --line-ink: rgba(255, 255, 255, 0.12);
+
+  /* Bands sit deeper than the page so the alternation survives. */
+  --band: #06080a;
+  --band-2: #0f141a;
+
+  --halftone-on-paper: rgba(255, 255, 255, 0.06);
+
+  color-scheme: dark;
 }
 
 /* ==========================================================================
@@ -63,7 +98,7 @@
 
   ::selection {
     background: var(--cyan);
-    color: var(--ink);
+    color: var(--band);
   }
 
   /* Reserve space for media so nothing shifts (CLS). */
@@ -111,7 +146,7 @@
   }
 
   .halftone-ink {
-    --halftone-color: rgba(14, 17, 22, 0.1);
+    --halftone-color: var(--halftone-on-paper);
   }
 
   /* Faint registration grid used behind hero / feature bands. */
@@ -147,6 +182,174 @@
     --reg-y: 12px;
     animation-delay: 120ms;
     opacity: 0.6;
+  }
+
+  /* ---- Pointer parallax (hero registration drift) ----------------------
+     PointerParallax writes --px/--py (−1…1); layers pick a depth. The
+     transition does the smoothing, so no lerp loop is needed in JS. */
+  .pointer-parallax {
+    --px: 0;
+    --py: 0;
+  }
+
+  .p-layer {
+    transform: translate3d(
+      calc(var(--px) * var(--p-depth, 12px)),
+      calc(var(--py) * var(--p-depth, 12px)),
+      0
+    );
+    transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  /* ---- GSAP-armed blocks ------------------------------------------------
+     Set in a layout effect before paint so nothing flashes in before its
+     entrance runs. Removed by the component (and by a 2.5s failsafe). */
+  [data-stagger='armed'] > *,
+  [data-stagger='armed'] [data-ink-item],
+  [data-stagger='armed'] [data-feed-item] {
+    visibility: hidden;
+  }
+
+  /* ---- Registration cursor (global pointer effect) ----------------------
+     Three channels trail the pointer at different rates; they separate while
+     moving and snap back into register when it stops. The native cursor is
+     left alone on purpose — see CursorRegistration.tsx. */
+  .cursor-reg {
+    position: fixed;
+    inset: 0;
+    /* Above the drawer (70) and the lightbox (90), below the skip link (100). */
+    z-index: 95;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .cursor-reg[data-visible='true'] {
+    opacity: 1;
+  }
+
+  .cursor-reg__ch {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    will-change: transform;
+    transition:
+      width 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      height 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 260ms ease;
+  }
+
+  .cursor-reg__ch--c {
+    color: var(--cyan);
+    opacity: 0.75;
+  }
+
+  .cursor-reg__ch--m {
+    color: var(--magenta);
+    opacity: 0.75;
+  }
+
+  /* Key channel: the crosshair itself, no ring. */
+  .cursor-reg__ch--k {
+    color: var(--onband);
+    border-color: transparent;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-reg__v,
+  .cursor-reg__h {
+    position: absolute;
+    background: currentColor;
+    opacity: 0.85;
+  }
+
+  .cursor-reg__v {
+    left: 50%;
+    top: -7px;
+    width: 1px;
+    height: 40px;
+    transform: translateX(-50%);
+  }
+
+  .cursor-reg__h {
+    top: 50%;
+    left: -7px;
+    height: 1px;
+    width: 40px;
+    transform: translateY(-50%);
+  }
+
+  /* Over something clickable: the rings open up and lock on. */
+  .cursor-reg[data-locked='true'] .cursor-reg__ch--c,
+  .cursor-reg[data-locked='true'] .cursor-reg__ch--m {
+    width: 44px;
+    height: 44px;
+    opacity: 1;
+  }
+
+  .cursor-reg[data-pressed='true'] .cursor-reg__ch--c,
+  .cursor-reg[data-pressed='true'] .cursor-reg__ch--m {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ---- Cursor-tracked registration crosshair ---------------------------- */
+  .crosshair-follow {
+    position: relative;
+  }
+
+  .crosshair-follow__mark {
+    position: absolute;
+    left: var(--mx, 50%);
+    top: var(--my, 50%);
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: opacity 250ms ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .crosshair-follow:hover .crosshair-follow__mark {
+    opacity: 1;
+  }
+
+  .crosshair-follow__v,
+  .crosshair-follow__h {
+    position: absolute;
+    background: currentColor;
+  }
+
+  .crosshair-follow__v {
+    left: 0;
+    top: -22px;
+    width: 1px;
+    height: 44px;
+    color: var(--cyan);
+  }
+
+  .crosshair-follow__h {
+    top: 0;
+    left: -22px;
+    height: 1px;
+    width: 44px;
+    color: var(--magenta);
+  }
+
+  .crosshair-follow__ring {
+    position: absolute;
+    left: -13px;
+    top: -13px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    opacity: 0.55;
   }
 
   /* Ink-spread scroll reveal, driven by the RevealOnView wrapper. */
@@ -314,6 +517,27 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* GSAP never loads under reduced motion, so nothing may stay armed, and the
+     pointer-driven layers must sit still. */
+  [data-stagger='armed'] > *,
+  [data-stagger='armed'] [data-ink-item],
+  [data-stagger='armed'] [data-feed-item] {
+    visibility: visible;
+  }
+
+  .p-layer {
+    transform: none;
+    transition: none;
+  }
+
+  .crosshair-follow__mark {
+    display: none;
+  }
+
+  .cursor-reg {
+    display: none;
   }
 
   *,

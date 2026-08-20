@@ -101,7 +101,7 @@ export default async function NewsArticlePage({
             </p>
           </header>
 
-          <figure className="relative mt-10 aspect-[16/9] overflow-hidden border border-ink/10 bg-ink">
+          <figure className="relative mt-10 aspect-[16/9] overflow-hidden border border-ink/10 bg-band">
             <Image
               src={post.coverImage}
               alt={post.title}

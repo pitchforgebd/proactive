@@ -168,6 +168,66 @@ must be replaced with the real partner marks before launch.
 
 ---
 
+## Theming (light / dark)
+
+The switch lives in the header. `data-theme="light" | "dark"` on `<html>` drives
+everything; a blocking inline script in `app/layout.tsx` sets it before first
+paint (stored choice first, then `prefers-color-scheme`), so there is no flash.
+The choice persists in `localStorage` under `ptt-theme`; with nothing stored the
+site keeps following the OS.
+
+Two token families in `app/globals.css`:
+
+- **Adaptive** — `--ink` (primary text), `--paper`, `--paper-2`, `--graphite`,
+  `--line-ink`. These flip in the `:root[data-theme='dark']` block.
+- **Band** — `--band`, `--band-2`, `--onband`. These never flip. They are the
+  always-dark section grounds and the text on them, so the page keeps its
+  alternation of light and dark bands in both themes.
+
+When adding UI, the rule is: **use `bg-band` / `text-onband` for a section that
+is meant to be dark in both themes; use `bg-paper*` / `text-ink` / `text-graphite`
+for anything that should follow the theme.** A solid dark button sitting on an
+adaptive surface wants `bg-ink text-paper` — it inverts with the theme and stays
+readable. Text on a cyan or yellow ground wants `text-band`, which stays dark.
+
+The `dark:` Tailwind variant is bound to `[data-theme="dark"]` if you need a
+one-off (`dark:invert` on the partner logos is the only current use).
+
+---
+
+## Motion
+
+Animations live in `components/motion/`. Each one is a printing gesture rather
+than a generic transition:
+
+| Component | Effect | Used on |
+|---|---|---|
+| `PointerParallax` | registration drift toward the cursor | home hero |
+| `PressCounter` | stats roll up like an impression counter | home hero |
+| `InkStagger` | ink-spread entrance, staggered | Our Solutions, `/products` |
+| `RollerLine` | press roller scrubbed to scroll | section dividers |
+| `StepFeed` | guide rail draws, steps feed in | Capabilities ladder |
+| `CrosshairFollow` | registration crosshair tracks the pointer | Solutions tiles |
+| `CursorRegistration` | CMYK channels trail the pointer, snapping back into register | every page |
+| `RevealOnView` | one-shot IntersectionObserver reveal | everywhere else |
+
+The registration cursor is global (mounted in `app/layout.tsx`) and **leaves the
+native cursor visible** — replacing it costs click precision and text carets,
+which matters more on a B2B site with forms than the effect does. Its rAF loop
+parks itself once the channels converge, so a still pointer costs nothing.
+
+GSAP (`gsap` + `ScrollTrigger`) powers the scroll-driven ones. It is loaded
+**lazily** through `lib/gsap.ts`: one cached runtime import, triggered only when
+an element comes within 300px of the viewport, so it never enters the shared
+bundle. The pointer effects use no library at all — they write CSS variables in
+a rAF and let CSS transition them.
+
+`prefers-reduced-motion` short-circuits everything before the import, so those
+visitors never download GSAP. Blocks awaiting an entrance are hidden before
+paint and released by a 2.5s failsafe if the library never loads.
+
+---
+
 ## Performance notes
 
 Measured against the CLAUDE.md §5 targets. What the build does to hold them:

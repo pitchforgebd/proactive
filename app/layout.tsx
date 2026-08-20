@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import RouteSweep from '@/components/motion/RouteSweep';
+import CursorRegistration from '@/components/motion/CursorRegistration';
 import { SITE_URL } from '@/lib/utils';
 
 /**
@@ -120,16 +121,30 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable}`}
+      suppressHydrationWarning
     >
       <body className="min-h-dvh bg-paper antialiased">
+        {/*
+          Applies the theme before anything paints, so there is no flash of the
+          wrong surface. Stored choice wins; otherwise follow the OS. Kept inline
+          and blocking on purpose — it is ~200 bytes and must not be deferred.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var s=localStorage.getItem('ptt-theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.dataset.theme=d?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}})()",
+          }}
+        />
+
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-band focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest focus:text-onband"
         >
           Skip to content
         </a>
 
         <RouteSweep />
+        <CursorRegistration />
         <Header />
         <main id="main">{children}</main>
         <Footer />

@@ -17,7 +17,7 @@ const links = [
 
 export default function NotFound() {
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-70px)] items-center overflow-hidden bg-ink text-paper">
+    <section className="relative isolate flex min-h-[calc(100svh-70px)] items-center overflow-hidden bg-band text-onband">
       <HalftoneBg grid fade={false} className="opacity-60" />
 
       <div className="container-page relative py-24">
@@ -29,14 +29,14 @@ export default function NotFound() {
         <RegistrationHero
           className="mt-6"
           as="h1"
-          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-paper md:text-4xl"
+          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-onband md:text-4xl"
         >
           Out of
           <br />
           register.
         </RegistrationHero>
 
-        <p className="mt-7 max-w-lg text-base leading-relaxed text-paper/65">
+        <p className="mt-7 max-w-lg text-base leading-relaxed text-onband/65">
           This page is not on the sheet. It may have moved, or the address may be
           mistyped. Pick a route below and carry on.
         </p>
@@ -46,7 +46,7 @@ export default function NotFound() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="group inline-flex items-center gap-2 rounded-sm border border-white/25 px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper transition-colors hover:border-cyan hover:text-cyan"
+                className="group inline-flex items-center gap-2 rounded-sm border border-white/25 px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-onband transition-colors hover:border-cyan hover:text-cyan"
               >
                 {l.label}
                 <ArrowRight

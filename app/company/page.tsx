@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { Download } from 'lucide-react';
-import { companyProfile } from '@/lib/data/mock/content';
+import Image from 'next/image';
+import { ArrowUpRight, Download } from 'lucide-react';
+import { companyProfile, parentCompany } from '@/lib/data/mock/content';
 import { getSiteSettings } from '@/lib/data';
 import PageHero from '@/components/layout/PageHero';
 import Section from '@/components/ui/Section';
@@ -67,6 +68,50 @@ export default async function CompanyPage() {
                 </a>
               </div>
             </div>
+          </RevealOnView>
+        </div>
+      </Section>
+
+      {/* Parent company ------------------------------------------------------ */}
+      <Section tone="paper">
+        <div className="grid items-center gap-10 border border-ink/10 bg-paper-2 p-8 md:p-12 lg:grid-cols-[auto_1fr] lg:gap-16">
+          <RevealOnView>
+            {/* Logo plate — ink ground so a mark of any colour sits cleanly. */}
+            <div className="relative flex h-[120px] w-[280px] items-center justify-center bg-band p-6">
+              <Image
+                src={parentCompany.logo}
+                alt={parentCompany.name + ' logo'}
+                width={480}
+                height={160}
+                sizes="280px"
+                loading="lazy"
+                className="h-auto w-full object-contain"
+              />
+            </div>
+          </RevealOnView>
+
+          <RevealOnView delay={80}>
+            <Eyebrow index="02" tone="cyan">
+              {parentCompany.role}
+            </Eyebrow>
+            <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">
+              {parentCompany.name}
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-graphite">
+              {parentCompany.description}
+            </p>
+            <a
+              href={parentCompany.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-7 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:text-magenta"
+            >
+              Visit {parentCompany.name}
+              <ArrowUpRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform duration-300 ease-press group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </a>
           </RevealOnView>
         </div>
       </Section>

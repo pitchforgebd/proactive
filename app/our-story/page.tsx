@@ -70,10 +70,10 @@ export default function OurStoryPage() {
       <Section tone="ink" halftone>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <RevealOnView>
-            <h2 className="text-xl font-bold leading-tight text-paper md:text-2xl">
+            <h2 className="text-xl font-bold leading-tight text-onband md:text-2xl">
               The next chapter is the one you are in.
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-paper/65">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-onband/65">
               Bangladesh&apos;s printing and packaging industry is moving into
               higher-value work — tighter tolerances, shorter runs, more finishing.
               Our job is to make sure the technology and the support behind it move

@@ -4,7 +4,7 @@ import Skeleton, { CardGridSkeleton } from '@/components/ui/Skeleton';
 export default function Loading() {
   return (
     <>
-      <section className="bg-ink py-16 md:py-24">
+      <section className="bg-band py-16 md:py-24">
         <div className="container-page">
           <Skeleton className="h-3 w-40 bg-white/10" />
           <Skeleton className="mt-6 h-12 w-full max-w-xl bg-white/10" />

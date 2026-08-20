@@ -7,10 +7,10 @@ const base =
   'group relative inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-cyan text-ink hover:bg-magenta hover:text-white',
+  primary: 'bg-cyan text-band hover:bg-magenta hover:text-white',
   secondary: 'border border-ink/25 text-ink hover:border-magenta hover:text-magenta',
   ghost: 'text-ink hover:text-magenta',
-  onInk: 'border border-white/25 text-paper hover:border-cyan hover:text-cyan',
+  onInk: 'border border-white/25 text-onband hover:border-cyan hover:text-cyan',
 };
 
 interface CommonProps {

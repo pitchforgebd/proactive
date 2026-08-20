@@ -46,7 +46,7 @@ export default function Card({
         className,
       )}
     >
-      <div className={cn('relative overflow-hidden bg-ink-2', aspectClass[aspect])}>
+      <div className={cn('relative overflow-hidden bg-band-2', aspectClass[aspect])}>
         <Image
           src={image}
           alt={title}

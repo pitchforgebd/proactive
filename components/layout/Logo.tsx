@@ -25,7 +25,10 @@ export default function Logo({
         <circle cx="17.5" cy="16" r="9" fill="none" stroke="var(--magenta)" strokeWidth="2" opacity="0.9" />
         <path
           d="M16 3v26M3 16h26"
-          stroke={invert ? 'rgba(244,246,248,.75)' : 'rgba(14,17,22,.55)'}
+          // Adaptive on light surfaces (var(--ink) flips with the theme);
+          // fixed light when sitting on an always-dark band.
+          stroke={invert ? 'rgba(244,246,248,.75)' : 'var(--ink)'}
+          strokeOpacity={invert ? 1 : 0.55}
           strokeWidth="1"
         />
       </svg>
@@ -33,7 +36,7 @@ export default function Logo({
         <span
           className={cn(
             'font-display text-[15px] font-extrabold uppercase tracking-[0.02em]',
-            invert ? 'text-paper' : 'text-ink',
+            invert ? 'text-onband' : 'text-ink',
           )}
         >
           Proactive
@@ -41,7 +44,7 @@ export default function Logo({
         <span
           className={cn(
             'font-mono text-[9px] uppercase tracking-[0.28em]',
-            invert ? 'text-paper/55' : 'text-graphite',
+            invert ? 'text-onband/55' : 'text-graphite',
           )}
         >
           Trade Int&apos;l

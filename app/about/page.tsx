@@ -60,7 +60,7 @@ export default function AboutPage() {
           {/* Founder aside */}
           <RevealOnView delay={80}>
             <aside className="border border-ink/10 bg-paper-2 p-7 lg:sticky lg:top-[110px]">
-              <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+              <div className="relative aspect-[4/5] overflow-hidden bg-band">
                 <Image
                   src="/images/about/founder-portrait.png"
                   alt="Mr. Billal Hossain Bappi, Founder & CEO of Proactive Trade International"

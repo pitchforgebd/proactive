@@ -46,7 +46,7 @@ export default function HeroSlider({
   const visible = mountRest ? slides : slides.slice(0, 1);
 
   return (
-    <div aria-hidden="true" className="absolute inset-0 overflow-hidden bg-ink">
+    <div aria-hidden="true" className="absolute inset-0 overflow-hidden bg-band">
       {visible.map((slide, i) => (
         <Image
           key={slide.src}
@@ -65,7 +65,7 @@ export default function HeroSlider({
       ))}
 
       {/* Ink scrim + halftone so the headline holds contrast on any slide. */}
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/45" />
+      <div className="absolute inset-0 bg-gradient-to-r from-band via-band/85 to-band/45" />
       <div className="absolute inset-0 halftone opacity-40" />
 
       {/* Slide indicators — decorative, the slider carries no content. */}

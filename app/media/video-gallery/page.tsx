@@ -35,8 +35,8 @@ export default async function VideoGalleryPage() {
       <Section tone="ink" halftone>
         {videos.length === 0 ? (
           <div className="border border-dashed border-line p-10 text-center">
-            <p className="eyebrow text-paper/60">No videos yet</p>
-            <p className="mx-auto mt-4 max-w-md text-base text-paper/60">
+            <p className="eyebrow text-onband/60">No videos yet</p>
+            <p className="mx-auto mt-4 max-w-md text-base text-onband/60">
               Videos published to our YouTube channel will appear here.
             </p>
           </div>
@@ -46,13 +46,13 @@ export default async function VideoGalleryPage() {
               <RevealOnView as="li" key={v.id} delay={i * 60}>
                 {/* Facade only — the player iframe is created on click (§5.6). */}
                 <YouTubeFacade youtubeId={v.youtubeId} title={v.title} />
-                <h2 className="mt-4 text-base font-semibold leading-snug text-paper">
+                <h2 className="mt-4 text-base font-semibold leading-snug text-onband">
                   {v.title}
                 </h2>
                 {v.publishedAt && (
                   <time
                     dateTime={isoDate(v.publishedAt)}
-                    className="eyebrow mt-2 block text-paper/40"
+                    className="eyebrow mt-2 block text-onband/40"
                   >
                     {formatDate(v.publishedAt)}
                   </time>

@@ -24,7 +24,7 @@ export default function PartnerMarquee({ partners }: { partners: Partner[] }) {
             height={60}
             sizes="160px"
             loading="lazy"
-            className="h-[46px] w-auto opacity-55 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+            className="h-[46px] w-auto opacity-55 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:brightness-0 dark:invert"
           />
         </li>
       ))}

@@ -6,7 +6,7 @@ type Tone = 'paper' | 'paper-2' | 'ink';
 const toneClass: Record<Tone, string> = {
   paper: 'bg-paper text-ink',
   'paper-2': 'bg-paper-2 text-ink',
-  ink: 'bg-ink text-paper',
+  ink: 'bg-band text-onband',
 };
 
 interface SectionProps {

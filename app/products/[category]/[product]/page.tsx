@@ -172,13 +172,13 @@ export default async function ProductPage({
       {related.length > 0 && (
         <Section tone="ink" halftone>
           <div className="flex items-end justify-between gap-6">
-            <h2 className="text-xl font-bold text-paper md:text-2xl">
+            <h2 className="text-xl font-bold text-onband md:text-2xl">
               Related products
             </h2>
             {category && (
               <Link
                 href={`/products/${category.slug}`}
-                className="eyebrow shrink-0 text-paper/60 transition-colors hover:text-cyan"
+                className="eyebrow shrink-0 text-onband/60 transition-colors hover:text-cyan"
               >
                 All in {category.name}
               </Link>

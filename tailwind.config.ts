@@ -5,6 +5,8 @@ import type { Config } from 'tailwindcss';
  * Tailwind only maps names onto them so there is a single source of truth.
  */
 const config: Config = {
+  // `dark:` follows the attribute the no-flash script writes on <html>.
+  darkMode: ['class', '[data-theme="dark"]'],
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -15,6 +17,11 @@ const config: Config = {
       colors: {
         ink: 'var(--ink)',
         'ink-2': 'var(--ink-2)',
+        // Always-dark section grounds + the text that sits on them. These do
+        // NOT flip with the theme — an ink band stays an ink band in dark mode.
+        band: 'var(--band)',
+        'band-2': 'var(--band-2)',
+        onband: 'var(--onband)',
         paper: 'var(--paper)',
         'paper-2': 'var(--paper-2)',
         graphite: 'var(--graphite)',

@@ -29,7 +29,7 @@ export default function PageHero({
   compact?: boolean;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink text-paper">
+    <section className="relative isolate overflow-hidden bg-band text-onband">
       {image ? (
         <>
           <Image
@@ -41,7 +41,7 @@ export default function PageHero({
             quality={70}
             className="object-cover opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-band via-band/80 to-band/40" />
         </>
       ) : (
         <HalftoneBg grid fade={false} className="opacity-70" />
@@ -59,7 +59,7 @@ export default function PageHero({
           {title}
         </h1>
         {lede && (
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-paper/65">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-onband/65">
             {lede}
           </p>
         )}

@@ -24,7 +24,7 @@ export default function ProductGallery({
 
   return (
     <div>
-      <div className="relative aspect-[4/3] overflow-hidden border border-ink/10 bg-ink">
+      <div className="relative aspect-[4/3] overflow-hidden border border-ink/10 bg-band">
         {images.map((src, i) => (
           <Image
             key={src}
