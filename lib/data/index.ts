@@ -1,54 +1,67 @@
 /**
  * PUBLIC DATA API — the only module UI components may import for content.
  *
- * Phase 1 (now):  every function resolves from lib/data/mock/*.
- * Phase 2 (later): flip USE_REMOTE (or set NEXT_PUBLIC_DATA_SOURCE=remote) and
- *                  lib/data/remote.ts serves the same signatures from the
- *                  dashboard API. No component changes.
+ * Phase 1 resolved everything from lib/data/mock/*. Phase 2 resolves everything
+ * from MySQL via lib/data/remote.ts. That swap is this file, and only this file
+ * (PHASE2-BACKEND.md §3) — no component changed to make it happen.
  *
  * Rules:
  *  - Components never fetch. They call these functions.
- *  - Every function is async so swapping in a network source is invisible.
+ *  - Every function is async, so the source can change without callers knowing.
  *  - Every function returns a resolved value or null — never throws for
  *    "not found", so pages can call notFound() themselves.
+ *
+ * The list-shaping arguments (`limit`) and the derived helpers live here rather
+ * than in remote.ts, so they stay identical whatever the backing store is.
  */
 import type {
   Category,
   GalleryImage,
   JobOpening,
   NewsPost,
+  PageWithSections,
   Partner,
   Product,
   SiteSettings,
   Video,
 } from '@/lib/types';
 
-import { categories as mockCategories } from './mock/categories';
-import { products as mockProducts } from './mock/products';
-import { news as mockNews } from './mock/news';
-import { galleryImages as mockGallery, partners as mockPartners, videos as mockVideos } from './mock/media';
-import { jobOpenings as mockJobs, siteSettings as mockSettings } from './mock/settings';
-import * as remote from './remote';
+import * as source from './remote';
 
-/** Single switch for the Phase 2 backend swap. */
-const USE_REMOTE = process.env.NEXT_PUBLIC_DATA_SOURCE === 'remote';
+/* -------------------------------------------------------------------------- */
+/* Pages & sections                                                            */
+/* -------------------------------------------------------------------------- */
 
-const byOrder = <T extends { order: number }>(a: T, b: T) => a.order - b.order;
-const byDateDesc = (a: { publishedAt: string }, b: { publishedAt: string }) =>
-  Date.parse(b.publishedAt) - Date.parse(a.publishedAt);
+/**
+ * A page and its sections, ordered and filtered to the visible ones.
+ * `includeHidden` is the dashboard's view; the public site never passes it.
+ */
+export async function getPage(
+  slug: string,
+  includeHidden = false,
+): Promise<PageWithSections | null> {
+  return source.getPage(slug, includeHidden);
+}
+
+export async function getAllPageSlugs(): Promise<string[]> {
+  return source.getAllPageSlugs();
+}
+
+/** Page record without its sections — enough for generateMetadata(). */
+export async function getPageMeta(slug: string) {
+  return source.getPageMeta(slug);
+}
 
 /* -------------------------------------------------------------------------- */
 /* Categories                                                                  */
 /* -------------------------------------------------------------------------- */
 
 export async function getCategories(): Promise<Category[]> {
-  if (USE_REMOTE) return remote.getCategories();
-  return [...mockCategories].sort(byOrder);
+  return source.getCategories();
 }
 
 export async function getCategory(slug: string): Promise<Category | null> {
-  if (USE_REMOTE) return remote.getCategory(slug);
-  return mockCategories.find((c) => c.slug === slug) ?? null;
+  return source.getCategory(slug);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -56,25 +69,18 @@ export async function getCategory(slug: string): Promise<Category | null> {
 /* -------------------------------------------------------------------------- */
 
 export async function getProducts(): Promise<Product[]> {
-  if (USE_REMOTE) return remote.getProducts();
-  return [...mockProducts].sort(byOrder);
+  return source.getProducts();
 }
 
 export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
-  if (USE_REMOTE) return remote.getProductsByCategory(categorySlug);
-  return mockProducts.filter((p) => p.categorySlug === categorySlug).sort(byOrder);
+  return source.getProductsByCategory(categorySlug);
 }
 
 export async function getProduct(
   categorySlug: string,
   productSlug: string,
 ): Promise<Product | null> {
-  if (USE_REMOTE) return remote.getProduct(categorySlug, productSlug);
-  return (
-    mockProducts.find(
-      (p) => p.categorySlug === categorySlug && p.slug === productSlug,
-    ) ?? null
-  );
+  return source.getProduct(categorySlug, productSlug);
 }
 
 /** Same category first, excluding the current product; falls back to any product. */
@@ -88,9 +94,7 @@ export async function getRelatedProducts(
   );
   if (inCategory.length >= limit) return inCategory.slice(0, limit);
 
-  const others = (await getProducts()).filter(
-    (p) => p.categorySlug !== categorySlug,
-  );
+  const others = (await getProducts()).filter((p) => p.categorySlug !== categorySlug);
   return [...inCategory, ...others].slice(0, limit);
 }
 
@@ -107,13 +111,12 @@ export async function getAllProductPaths(): Promise<
 /* -------------------------------------------------------------------------- */
 
 export async function getNews(limit?: number): Promise<NewsPost[]> {
-  const all = USE_REMOTE ? await remote.getNews() : [...mockNews].sort(byDateDesc);
+  const all = await source.getNews();
   return typeof limit === 'number' ? all.slice(0, limit) : all;
 }
 
 export async function getNewsPost(slug: string): Promise<NewsPost | null> {
-  if (USE_REMOTE) return remote.getNewsPost(slug);
-  return mockNews.find((n) => n.slug === slug) ?? null;
+  return source.getNewsPost(slug);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -121,18 +124,16 @@ export async function getNewsPost(slug: string): Promise<NewsPost | null> {
 /* -------------------------------------------------------------------------- */
 
 export async function getGalleryImages(limit?: number): Promise<GalleryImage[]> {
-  const all = USE_REMOTE ? await remote.getGalleryImages() : mockGallery;
+  const all = await source.getGalleryImages();
   return typeof limit === 'number' ? all.slice(0, limit) : all;
 }
 
 export async function getVideos(): Promise<Video[]> {
-  if (USE_REMOTE) return remote.getVideos();
-  return mockVideos;
+  return source.getVideos();
 }
 
 export async function getPartners(): Promise<Partner[]> {
-  if (USE_REMOTE) return remote.getPartners();
-  return mockPartners;
+  return source.getPartners();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -140,11 +141,9 @@ export async function getPartners(): Promise<Partner[]> {
 /* -------------------------------------------------------------------------- */
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  if (USE_REMOTE) return remote.getSiteSettings();
-  return mockSettings;
+  return source.getSiteSettings();
 }
 
 export async function getJobOpenings(): Promise<JobOpening[]> {
-  if (USE_REMOTE) return remote.getJobOpenings();
-  return mockJobs;
+  return source.getJobOpenings();
 }

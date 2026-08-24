@@ -8,11 +8,17 @@ import HalftoneBg from '@/components/motion/HalftoneBg';
  * always one obvious next step.
  */
 export default async function CTABand({
+  eyebrow = 'Get in Touch',
   title = 'Tell us what you print. We will specify the rest.',
   lede = 'Machinery selection, consumable programmes, technical service — talk to our team about your production.',
+  buttonText = 'Contact Us',
+  buttonHref = '/contact',
 }: {
+  eyebrow?: string;
   title?: string;
   lede?: string;
+  buttonText?: string;
+  buttonHref?: string;
 }) {
   const settings = await getSiteSettings();
 
@@ -25,20 +31,22 @@ export default async function CTABand({
           <div className="max-w-2xl">
             <p className="eyebrow flex items-center gap-3 text-cyan">
               <span aria-hidden="true" className="h-px w-10 bg-cyan" />
-              Get in Touch
+              {eyebrow}
             </p>
             <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">
               {title}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-onband/65">{lede}</p>
+            {lede && (
+              <p className="mt-4 text-base leading-relaxed text-onband/65">{lede}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-4">
             <Link
-              href="/contact"
+              href={buttonHref}
               className="group inline-flex items-center justify-center gap-2 rounded-sm bg-cyan px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white"
             >
-              Contact Us
+              {buttonText}
               <ArrowRight
                 aria-hidden="true"
                 className="h-4 w-4 transition-transform duration-300 ease-press group-hover:translate-x-1"

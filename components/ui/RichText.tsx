@@ -1,12 +1,13 @@
-import DOMPurify from 'isomorphic-dompurify';
+import { sanitizeHtml } from '@/lib/sanitize';
 import { cn } from '@/lib/utils';
 
 /**
  * The ONLY place dangerouslySetInnerHTML is allowed.
  *
- * Rich HTML fields (category/product/news bodies) come from Summernote in the
- * Phase 2 dashboard, so every one of them is sanitized here before it renders.
- * Styling comes from the .prose class in globals.css.
+ * Rich HTML fields (page sections, category/product/news bodies) come from
+ * Summernote in the dashboard and are already sanitized on save — this is the
+ * second pass, so content that reached the database by any other route still
+ * cannot execute. Styling comes from the .prose class in globals.css.
  */
 export default function RichText({
   html,
@@ -18,14 +19,8 @@ export default function RichText({
   invert?: boolean;
   className?: string;
 }) {
-  if (!html?.trim()) return null;
-
-  const clean = DOMPurify.sanitize(html, {
-    USE_PROFILES: { html: true },
-    ADD_ATTR: ['target', 'rel'],
-    FORBID_TAGS: ['style', 'script', 'iframe', 'form', 'input'],
-    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick'],
-  });
+  const clean = sanitizeHtml(html);
+  if (!clean) return null;
 
   return (
     <div

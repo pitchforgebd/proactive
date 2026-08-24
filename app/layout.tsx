@@ -1,10 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import RouteSweep from '@/components/motion/RouteSweep';
-import CursorRegistration from '@/components/motion/CursorRegistration';
 import { SITE_URL } from '@/lib/utils';
 
 /**
@@ -82,36 +78,13 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Proactive Trade International',
-  url: SITE_URL,
-  logo: `${SITE_URL}/images/og/og-default.png`,
-  foundingDate: '2024',
-  description:
-    'Supplier of printing and packaging machineries, press room chemicals, inks, coatings and consumables in Bangladesh.',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '292, Inner Circular Road, Shatabdi Centre, Fakirapool, Motijheel',
-    addressLocality: 'Dhaka',
-    postalCode: '1000',
-    addressCountry: 'BD',
-  },
-  contactPoint: {
-    '@type': 'ContactPoint',
-    telephone: '+880 1855 939 450',
-    email: 'info@proactive.com.bd',
-    contactType: 'sales',
-  },
-  sameAs: [
-    'https://www.facebook.com/proactivetradeInt',
-    'https://www.linkedin.com/company/proactivetradeint',
-    'https://www.instagram.com/proactivetradeint',
-    'https://www.youtube.com/@proactivetradeint',
-  ],
-};
-
+/**
+ * ROOT LAYOUT — document shell only.
+ *
+ * Fonts, tokens and the theme script are shared by the public site and the
+ * dashboard; the page chrome is not. Public chrome lives in (site)/layout.tsx,
+ * the dashboard's in admin/layout.tsx.
+ */
 export default function RootLayout({
   children,
 }: {
@@ -143,16 +116,7 @@ export default function RootLayout({
           Skip to content
         </a>
 
-        <RouteSweep />
-        <CursorRegistration />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        {children}
       </body>
     </html>
   );

@@ -168,3 +168,63 @@ Each phase's tasks, files, risks and exit criteria: `PHASE2_PLAN.md` §6.
 Once answered, the first commit is Phase 2A: the schema plus `lib/data/db.ts`,
 seeded from the existing mocks, with the exit test being "`DATA_SOURCE=db` renders
 every page identically to `mock`."
+
+
+
+
+
+You are building Phase 2 (backend + admin dashboard) of the Proactive Trade
+International website. The specs are in the repo: read CLAUDE.md (Phase 1 frontend,
+already built) and PHASE2-BACKEND.md (this phase) IN FULL before writing any code,
+and follow PHASE2-BACKEND.md exactly.
+
+CONTEXT
+- Phase 1 frontend is done. All pages read content through lib/data, which currently
+  re-exports mock fixtures. Types live in lib/types.ts.
+- Deployment is locked to Mode A: Next.js Node.js standalone on cPanel + MySQL +
+  on-demand ISR. Node 18+ and terminal are available.
+
+GOAL
+Turn the mock-driven frontend into a live, editable site with an admin dashboard,
+without rewriting frontend components.
+
+STACK (do not deviate)
+MySQL + Drizzle ORM + mysql2 (NOT Prisma). Auth.js credentials + bcrypt. Summernote
+in the dashboard. isomorphic-dompurify for sanitizing rich HTML. zod validation.
+Local persistent uploads dir + a file-serving route. Optional nodemailer.
+
+EXECUTION ORDER (do these in sequence, verify each before moving on)
+1. Add lib/db.ts (small pooled singleton, connectionLimit <= 5) and lib/schema.ts
+   (Drizzle tables mirroring lib/types.ts, per PHASE2-BACKEND.md §5). Run drizzle-kit push.
+2. Write a seed script that imports the Phase 1 mock content into the tables and
+   creates one admin user (bcrypt-hashed). Expose as npm run db:seed.
+3. Create lib/data/remote.ts implementing EVERY function signature currently exported
+   from lib/data (same names, same return types, mapping Drizzle rows to the existing
+   type shapes). Then change lib/data/index.ts to export from './remote'. Do NOT edit
+   any component or page.
+4. Verify all public pages still render correctly, now from the database.
+5. Add Auth.js (credentials) and middleware protecting all /admin/* except /admin/login.
+6. Build the dashboard CRUD in this order: Categories -> Products -> News -> Gallery
+   -> Videos. Product/News/Category rich content uses Summernote; sanitize HTML
+   server-side BEFORE storing.
+7. Add Career and Contact inboxes; wire /api/career and /api/contact to insert into
+   the DB (zod-validated), with resume upload handling and optional email notify.
+8. Build the Settings page; make it drive the header/footer contact info, socials, map.
+9. After EVERY create/update/delete in the dashboard, call revalidatePath() for the
+   affected public routes (per PHASE2-BACKEND.md §8).
+
+HARD CONSTRAINTS (violating these is a bug)
+- Do not touch frontend components/pages when swapping to remote data — the one-file
+  swap in lib/data/index.ts is the only change.
+- NEVER write uploads into public/ (it is replaced on every deploy). Store uploads in
+  a persistent dir outside the build and serve them via app/api/files/[...path]. Store
+  relative paths in the DB.
+- Keep the MySQL connection pool small and reuse a singleton (shared hosting has low
+  max_user_connections).
+- Sanitize all rich HTML on save AND on render. Validate all inputs with zod.
+- Never expose DB creds or AUTH_SECRET to the client. Server-only modules for db access.
+- Read env vars from .env (git-ignored): DB_HOST, DB_USER, DB_PASSWORD, DB_NAME,
+  AUTH_SECRET, NEXTAUTH_URL, UPLOAD_DIR (+ SMTP_* if email is enabled).
+
+Work incrementally, keep the build passing at each step, and after each numbered step
+briefly state what you did and how you verified it. Start with step 1 now.

@@ -92,6 +92,41 @@ export interface ContactMessage {
   message: string;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Dynamic pages & sections                                                    */
+/* -------------------------------------------------------------------------- */
+
+/** A dashboard-managed page. Its body is an ordered list of sections. */
+export interface Page {
+  slug: string;
+  title: string;
+  seo?: Seo;
+  /** ISO 8601. */
+  updatedAt?: string;
+}
+
+/**
+ * One section instance on a page.
+ *
+ * `type` names an entry in lib/sections/registry.ts (the coded component and
+ * its design); `data` is the editable content for that type. `data` is
+ * deliberately `unknown` — it is only trusted after the registry's zod schema
+ * has parsed it in SectionRenderer.
+ */
+export interface PageSection {
+  id: string;
+  pageSlug: string;
+  type: string;
+  order: number;
+  visible: boolean;
+  data: unknown;
+}
+
+export interface PageWithSections {
+  page: Page;
+  sections: PageSection[];
+}
+
 /** Editable-from-dashboard globals (contact block, socials, map). */
 export interface SiteSettings {
   companyName: string;

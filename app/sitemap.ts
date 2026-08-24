@@ -2,6 +2,14 @@ import type { MetadataRoute } from 'next';
 import { getCategories, getNews, getProducts } from '@/lib/data';
 import { absoluteUrl } from '@/lib/utils';
 
+/**
+ * ISR, like the pages it lists. Without this the sitemap is generated once at
+ * build time and never mentions a category, product or article added later.
+ * Collection writes also call revalidatePath('/sitemap.xml'); this is the
+ * belt-and-braces fallback, and the one that is guaranteed to work.
+ */
+export const revalidate = 60;
+
 /** Static routes with hand-set priorities; dynamic ones are appended below. */
 const staticRoutes: { path: string; priority: number; changeFrequency: 'weekly' | 'monthly' }[] = [
   { path: '/', priority: 1, changeFrequency: 'weekly' },
