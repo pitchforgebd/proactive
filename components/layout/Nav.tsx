@@ -134,7 +134,7 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   onKeyDown={(e) => {
                     if (e.key === 'Escape') setOpenIndex(null);
                   }}
-                  className="absolute left-0 top-full z-50 min-w-[260px] border border-ink/10 bg-paper-2 py-2 shadow-[0_18px_40px_-24px_rgba(14,17,22,.45)]"
+                  className="absolute left-0 top-full z-50 min-w-[260px] rounded-xl border border-ink/10 bg-paper-2 py-2 shadow-[0_18px_40px_-24px_rgba(14,17,22,.45)]"
                 >
                   {/* Registration tick marking the panel edge. */}
                   <span

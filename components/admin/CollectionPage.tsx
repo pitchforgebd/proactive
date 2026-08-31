@@ -79,7 +79,7 @@ export async function CollectionListPage({ collection }: { collection: Collectio
       <div className="mb-6">
         <Link
           href={`/admin/${collection}/new`}
-          className="inline-flex items-center gap-2 rounded-sm bg-cyan px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-band transition-colors hover:bg-magenta hover:text-white"
+          className="inline-flex items-center gap-2 rounded-md bg-cyan px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-band transition-colors hover:bg-magenta hover:text-white"
         >
           <Plus aria-hidden="true" className="h-4 w-4" />
           Add {def.singular}
@@ -87,11 +87,11 @@ export async function CollectionListPage({ collection }: { collection: Collectio
       </div>
 
       {rows.length === 0 ? (
-        <p className="border border-dashed border-ink/25 px-6 py-10 text-center text-sm text-graphite">
+        <p className="rounded-xl border border-dashed border-ink/25 px-6 py-10 text-center text-sm text-graphite">
           No {def.label.toLowerCase()} yet. Add the first one above.
         </p>
       ) : (
-        <ul className="grid gap-px overflow-hidden border border-ink/10 bg-ink/10">
+        <ul className="grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
           {rows.map((row) => {
             const image = def.imageField ? String(row[def.imageField] ?? '') : '';
             const title = String(row[def.titleField] ?? '') || '(untitled)';
@@ -106,7 +106,7 @@ export async function CollectionListPage({ collection }: { collection: Collectio
                   className="flex items-center gap-4 p-4 transition-colors hover:bg-ink/[0.03]"
                 >
                   {def.imageField && (
-                    <span className="flex h-[52px] w-[78px] shrink-0 items-center justify-center overflow-hidden rounded-sm border border-ink/10 bg-ink/[0.04]">
+                    <span className="flex h-[52px] w-[78px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-ink/10 bg-ink/[0.04]">
                       {image && (
                         // Arbitrary admin-supplied paths — next/image would need
                         // every one configured.

@@ -77,7 +77,7 @@ export default async function AdminHomePage() {
         <h2 id="counts" className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
           Content
         </h2>
-        <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-5">
+        <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-5">
           {stats.map((s) => (
             <div key={s.label} className="bg-paper-2 p-5">
               <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
@@ -95,7 +95,7 @@ export default async function AdminHomePage() {
         <h2 id="pages" className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
           Pages
         </h2>
-        <ul className="mt-4 grid gap-px overflow-hidden border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-4 grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
           {PAGE_SLUGS.map((slug) => (
             <li key={slug} className="bg-paper-2 p-5">
               <p className="text-sm font-semibold text-ink">{pageLabels[slug]}</p>

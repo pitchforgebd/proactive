@@ -102,7 +102,7 @@ export default function Summernote({
           defaultValue={value}
           onChange={(e) => onChange(e.target.value)}
           rows={10}
-          className="w-full rounded-sm border border-ink/20 bg-paper-2 px-3 py-2 font-mono text-xs text-ink outline-none focus:border-cyan"
+          className="w-full rounded-md border border-ink/20 bg-paper-2 px-3 py-2 font-mono text-xs text-ink outline-none focus:border-cyan"
         />
       </div>
     );
@@ -113,7 +113,7 @@ export default function Summernote({
       {!ready && (
         <div
           style={{ height: minHeight }}
-          className="animate-pulse rounded-sm border border-ink/10 bg-ink/[0.04]"
+          className="animate-pulse rounded-md border border-ink/10 bg-ink/[0.04]"
         />
       )}
       <div id={id} ref={ref} hidden={!ready} />

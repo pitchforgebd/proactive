@@ -43,7 +43,7 @@ export default function AddSection({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-6 inline-flex items-center gap-2 rounded-sm border border-dashed border-ink/30 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+        className="mt-6 inline-flex items-center gap-2 rounded-md border border-dashed border-ink/30 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
       >
         <Plus aria-hidden="true" className="h-4 w-4" />
         Add section
@@ -52,7 +52,7 @@ export default function AddSection({
   }
 
   return (
-    <section aria-label="Add a section" className="mt-8 border border-ink/15 bg-paper-2 p-6">
+    <section aria-label="Add a section" className="mt-8 rounded-xl border border-ink/15 bg-paper-2 p-6">
       <div className="mb-5 flex items-center justify-between gap-4">
         <div>
           <h3 className="font-display text-lg font-bold leading-tight">Add a section</h3>
@@ -87,7 +87,7 @@ export default function AddSection({
                       type="button"
                       disabled={pending}
                       onClick={() => add(option.type)}
-                      className="flex h-full w-full flex-col items-start gap-1 rounded-sm border border-ink/15 p-4 text-left transition-colors hover:border-cyan disabled:opacity-60"
+                      className="flex h-full w-full flex-col items-start gap-1 rounded-lg border border-ink/15 p-4 text-left transition-colors hover:border-cyan disabled:opacity-60"
                     >
                       <span className="flex items-center gap-2 text-sm font-semibold text-ink">
                         {pending && adding === option.type && (

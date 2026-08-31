@@ -111,7 +111,7 @@ export default function RecordForm({
               type="button"
               onClick={remove}
               disabled={pending}
-              className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-magenta hover:text-magenta disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-magenta hover:text-magenta disabled:opacity-60"
             >
               <Trash2 aria-hidden="true" className="h-3.5 w-3.5" />
               Delete
@@ -120,7 +120,7 @@ export default function RecordForm({
           <button
             type="submit"
             disabled={pending}
-            className="inline-flex items-center gap-2 rounded-sm bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-md bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
           >
             {pending ? (
               <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />

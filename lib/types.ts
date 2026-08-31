@@ -18,6 +18,8 @@ export interface Category {
   image: string;
   order: number;
   seo?: Seo;
+  /** ISO 8601 — used by sitemap lastModified when present. */
+  createdAt?: string;
 }
 
 export interface Product {
@@ -32,6 +34,8 @@ export interface Product {
   specs?: { label: string; value: string }[];
   order: number;
   seo?: Seo;
+  /** ISO 8601 — used by sitemap lastModified when present. */
+  createdAt?: string;
 }
 
 export interface NewsPost {
@@ -127,12 +131,53 @@ export interface PageWithSections {
   sections: PageSection[];
 }
 
-/** Editable-from-dashboard globals (contact block, socials, map). */
+/** Editable-from-dashboard globals (contact block, socials, map, logo, SEO). */
 export interface SiteSettings {
   companyName: string;
+  /** Empty string → UI uses the coded SVG wordmark fallback. */
+  logo: string;
+  /** Empty string → no custom favicon in public `<head>`. */
+  favicon: string;
+  /** Empty string → footer omits the QR block. */
+  qrCode: string;
+  /** Optional caption under the footer QR. */
+  qrCodeCaption: string;
   phone: string;
   email: string;
   address: string;
   mapQuery: string;
   socials: { label: string; href: string }[];
+  /**
+   * SEO / analytics IDs and verification tokens (Settings → Verification & Head Tags).
+   * Empty strings omit the corresponding public `<head>` tags / scripts.
+   */
+  seo: SiteSeoSettings;
 }
+
+/** Flat SEO fields kept on Settings (same row — no extra table). */
+export interface SiteSeoSettings {
+  googleVerification: string;
+  bingVerification: string;
+  ga4Id: string;
+  gtmId: string;
+  metaPixelId: string;
+  facebookDomainVerification: string;
+  yandexVerification: string;
+  pinterestVerification: string;
+  ahrefsVerification: string;
+  /** Allowlisted meta/link HTML only — sanitized on save and when extracted for head. */
+  customHeadTags: string;
+}
+
+export const emptySiteSeo = (): SiteSeoSettings => ({
+  googleVerification: '',
+  bingVerification: '',
+  ga4Id: '',
+  gtmId: '',
+  metaPixelId: '',
+  facebookDomainVerification: '',
+  yandexVerification: '',
+  pinterestVerification: '',
+  ahrefsVerification: '',
+  customHeadTags: '',
+});

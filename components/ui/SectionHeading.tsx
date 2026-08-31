@@ -68,7 +68,7 @@ export default function SectionHeading({
         <Link
           href={link.href}
           className={cn(
-            'group inline-flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] transition-colors',
+            'group inline-flex shrink-0 items-center gap-2 font-mono text-xs uppercase transition-colors',
             invert ? 'text-onband/70 hover:text-cyan' : 'text-graphite hover:text-magenta',
           )}
         >

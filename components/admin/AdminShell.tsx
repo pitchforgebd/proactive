@@ -68,7 +68,7 @@ export default function AdminShell({
             {nav.map((item) => {
               const Icon = item.icon;
               const className =
-                'flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm transition-colors';
+                'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors';
 
               return (
                 <li key={item.href}>
@@ -107,7 +107,7 @@ export default function AdminShell({
           <form action={signOutAction} className="mt-4">
             <button
               type="submit"
-              className="w-full rounded-sm border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
+              className="w-full rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
             >
               Sign out
             </button>

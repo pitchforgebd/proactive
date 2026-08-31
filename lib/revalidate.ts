@@ -41,6 +41,8 @@ function revalidateRoutePattern(pattern: string) {
 export function revalidatePage(slug: string) {
   const path = pathForPage(slug);
   if (path) revalidatePath(path);
+  // lastModified on sitemap entries comes from pages.updatedAt.
+  revalidateSitemap();
 }
 
 /**
@@ -104,10 +106,12 @@ export function revalidateCollectionLists(key: string) {
       revalidatePath('/products');
       revalidatePage('home');
       revalidatePath('/', 'layout');
+      revalidateSitemap();
       break;
     case 'news':
       revalidatePath('/media/news');
       revalidatePage('media');
+      revalidateSitemap();
       break;
     case 'gallery':
       revalidateGallery();
@@ -128,11 +132,13 @@ export function revalidateGallery() {
   revalidatePath('/media/photo-gallery');
   revalidatePage('media');
   revalidatePage('home');
+  revalidateSitemap();
 }
 
 export function revalidateVideos() {
   revalidatePath('/media/video-gallery');
   revalidatePage('media');
+  revalidateSitemap();
 }
 
 export function revalidatePartners() {

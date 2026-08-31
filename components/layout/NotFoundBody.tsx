@@ -6,7 +6,7 @@ import RegistrationHero from '@/components/motion/RegistrationHero';
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/products', label: 'What We Offer' },
+  { href: '/products', label: 'Products' },
   { href: '/media/news', label: 'News' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -26,7 +26,7 @@ export default function NotFoundBody() {
         <RegistrationHero
           className="mt-6"
           as="h1"
-          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-onband md:text-4xl"
+          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] text-onband md:text-4xl"
         >
           Out of
           <br />
@@ -43,7 +43,7 @@ export default function NotFoundBody() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="group inline-flex items-center gap-2 rounded-sm border border-white/25 px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-onband transition-colors hover:border-cyan hover:text-cyan"
+                className="group inline-flex items-center gap-2 rounded-md border border-white/25 px-6 py-3 font-mono text-xs uppercase text-onband transition-colors hover:border-cyan hover:text-cyan"
               >
                 {l.label}
                 <ArrowRight

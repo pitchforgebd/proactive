@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import HeroSlider from '@/components/sections/HeroSlider';
 import RegistrationHero from '@/components/motion/RegistrationHero';
 import PointerParallax from '@/components/motion/PointerParallax';
+import PressAtmosphere from '@/components/motion/PressAtmosphere';
 import PressCounter from '@/components/motion/PressCounter';
 import type { HeroData } from '@/lib/sections/schemas';
 
@@ -33,8 +34,9 @@ export default function Hero({
   return (
     <section className="relative isolate flex min-h-[calc(100svh-70px)] items-center overflow-hidden text-onband">
       <HeroSlider slides={slides.map((s) => ({ src: s.image, alt: s.alt ?? '' }))} />
+      <PressAtmosphere intensity="soft" className="z-[1]" />
 
-      <PointerParallax className="absolute inset-0 z-0">
+      <PointerParallax className="absolute inset-0 z-[2]">
         {/* Registration target — drifts with the pointer, three depths so the
             channels separate slightly, like a sheet not yet in register. */}
         <svg
@@ -73,7 +75,7 @@ export default function Hero({
         <RegistrationHero
           className="mt-6 max-w-4xl"
           as="h1"
-          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-onband md:text-4xl"
+          textClassName="font-display text-3xl font-extrabold uppercase leading-[0.95] text-onband md:text-4xl"
         >
           {lines.map((line, i) => (
             <span key={line + i} className="block">
@@ -93,7 +95,7 @@ export default function Hero({
             {primaryCtaText && (
               <Link
                 href={primaryCtaHref || '/products'}
-                className="group inline-flex items-center gap-2 rounded-sm bg-cyan px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-md bg-cyan px-7 py-3.5 font-mono text-xs uppercase text-band transition-colors hover:bg-magenta hover:text-white"
               >
                 {primaryCtaText}
                 <ArrowRight
@@ -105,7 +107,7 @@ export default function Hero({
             {secondaryCtaText && (
               <Link
                 href={secondaryCtaHref || '/contact'}
-                className="inline-flex items-center gap-2 rounded-sm border border-white/25 px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-onband transition-colors hover:border-cyan hover:text-cyan"
+                className="inline-flex items-center gap-2 rounded-md border border-white/25 px-7 py-3.5 font-mono text-xs uppercase text-onband transition-colors hover:border-cyan hover:text-cyan"
               >
                 {secondaryCtaText}
               </Link>

@@ -1,21 +1,12 @@
+'use client';
+
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import RevealOnView from '@/components/motion/RevealOnView';
+import MotionReveal from '@/components/motion/MotionReveal';
 import { resolveIcon } from '@/lib/sections/icons';
 import { cn } from '@/lib/utils';
 import type { ValueGridData } from '@/lib/sections/schemas';
 
-/**
- * Feature / value grid — Why Choose Us, Core Values, the Global Sourcing
- * pillars. One coded component, three coded variants:
- *
- *   hairline — cells separated by a 1px rule, filled surface (Why Choose Us)
- *   rule     — open cells under a heavy top rule (home Core Values)
- *   numbered — hairline cells with a registration index (Vision & Mission)
- *
- * Icons are stored BY NAME in section data and resolved through the whitelist
- * in lib/sections/icons.ts, so reordering the list can never reshuffle them.
- */
 const columnClass: Record<ValueGridData['columns'], string> = {
   '2': 'sm:grid-cols-2',
   '3': 'md:grid-cols-2 lg:grid-cols-3',
@@ -23,6 +14,9 @@ const columnClass: Record<ValueGridData['columns'], string> = {
   '5': 'sm:grid-cols-2 lg:grid-cols-5',
 };
 
+/**
+ * Feature / value grid — Framer reveals + hover lift on hairline/numbered cards.
+ */
 export default function ValueGrid({
   eyebrow,
   index,
@@ -39,10 +33,7 @@ export default function ValueGrid({
 }: ValueGridData) {
   const invert = tone === 'ink';
   const hasHeading = Boolean(eyebrow || title);
-  // When the section carries no heading of its own, the item titles are the
-  // page's next heading level.
   const ItemTitle = hasHeading ? 'h3' : 'h2';
-
   const isOpen = variant === 'rule';
 
   return (
@@ -63,32 +54,54 @@ export default function ValueGrid({
           'grid',
           columnClass[columns],
           hasHeading ? 'mt-12' : '',
-          isOpen
-            ? 'gap-6'
-            : cn(
-                'gap-px overflow-hidden border',
-                invert ? 'border-line bg-line' : 'border-ink/10 bg-ink/10',
-              ),
+          isOpen ? 'gap-6 md:gap-8' : 'gap-4',
         )}
       >
         {items.map((item, i) => {
           const Icon = resolveIcon(item.icon);
           const accent = i % 2 === 0 ? 'text-cyan' : 'text-magenta';
+          const accentBg = i % 2 === 0 ? 'bg-cyan/10' : 'bg-magenta/10';
 
           return (
-            <RevealOnView
+            <MotionReveal
               as="li"
               key={item.title}
-              delay={i * 60}
+              delay={i * 70}
               className={cn(
                 isOpen
-                  ? cn('border-t-2 pt-6', invert ? 'border-onband' : 'border-ink')
-                  : cn('p-7', invert ? 'bg-band' : 'bg-paper-2', variant === 'numbered' && 'p-8'),
+                  ? cn(
+                      'group border-t-2 pt-6 transition-colors',
+                      invert ? 'border-onband hover:border-cyan' : 'border-ink hover:border-magenta',
+                    )
+                  : cn(
+                      'group relative overflow-hidden rounded-xl border p-7 transition-shadow duration-300 md:p-8',
+                      invert
+                        ? 'border-line bg-band-2/60 hover:border-cyan/40 hover:shadow-[0_20px_50px_-32px_rgba(0,174,239,0.45)]'
+                        : 'border-ink/10 bg-paper-2 hover:border-magenta/30 hover:shadow-[0_20px_50px_-32px_rgba(14,17,22,0.35)]',
+                      variant === 'numbered' && 'p-8',
+                    ),
               )}
             >
+              {!isOpen && (
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    'absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 transition-transform duration-500 ease-press group-hover:scale-x-100',
+                    i % 2 === 0 ? 'bg-cyan' : 'bg-magenta',
+                  )}
+                />
+              )}
+
               {variant === 'numbered' ? (
                 <div className="flex items-start justify-between gap-4">
-                  <Icon aria-hidden="true" className={cn('h-6 w-6', accent)} />
+                  <span
+                    className={cn(
+                      'inline-flex h-11 w-11 items-center justify-center rounded-lg',
+                      accentBg,
+                    )}
+                  >
+                    <Icon aria-hidden="true" className={cn('h-5 w-5', accent)} />
+                  </span>
                   <span
                     className={cn(
                       'font-mono text-xs',
@@ -99,16 +112,26 @@ export default function ValueGrid({
                   </span>
                 </div>
               ) : (
-                <Icon
-                  aria-hidden="true"
-                  className={cn(isOpen ? 'h-5 w-5' : 'h-6 w-6', isOpen ? accent : invert ? 'text-cyan' : accent)}
-                />
+                <span
+                  className={cn(
+                    'inline-flex h-11 w-11 items-center justify-center rounded-lg',
+                    isOpen ? 'bg-transparent p-0' : accentBg,
+                  )}
+                >
+                  <Icon
+                    aria-hidden="true"
+                    className={cn(
+                      isOpen ? 'h-5 w-5' : 'h-5 w-5',
+                      isOpen ? accent : invert ? 'text-cyan' : accent,
+                    )}
+                  />
+                </span>
               )}
 
               <ItemTitle
                 className={cn(
                   'text-base font-semibold leading-snug',
-                  isOpen ? 'mt-5' : 'mt-6',
+                  isOpen ? 'mt-5' : 'mt-5',
                   invert ? 'text-onband' : 'text-ink',
                 )}
               >
@@ -125,7 +148,7 @@ export default function ValueGrid({
                   {item.text}
                 </p>
               )}
-            </RevealOnView>
+            </MotionReveal>
           );
         })}
       </ul>

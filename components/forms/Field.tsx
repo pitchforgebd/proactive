@@ -25,7 +25,7 @@ export function Field({
     <div className={cn('flex flex-col gap-2', className)}>
       <label
         htmlFor={id}
-        className="font-mono text-xs uppercase tracking-[0.14em] text-graphite"
+        className="font-mono text-xs uppercase text-graphite"
       >
         {label}
         {required && (
@@ -50,4 +50,4 @@ export function Field({
 
 /** One shared input skin so every control in the site matches. */
 export const controlClass =
-  'w-full rounded-sm border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink transition-colors placeholder:text-graphite/50 focus:border-cyan focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-magenta';
+  'w-full rounded-md border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink transition-colors placeholder:text-graphite/50 focus:border-cyan focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-magenta';

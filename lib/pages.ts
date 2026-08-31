@@ -67,3 +67,35 @@ export function isPageSlug(value: string): value is PageSlug {
 export function pathForPage(slug: string): string | null {
   return isPageSlug(slug) ? pagePathMap[slug] : null;
 }
+
+/**
+ * App Router collection hubs that are public but are NOT rows in `pages`
+ * (those rows drive section-based marketing pages only). Kept here so the
+ * sitemap does not invent a second hard-coded marketing route list.
+ */
+export const PUBLIC_COLLECTION_INDEXES: {
+  path: string;
+  priority: number;
+  changeFrequency: 'weekly' | 'monthly';
+}[] = [
+  { path: '/media/news', priority: 0.7, changeFrequency: 'weekly' },
+  { path: '/media/photo-gallery', priority: 0.5, changeFrequency: 'monthly' },
+  { path: '/media/video-gallery', priority: 0.5, changeFrequency: 'monthly' },
+];
+
+/** Sitemap priority / frequency for section-based pages (by slug). */
+export const sitemapPageMeta: Partial<
+  Record<PageSlug, { priority: number; changeFrequency: 'weekly' | 'monthly' }>
+> = {
+  home: { priority: 1, changeFrequency: 'weekly' },
+  about: { priority: 0.8, changeFrequency: 'monthly' },
+  'founder-message': { priority: 0.6, changeFrequency: 'monthly' },
+  products: { priority: 0.9, changeFrequency: 'weekly' },
+  'vision-mission': { priority: 0.6, changeFrequency: 'monthly' },
+  'global-sourcing': { priority: 0.6, changeFrequency: 'monthly' },
+  'our-story': { priority: 0.6, changeFrequency: 'monthly' },
+  company: { priority: 0.6, changeFrequency: 'monthly' },
+  media: { priority: 0.6, changeFrequency: 'weekly' },
+  career: { priority: 0.7, changeFrequency: 'weekly' },
+  contact: { priority: 0.8, changeFrequency: 'monthly' },
+};

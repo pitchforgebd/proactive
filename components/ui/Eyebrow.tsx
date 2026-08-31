@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 
 /**
- * Mono press-sheet annotation. Optionally prefixed with a registration index
- * (e.g. "02 —") the way a press sheet numbers its separations.
+ * Mono caption label. Optional registration index (e.g. "02") sits beside the
+ * title with no dash/hyphen separator.
  */
 export default function Eyebrow({
   children,
@@ -24,12 +24,7 @@ export default function Eyebrow({
 
   return (
     <p className={cn('eyebrow flex items-center gap-2', color, className)}>
-      {index && (
-        <>
-          <span className="opacity-60">{index}</span>
-          <span aria-hidden="true" className="h-px w-6 bg-current opacity-40" />
-        </>
-      )}
+      {index && <span className="opacity-60">{index}</span>}
       <span>{children}</span>
     </p>
   );

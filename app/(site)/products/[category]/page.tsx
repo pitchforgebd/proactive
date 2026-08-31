@@ -99,7 +99,7 @@ export default async function CategoryPage({
           </ul>
         ) : (
           /* Empty state in the interface's own voice — no apology. */
-          <div className="mt-10 border border-dashed border-ink/20 p-10 text-center">
+          <div className="mt-10 rounded-xl border border-dashed border-ink/20 p-10 text-center">
             <p className="eyebrow text-graphite">Nothing listed yet</p>
             <p className="mx-auto mt-4 max-w-md text-base text-graphite">
               This line is stocked but not yet catalogued online. Contact our team

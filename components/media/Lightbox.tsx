@@ -96,7 +96,7 @@ export default function Lightbox({
                 step(-1);
               }}
               aria-label="Previous image"
-              className="absolute left-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:left-6"
+              className="absolute left-2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-md border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:left-6"
             >
               <ChevronLeft aria-hidden="true" className="h-5 w-5" />
             </button>
@@ -125,7 +125,7 @@ export default function Lightbox({
                 step(1);
               }}
               aria-label="Next image"
-              className="absolute right-2 z-10 inline-flex h-11 w-11 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:right-6"
+              className="absolute right-2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-md border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan md:right-6"
             >
               <ChevronRight aria-hidden="true" className="h-5 w-5" />
             </button>
@@ -136,7 +136,7 @@ export default function Lightbox({
             <p className="px-6 pb-8 text-center text-sm text-onband/60">
               {current.caption}
               {current.album && (
-                <span className="ml-3 font-mono text-xs uppercase tracking-[0.16em] text-onband/35">
+                <span className="ml-3 font-mono text-xs uppercase text-onband/35">
                   {current.album}
                 </span>
               )}

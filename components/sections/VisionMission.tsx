@@ -1,17 +1,16 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import Eyebrow from '@/components/ui/Eyebrow';
-import RevealOnView from '@/components/motion/RevealOnView';
+import MotionReveal from '@/components/motion/MotionReveal';
 import { resolveIcon } from '@/lib/sections/icons';
 import { cn } from '@/lib/utils';
 import type { VisionMissionData } from '@/lib/sections/schemas';
 
 /**
- * Vision + Mission pair.
- *
- *   strip  — condensed home band, no icons, optional "in full" link
- *   panels — the full page treatment: larger type, an icon per panel
+ * Vision + Mission pair — asymmetric accent panels + Framer reveal.
  */
 export default function VisionMission({
   visionTitle,
@@ -36,28 +35,52 @@ export default function VisionMission({
     text: string,
     Icon: ReturnType<typeof resolveIcon>,
     show: boolean,
+    delay: number,
   ) => {
     const isVision = which === 'vision';
     return (
-      <RevealOnView
-        delay={isVision ? 0 : 80}
-        className="bg-paper-2 p-8 md:p-12"
+      <MotionReveal
+        delay={delay}
+        className={cn(
+          'relative overflow-hidden p-8 md:p-12',
+          isVision ? 'bg-paper-2' : 'bg-band text-onband',
+        )}
       >
+        <span
+          aria-hidden="true"
+          className={cn(
+            'absolute bottom-0 left-0 top-0 w-1',
+            isVision ? 'bg-cyan' : 'bg-magenta',
+          )}
+        />
+        <span
+          aria-hidden="true"
+          className={cn(
+            'pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-20 blur-2xl',
+            isVision ? 'bg-cyan' : 'bg-magenta',
+          )}
+        />
+
         {panels && show && (
-          <Icon
-            aria-hidden="true"
-            className={cn('h-7 w-7', isVision ? 'text-cyan' : 'text-magenta')}
-          />
+          <span
+            className={cn(
+              'inline-flex h-12 w-12 items-center justify-center rounded-xl',
+              isVision ? 'bg-cyan/15 text-cyan' : 'bg-magenta/20 text-magenta',
+            )}
+          >
+            <Icon aria-hidden="true" className="h-6 w-6" />
+          </span>
         )}
         <Eyebrow
           tone={isVision ? 'cyan' : 'magenta'}
-          className={panels && show ? 'mt-6' : undefined}
+          className={cn(panels && show ? 'mt-6' : undefined, !isVision && 'text-magenta')}
         >
           {label}
         </Eyebrow>
         <p
           className={cn(
-            'leading-relaxed text-ink',
+            'leading-relaxed',
+            isVision ? 'text-ink' : 'text-onband/85',
             panels
               ? 'mt-5 text-lg md:text-xl md:leading-relaxed'
               : 'mt-6 text-lg',
@@ -65,7 +88,7 @@ export default function VisionMission({
         >
           {text}
         </p>
-      </RevealOnView>
+      </MotionReveal>
     );
   };
 
@@ -73,19 +96,19 @@ export default function VisionMission({
     <Section tone={tone} cropMarks={cropMarks}>
       <div
         className={cn(
-          'grid gap-px overflow-hidden border border-ink/10 bg-ink/10',
+          'grid overflow-hidden rounded-xl border border-ink/10',
           panels ? 'lg:grid-cols-2' : 'md:grid-cols-2',
         )}
       >
-        {panel('vision', visionTitle, visionText, VisionIcon, Boolean(visionIcon))}
-        {panel('mission', missionTitle, missionText, MissionIcon, Boolean(missionIcon))}
+        {panel('vision', visionTitle, visionText, VisionIcon, Boolean(visionIcon), 0)}
+        {panel('mission', missionTitle, missionText, MissionIcon, Boolean(missionIcon), 90)}
       </div>
 
       {linkText && (
-        <div className="mt-8">
+        <MotionReveal delay={140} className="mt-8">
           <Link
             href={linkHref || '/vision-mission'}
-            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-graphite transition-colors hover:text-magenta"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase text-graphite transition-colors hover:text-magenta"
           >
             {linkText}
             <ArrowRight
@@ -93,7 +116,7 @@ export default function VisionMission({
               className="h-4 w-4 transition-transform duration-300 ease-press group-hover:translate-x-1"
             />
           </Link>
-        </div>
+        </MotionReveal>
       )}
     </Section>
   );

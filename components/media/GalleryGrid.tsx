@@ -34,7 +34,7 @@ export default function GalleryGrid({ images }: { images: GalleryImage[] }) {
 
   if (images.length === 0) {
     return (
-      <div className="border border-dashed border-ink/20 p-10 text-center">
+      <div className="rounded-xl border border-dashed border-ink/20 p-10 text-center">
         <p className="eyebrow text-graphite">Gallery empty</p>
         <p className="mx-auto mt-4 max-w-md text-base text-graphite">
           Photographs are being added. Check back shortly.
@@ -57,7 +57,7 @@ export default function GalleryGrid({ images }: { images: GalleryImage[] }) {
                 }}
                 aria-pressed={album === a}
                 className={cn(
-                  'rounded-sm border px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] transition-colors',
+                  'rounded-md border px-4 py-2 font-mono text-xs uppercase transition-colors',
                   album === a
                     ? 'border-ink bg-ink text-paper'
                     : 'border-ink/20 text-graphite hover:border-magenta hover:text-magenta',
@@ -77,7 +77,7 @@ export default function GalleryGrid({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               onClick={() => setOpenIndex(i)}
-              className="group relative block w-full overflow-hidden border border-ink/10 bg-band"
+              className="group relative block w-full overflow-hidden rounded-xl border border-ink/10 bg-band"
             >
               {/* Dimensions are reserved by the aspect box — no shift on load. */}
               <span

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Breadcrumbs, { type Crumb } from '@/components/ui/Breadcrumbs';
 import Eyebrow from '@/components/ui/Eyebrow';
 import HalftoneBg from '@/components/motion/HalftoneBg';
+import PressAtmosphere from '@/components/motion/PressAtmosphere';
 import { cn } from '@/lib/utils';
 
 /**
@@ -46,16 +47,17 @@ export default function PageHero({
       ) : (
         <HalftoneBg grid fade={false} className="opacity-70" />
       )}
+      <PressAtmosphere intensity="soft" />
 
       <div
         className={cn(
-          'container-page relative',
+          'container-page relative z-[1]',
           compact ? 'py-14 md:py-16' : 'py-16 md:py-24',
         )}
       >
         {crumbs && <Breadcrumbs items={crumbs} invert className="mb-8" />}
         {eyebrow && <Eyebrow tone="cyan">{eyebrow}</Eyebrow>}
-        <h1 className="mt-4 max-w-4xl text-2xl font-extrabold uppercase leading-[1.02] tracking-[-0.025em] md:text-3xl">
+        <h1 className="mt-4 max-w-4xl text-2xl font-extrabold uppercase leading-[1.02] md:text-3xl">
           {title}
         </h1>
         {lede && (

@@ -45,7 +45,7 @@ export default async function RichTextFactsAside({
         <RevealOnView delay={80}>
           <div className="lg:sticky lg:top-[110px]">
             {facts.length > 0 && (
-              <dl className="grid grid-cols-2 gap-px overflow-hidden border border-ink/10 bg-ink/10">
+              <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
                 {facts.map((f) => (
                   <div key={f.label} className="bg-paper-2 p-5">
                     <dt className="eyebrow text-graphite">{f.label}</dt>
@@ -56,7 +56,7 @@ export default async function RichTextFactsAside({
             )}
 
             {(boxEyebrow || boxText || boxCtaText) && (
-              <div className="mt-6 border border-dashed border-ink/25 p-6">
+              <div className="mt-6 rounded-lg border border-dashed border-ink/25 p-6">
                 {boxEyebrow && <Eyebrow tone="cyan">{boxEyebrow}</Eyebrow>}
                 {boxText && (
                   <p className="mt-4 text-sm leading-relaxed text-graphite">{boxText}</p>
@@ -64,7 +64,7 @@ export default async function RichTextFactsAside({
                 {boxCtaText && (
                   <a
                     href={mailto}
-                    className="mt-5 inline-flex items-center gap-2 rounded-sm border border-ink/25 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:border-magenta hover:text-magenta"
+                    className="mt-5 inline-flex items-center gap-2 rounded-md border border-ink/25 px-5 py-2.5 font-mono text-xs uppercase text-ink transition-colors hover:border-magenta hover:text-magenta"
                   >
                     <Download aria-hidden="true" className="h-3.5 w-3.5" />
                     {boxCtaText}

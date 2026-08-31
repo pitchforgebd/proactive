@@ -7,7 +7,7 @@ import { savePageSeo, type ActionResult } from '@/app/admin/pages/actions';
 import ImageField from '@/components/admin/ImageField';
 
 const control =
-  'w-full rounded-sm border border-ink/20 bg-paper-2 px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/25';
+  'w-full rounded-md border border-ink/20 bg-paper-2 px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/25';
 
 const label = 'font-mono text-[11px] uppercase tracking-[0.14em] text-graphite';
 
@@ -113,7 +113,7 @@ export default function SeoForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex items-center gap-2 rounded-sm bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
+        className="inline-flex items-center gap-2 rounded-md bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
       >
         {pending ? (
           <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />

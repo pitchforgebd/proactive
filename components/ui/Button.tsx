@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 type Variant = 'primary' | 'secondary' | 'ghost' | 'onInk';
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50';
+  'group relative inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 font-mono text-xs uppercase transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50';
 
 const variants: Record<Variant, string> = {
   primary: 'bg-cyan text-band hover:bg-magenta hover:text-white',

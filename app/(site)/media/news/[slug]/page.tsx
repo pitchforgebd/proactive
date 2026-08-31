@@ -95,7 +95,7 @@ export default async function NewsArticlePage({
             >
               {formatDate(post.publishedAt)}
             </time>
-            <h1 className="mt-5 text-2xl font-extrabold leading-tight tracking-[-0.025em] md:text-3xl">
+            <h1 className="mt-5 text-2xl font-extrabold leading-tight md:text-3xl">
               {post.title}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-graphite">
@@ -103,7 +103,7 @@ export default async function NewsArticlePage({
             </p>
           </header>
 
-          <figure className="relative mt-10 aspect-[16/9] overflow-hidden border border-ink/10 bg-band">
+          <figure className="relative mt-10 aspect-[16/9] overflow-hidden rounded-xl border border-ink/10 bg-band">
             <Image
               src={post.coverImage}
               alt={post.title}

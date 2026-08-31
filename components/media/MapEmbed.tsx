@@ -49,7 +49,7 @@ export default function MapEmbed({
     <div
       ref={ref}
       className={cn(
-        'relative w-full overflow-hidden border border-ink/10 bg-band-2',
+        'relative w-full overflow-hidden rounded-xl border border-ink/10 bg-band-2',
         heightClass,
         className,
       )}

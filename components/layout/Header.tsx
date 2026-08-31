@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getCategories } from '@/lib/data';
+import { getCategories, getSiteSettings } from '@/lib/data';
 import { buildNav } from '@/lib/nav';
 import Logo from '@/components/layout/Logo';
 import Nav from '@/components/layout/Nav';
@@ -7,15 +7,23 @@ import MobileDrawer from '@/components/layout/MobileDrawer';
 import ThemeToggle from '@/components/layout/ThemeToggle';
 
 /**
- * Server component — the category list for the "What We Offer" dropdown is read
- * here, so only the interactive shells (Nav, MobileDrawer) ship JavaScript.
+ * Server component — categories for the Products dropdown and Settings.logo
+ * are read here so only the interactive shells (Nav, MobileDrawer) ship JS.
+ *
+ * Contrast: the bar is an opaque `bg-paper-2` surface (design-token adaptive
+ * for light/dark theme). Semi-transparent glass over dark heroes made
+ * `text-ink` nav labels unreadable; opacity is intentional, not decorative.
  */
 export default async function Header() {
-  const categories = await getCategories();
+  const [categories, settings] = await Promise.all([
+    getCategories(),
+    getSiteSettings(),
+  ]);
   const nav = buildNav(categories);
+  const logoSrc = settings.logo || undefined;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper-2/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper-2">
       {/* CMYK registration rule — the site's signature hairline. */}
       <div
         aria-hidden="true"
@@ -32,7 +40,7 @@ export default async function Header() {
           aria-label="Proactive Trade International — home"
           className="shrink-0"
         >
-          <Logo />
+          <Logo src={logoSrc} />
         </Link>
 
         <Nav items={nav} />
@@ -42,12 +50,12 @@ export default async function Header() {
 
           <Link
             href="/contact"
-            className="hidden rounded-sm bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-paper transition-colors hover:bg-magenta sm:inline-flex"
+            className="hidden rounded-md bg-ink px-5 py-2.5 font-mono text-xs uppercase text-paper transition-colors hover:bg-magenta sm:inline-flex"
           >
             Get in Touch
           </Link>
 
-          <MobileDrawer items={nav} />
+          <MobileDrawer items={nav} logoSrc={logoSrc} />
         </div>
       </div>
     </header>

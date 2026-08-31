@@ -1,0 +1,44 @@
+---
+description: Permanent project rules for Proactive Trade International — architecture, stack, workflow, and continuity
+alwaysApply: true
+---
+
+# Proactive Trade International — Cursor project rules
+
+**Primary development environment: Cursor** (continuing work previously done in Claude Code). Do not assume Claude Code workflows.
+
+## Source of truth (read order)
+
+1. **`TASK_STATE.md`** — live progress tracker; current phase; exact next action. Update it after every completed phase of work.
+2. **`docs/`** — verified continuity docs (`ARCHITECTURE`, `DEVELOPMENT`, `DEPLOYMENT`, `CHANGELOG`). Prefer these over outdated root docs when they conflict.
+3. **`CLAUDE.md`** — Phase 1 frontend Spec of Record (design, routes, performance). Keep; do not delete.
+4. **`PHASE2-BACKEND.md`** — Phase 2 Spec of Record (MySQL/Drizzle/Auth/admin). Keep; do not delete.
+5. **`PHASE2_PLAN.md`**, **`HANDOFF.md`**, **`README.md`** — historical / partially stale. Never follow them over the codebase or `docs/`.
+
+## Locked stack (do not swap)
+
+- Next.js 14 App Router + TypeScript + Tailwind
+- MySQL + Drizzle + mysql2 (not Prisma)
+- Auth.js credentials + bcryptjs; JWT sessions
+- Summernote in **admin only** (jQuery stays admin-only)
+- `isomorphic-dompurify` on save and render; zod validation
+- Deploy: **Mode A only** (`output: 'standalone'`). Static export is retired.
+- Optional SMTP via nodemailer when `SMTP_*` env is set
+
+## Architecture constraints
+
+- Public content reads go through **`lib/data`** only → `lib/data/remote.ts` → Drizzle. Do not fetch inside UI components.
+- Marketing pages: `getPage()` + `SectionRenderer`. Section **design** is coded; section **data** is DB JSON validated by `lib/sections/registry.ts`.
+- New section types are a **developer** change (component + schema + registry + loader). Editors cannot invent layout/CSS.
+- Never write uploads into `public/`. Use `UPLOAD_DIR` + `/api/files` (images) / `/api/admin/resume` (CVs).
+- Keep MySQL pool `connectionLimit` ≤ 5. Import DB only from `server-only` modules.
+- After every admin write: call the helpers in `lib/revalidate.ts`.
+- Do not expose `DB_*`, `AUTH_SECRET`, or `SMTP_PASS` to the client.
+
+## Working rules
+
+- Work **one unfinished phase / approved task** at a time. Do not start the next without approval.
+- Before editing: inspect existing implementation. Match local patterns.
+- Do not change application functionality when the task is documentation-only.
+- After meaningful work: run `npm run check`, fix breakage from your changes, update `TASK_STATE.md` and `docs/CHANGELOG.md`.
+- Never commit secrets (`.env`, credentials). Do not commit unless the user asks.

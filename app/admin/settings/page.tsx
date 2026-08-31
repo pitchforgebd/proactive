@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import { auth } from '@/auth';
 import AdminShell from '@/components/admin/AdminShell';
 import SettingsForm from '@/components/admin/SettingsForm';
+import SettingsNav from '@/components/admin/SettingsNav';
 import { db } from '@/lib/db';
 import { settings } from '@/lib/schema';
 
@@ -19,12 +20,17 @@ export default async function SettingsPage() {
   return (
     <AdminShell
       title="Settings"
-      lede="Contact details, social links and the map location. These appear in the header, the footer, the contact page and every call-to-action band — change them once here."
+      lede="Logo, favicon, footer QR, contact, socials, map, and Verification & Head Tags. Empty verification or analytics fields remove those tags from the public site."
       user={session.user}
     >
+      <SettingsNav active="general" />
       <SettingsForm
         initial={{
           companyName: row?.companyName ?? '',
+          logo: row?.logo ?? '',
+          favicon: row?.favicon ?? '',
+          qrCode: row?.qrCode ?? '',
+          qrCodeCaption: row?.qrCodeCaption ?? '',
           phone: row?.phone ?? '',
           email: row?.email ?? '',
           address: row?.address ?? '',
@@ -33,6 +39,16 @@ export default async function SettingsPage() {
           linkedin: row?.linkedin ?? '',
           instagram: row?.instagram ?? '',
           youtube: row?.youtube ?? '',
+          seoGoogleVerification: row?.seoGoogleVerification ?? '',
+          seoBingVerification: row?.seoBingVerification ?? '',
+          seoGa4Id: row?.seoGa4Id ?? '',
+          seoGtmId: row?.seoGtmId ?? '',
+          seoMetaPixelId: row?.seoMetaPixelId ?? '',
+          seoFacebookDomainVerification: row?.seoFacebookDomainVerification ?? '',
+          seoYandexVerification: row?.seoYandexVerification ?? '',
+          seoPinterestVerification: row?.seoPinterestVerification ?? '',
+          seoAhrefsVerification: row?.seoAhrefsVerification ?? '',
+          seoCustomHeadTags: row?.seoCustomHeadTags ?? '',
         }}
       />
     </AdminShell>

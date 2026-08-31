@@ -75,7 +75,7 @@ export default function Capabilities({
               {services.map((s) => (
                 <li
                   key={s}
-                  className="border border-ink/15 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-graphite"
+                  className="rounded-lg border border-ink/15 px-3 py-1.5 font-mono text-[11px] uppercase text-graphite"
                 >
                   {s}
                 </li>
@@ -86,7 +86,7 @@ export default function Capabilities({
           {ctaText && (
             <Link
               href={ctaHref || '/contact'}
-              className="group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:text-magenta"
+              className="group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase text-ink transition-colors hover:text-magenta"
             >
               {ctaText}
               <ArrowRight
@@ -99,7 +99,7 @@ export default function Capabilities({
 
         {/* Method ----------------------------------------------------------- */}
         <RevealOnView delay={80} className="lg:col-span-6">
-          <div className="relative flex h-full flex-col justify-center overflow-hidden bg-band p-8 text-onband md:p-10">
+          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-xl bg-band p-8 text-onband md:p-10">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 halftone opacity-60"
@@ -123,7 +123,7 @@ export default function Capabilities({
                       key={a.step}
                       className="group relative flex gap-5 border-t border-line py-5 last:border-b"
                     >
-                      <span className="mt-1 font-mono text-xs tracking-[0.16em] text-cyan/80">
+                      <span className="mt-1 font-mono text-xs text-cyan/80">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="flex-1">

@@ -234,6 +234,10 @@ async function seedSettings() {
   await db.insert(schema.settings).values({
     id: 1,
     companyName: siteSettings.companyName,
+    logo: siteSettings.logo || null,
+    favicon: siteSettings.favicon || null,
+    qrCode: siteSettings.qrCode || null,
+    qrCodeCaption: siteSettings.qrCodeCaption || null,
     phone: siteSettings.phone,
     email: siteSettings.email,
     address: siteSettings.address,
@@ -243,6 +247,16 @@ async function seedSettings() {
     linkedin: social('LinkedIn'),
     instagram: social('Instagram'),
     youtube: social('YouTube'),
+    seoGoogleVerification: siteSettings.seo.googleVerification || null,
+    seoBingVerification: siteSettings.seo.bingVerification || null,
+    seoGa4Id: siteSettings.seo.ga4Id || null,
+    seoGtmId: siteSettings.seo.gtmId || null,
+    seoMetaPixelId: siteSettings.seo.metaPixelId || null,
+    seoFacebookDomainVerification: siteSettings.seo.facebookDomainVerification || null,
+    seoYandexVerification: siteSettings.seo.yandexVerification || null,
+    seoPinterestVerification: siteSettings.seo.pinterestVerification || null,
+    seoAhrefsVerification: siteSettings.seo.ahrefsVerification || null,
+    seoCustomHeadTags: siteSettings.seo.customHeadTags || null,
   });
 }
 

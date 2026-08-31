@@ -5,23 +5,29 @@ import Eyebrow from '@/components/ui/Eyebrow';
 import RevealOnView from '@/components/motion/RevealOnView';
 import type { ParentCompanyData } from '@/lib/sections/schemas';
 
-/** Parent / group company block: logo plate, relationship copy, outbound link. */
+/** Parent / group / brand block: logo plate, relationship copy, optional outbound link. */
 export default function ParentCompany({
   eyebrow,
   index,
   logo,
+  logoSurface = 'band',
   name,
+  tagline,
   description,
   url,
   linkText,
   tone,
 }: ParentCompanyData) {
+  const plate =
+    logoSurface === 'paper'
+      ? 'relative flex h-[120px] w-[280px] items-center justify-center rounded-lg border border-ink/10 bg-paper-2 p-6'
+      : 'relative flex h-[120px] w-[280px] items-center justify-center rounded-lg bg-band p-6';
+
   return (
     <Section tone={tone}>
-      <div className="grid items-center gap-10 border border-ink/10 bg-paper-2 p-8 md:p-12 lg:grid-cols-[auto_1fr] lg:gap-16">
+      <div className="grid items-center gap-10 rounded-xl border border-ink/10 bg-paper-2 p-8 md:p-12 lg:grid-cols-[auto_1fr] lg:gap-16">
         <RevealOnView>
-          {/* Logo plate — ink ground so a mark of any colour sits cleanly. */}
-          <div className="relative flex h-[120px] w-[280px] items-center justify-center bg-band p-6">
+          <div className={plate}>
             <Image
               src={logo}
               alt={`${name} logo`}
@@ -41,6 +47,11 @@ export default function ParentCompany({
             </Eyebrow>
           )}
           <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">{name}</h2>
+          {tagline && (
+            <p className="mt-3 max-w-2xl font-display text-base font-semibold leading-snug text-ink md:text-lg">
+              {tagline}
+            </p>
+          )}
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-graphite">
             {description}
           </p>
@@ -49,7 +60,7 @@ export default function ParentCompany({
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-7 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:text-magenta"
+              className="group mt-7 inline-flex items-center gap-2 font-mono text-xs uppercase text-ink transition-colors hover:text-magenta"
             >
               {linkText || `Visit ${name}`}
               <ArrowUpRight

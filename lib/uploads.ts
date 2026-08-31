@@ -40,10 +40,11 @@ const RULES: Record<UploadKind, KindRule> = {
       '.png': ['image/png'],
       '.webp': ['image/webp'],
       '.avif': ['image/avif'],
-      '.svg': ['image/svg+xml'],
+      // SVG is rejected on purpose: uploaded SVG can carry script and is an XSS
+      // vector when served as image/svg+xml (PHASE2-BACKEND.md §14).
     },
     maxBytes: 5 * 1024 * 1024,
-    label: 'JPG, PNG, WebP, AVIF or SVG up to 5MB',
+    label: 'JPG, PNG, WebP or AVIF up to 5MB',
   },
   resumes: {
     types: {

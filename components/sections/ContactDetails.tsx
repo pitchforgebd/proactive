@@ -102,7 +102,7 @@ export default async function ContactDetails({
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex rounded-sm border border-ink/20 px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
+                      className="inline-flex rounded-md border border-ink/20 px-4 py-2 font-mono text-xs uppercase text-graphite transition-colors hover:border-magenta hover:text-magenta"
                     >
                       {s.label}
                     </a>

@@ -1,16 +1,39 @@
+import type { Metadata } from 'next';
+
 import { getSiteSettings } from '@/lib/data';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import RouteSweep from '@/components/motion/RouteSweep';
 import CursorRegistration from '@/components/motion/CursorRegistration';
-import { SITE_URL } from '@/lib/utils';
+import SiteAnalytics from '@/components/seo/SiteAnalytics';
+import { buildSiteSeoMetadata } from '@/lib/seo/site-seo';
+import { absoluteUrl, SITE_URL } from '@/lib/utils';
 
 /**
  * PUBLIC SITE CHROME.
  *
  * Split out of the root layout in Phase 2 so /admin can have its own shell.
  * Route groups do not affect URLs — every path under (site) is unchanged.
+ *
+ * Verification meta tags merge into the document <head> via generateMetadata.
+ * GA4 / GTM / Meta Pixel load only when configured (SiteAnalytics).
  */
+
+/** Merges Settings → Verification & Head Tags + favicon into public metadata. */
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const metadata = buildSiteSeoMetadata(settings.seo);
+  const favicon = settings.favicon.trim();
+  if (favicon) {
+    metadata.icons = {
+      icon: [{ url: favicon }],
+      apple: [{ url: favicon }],
+      shortcut: favicon,
+    };
+  }
+  return metadata;
+}
+
 /**
  * Organization JSON-LD.
  *
@@ -24,7 +47,7 @@ function organizationJsonLd(settings: Awaited<ReturnType<typeof getSiteSettings>
     '@type': 'Organization',
     name: settings.companyName,
     url: SITE_URL,
-    logo: `${SITE_URL}/images/og/og-default.png`,
+    logo: absoluteUrl(settings.logo || '/images/og/og-default.png'),
     foundingDate: '2024',
     description:
       'Supplier of printing and packaging machineries, press room chemicals, inks, coatings and consumables in Bangladesh.',
@@ -55,6 +78,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <Header />
       <main id="main">{children}</main>
       <Footer />
+
+      <SiteAnalytics seo={settings.seo} />
 
       <script
         type="application/ld+json"

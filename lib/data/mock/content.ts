@@ -272,6 +272,18 @@ export const parentCompany = {
     'Proactive Trade International operates as part of Zexora, the parent group behind its sourcing relationships and shared corporate services. The group connection is what gives us direct manufacturer agreements, the working capital to hold consumable stock locally, and the operational backing of a larger organisation behind every supply commitment.',
 };
 
+/**
+ * Proprietary brand block on /company (after the parent-group section).
+ */
+export const dynamikBrand = {
+  name: 'DYNAMIK',
+  logo: '/images/about/dynamik-logo.png',
+  role: 'Our brand',
+  tagline: 'Engineered for Performance. Built for Printing.',
+  description:
+    'DYNAMIK is our proprietary brand of high-performance Pressroom Chemicals, Printing Inks, Coatings, and Machinery Solutions — engineered to deliver consistent quality and reliability across the printing and packaging industry.',
+};
+
 /** What We Offer intro paragraph, used on /products. */
 export const whatWeOfferIntro = `
   <p>Proactive Trade International supplies the full production chain for printing

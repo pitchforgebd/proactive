@@ -27,11 +27,33 @@ const nextConfig = {
     imageSizes: [64, 96, 128, 200, 256, 384],
   },
 
+  /**
+   * Baseline response headers (PHASE2-BACKEND.md §14).
+   * HSTS belongs on the cPanel/SSL vhost once the domain is HTTPS-only —
+   * setting it here would break local http:// development.
+   */
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+    ];
+  },
+
   experimental: {
     // Keeps the client bundle lean: only the icons actually used get bundled.
     optimizePackageImports: ['lucide-react', 'framer-motion'],
     // Never bundle these into the server build — they load natively at runtime.
-    serverComponentsExternalPackages: ['mysql2', 'bcryptjs'],
+    serverComponentsExternalPackages: ['mysql2', 'bcryptjs', 'nodemailer'],
   },
 };
 

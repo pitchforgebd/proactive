@@ -33,7 +33,7 @@ export default async function CareerOpenings({
         invert={tone === 'ink'}
       />
 
-      <ul className="mt-12 grid gap-px overflow-hidden border border-ink/10 bg-ink/10">
+      <ul className="mt-12 grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
         {openings.map((job, i) => (
           <RevealOnView
             as="li"

@@ -57,7 +57,7 @@ export default function ImageText({
         <Link
           href={ctaHref || '/'}
           className={cn(
-            'group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] transition-colors',
+            'group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase transition-colors',
             invert ? 'text-onband hover:text-cyan' : 'text-ink hover:text-magenta',
           )}
         >
@@ -78,7 +78,7 @@ export default function ImageText({
     >
       <div
         className={cn(
-          'relative overflow-hidden bg-band',
+          'relative overflow-hidden rounded-xl bg-band',
           imageAspect === '16/10' ? 'aspect-[16/10]' : 'aspect-[4/3]',
           invert && 'border border-line',
         )}
@@ -95,7 +95,7 @@ export default function ImageText({
 
       {/* Registration stat plate overlapping the image edge. */}
       {badgeValue && (
-        <div className="absolute -bottom-6 -left-4 hidden bg-band px-6 py-5 text-onband sm:block">
+        <div className="absolute -bottom-6 -left-4 hidden rounded-lg bg-band px-6 py-5 text-onband sm:block">
           <p className="font-display text-2xl font-bold leading-none">{badgeValue}</p>
           {badgeLabel && <p className="eyebrow mt-2 text-onband/50">{badgeLabel}</p>}
         </div>

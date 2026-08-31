@@ -40,7 +40,7 @@ export default function Inbox({
 
   if (entries.length === 0) {
     return (
-      <p className="border border-dashed border-ink/25 px-6 py-12 text-center text-sm text-graphite">
+      <p className="rounded-xl border border-dashed border-ink/25 px-6 py-12 text-center text-sm text-graphite">
         Nothing here yet. Submissions from the website appear in this list as they
         arrive.
       </p>
@@ -67,7 +67,7 @@ export default function Inbox({
         {entries.length} total · {unread} unread
       </p>
 
-      <ul className="grid gap-px overflow-hidden border border-ink/10 bg-ink/10">
+      <ul className="grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
         {entries.map((entry) => {
           const expanded = open === entry.id;
           return (
@@ -129,7 +129,7 @@ export default function Inbox({
                     {entry.resumeUrl && (
                       <a
                         href={entry.resumeUrl}
-                        className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                        className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
                       >
                         <Download aria-hidden="true" className="h-3.5 w-3.5" />
                         Download CV
@@ -143,7 +143,7 @@ export default function Inbox({
                           router.refresh();
                         })
                       }
-                      className="rounded-sm border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                      className="rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
                     >
                       Mark {entry.read ? 'unread' : 'read'}
                     </button>
@@ -156,7 +156,7 @@ export default function Inbox({
                           router.refresh();
                         });
                       }}
-                      className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
+                      className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
                     >
                       <Trash2 aria-hidden="true" className="h-3.5 w-3.5" />
                       Delete

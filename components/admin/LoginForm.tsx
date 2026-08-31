@@ -48,7 +48,7 @@ export default function LoginForm() {
           autoComplete="username"
           required
           autoFocus
-          className="mt-2 w-full rounded-sm border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/30"
+          className="mt-2 w-full rounded-md border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/30"
         />
       </div>
 
@@ -65,7 +65,7 @@ export default function LoginForm() {
           type="password"
           autoComplete="current-password"
           required
-          className="mt-2 w-full rounded-sm border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/30"
+          className="mt-2 w-full rounded-md border border-ink/20 bg-paper-2 px-4 py-3 text-base text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/30"
         />
       </div>
 
@@ -81,7 +81,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-cyan px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-cyan px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
       >
         {pending ? (
           <>

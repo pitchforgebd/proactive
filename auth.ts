@@ -18,6 +18,14 @@ import { authConfig } from './auth.config';
 import { db } from './lib/db';
 import { adminUsers } from './lib/schema';
 
+// Production must have a real signing secret — an empty/missing value would
+// mint forgeable session cookies (PHASE2-BACKEND.md §14).
+if (process.env.NODE_ENV === 'production' && !process.env.AUTH_SECRET?.trim()) {
+  throw new Error(
+    'AUTH_SECRET is required in production. Generate one with: openssl rand -base64 32',
+  );
+}
+
 /** Shape of the login form. Anything else is rejected before touching the DB. */
 const credentialsSchema = z.object({
   email: z.string().email(),

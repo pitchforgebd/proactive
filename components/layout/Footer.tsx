@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react';
 import { getCategories, getSiteSettings } from '@/lib/data';
 import { footerLinks } from '@/lib/nav';
@@ -19,6 +20,8 @@ export default async function Footer() {
     getCategories(),
   ]);
 
+  const qrSrc = settings.qrCode.trim();
+
   return (
     <footer className="relative overflow-hidden bg-band text-onband">
       <HalftoneBg grid fade={false} className="opacity-60" />
@@ -37,7 +40,7 @@ export default async function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
           {/* Identity + socials */}
           <div className="lg:col-span-4">
-            <Logo invert />
+            <Logo invert src={settings.logo || undefined} />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-onband/60">
               One-stop printing &amp; packaging solutions — machineries, press room
               chemicals, inks, coatings and consumables, backed by dedicated
@@ -54,7 +57,7 @@ export default async function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="inline-flex h-10 w-10 items-center justify-center border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
                     >
                       <Icon aria-hidden="true" className="h-4 w-4" />
                     </a>
@@ -62,6 +65,33 @@ export default async function Footer() {
                 );
               })}
             </ul>
+
+            {qrSrc && (
+              <div className="mt-8">
+                <p className="eyebrow text-cyan">QR code</p>
+                <div className="mt-4 inline-flex flex-col items-start gap-2">
+                  <div className="rounded-lg bg-paper-2 p-2">
+                    <Image
+                      src={qrSrc}
+                      alt={
+                        settings.qrCodeCaption
+                          ? settings.qrCodeCaption
+                          : 'QR code — Proactive Trade International'
+                      }
+                      width={128}
+                      height={128}
+                      sizes="128px"
+                      className="h-28 w-28 rounded-md object-contain"
+                    />
+                  </div>
+                  {settings.qrCodeCaption && (
+                    <p className="max-w-[10rem] text-xs leading-snug text-onband/55">
+                      {settings.qrCodeCaption}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Quick links */}
@@ -137,7 +167,7 @@ export default async function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Proactive Trade International. All rights reserved.</p>
-          <p className="tracking-[0.16em]">DHAKA · BANGLADESH</p>
+          <p>DHAKA · BANGLADESH</p>
         </div>
       </div>
     </footer>

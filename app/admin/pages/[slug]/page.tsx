@@ -114,7 +114,7 @@ export default async function SectionEditorPage({
         </span>
         <Link
           href={`/admin/pages/${slug}/seo`}
-          className="inline-flex items-center gap-1.5 rounded-sm border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+          className="inline-flex items-center gap-1.5 rounded-md border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
         >
           <Search aria-hidden="true" className="h-3.5 w-3.5" />
           SEO &amp; title
@@ -123,7 +123,7 @@ export default async function SectionEditorPage({
           href={pagePathMap[slug]}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-sm border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+          className="inline-flex items-center gap-1.5 rounded-md border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
         >
           <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
           View live page

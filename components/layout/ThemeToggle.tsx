@@ -66,7 +66,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
       }
       aria-pressed={theme === null ? undefined : theme === 'dark'}
       className={cn(
-        'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-ink/15 text-ink transition-colors hover:border-magenta hover:text-magenta',
+        'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-ink/15 text-ink transition-colors hover:border-magenta hover:text-magenta',
         className,
       )}
     >

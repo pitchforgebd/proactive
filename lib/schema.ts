@@ -199,6 +199,22 @@ export const contactMessages = mysqlTable('contact_messages', {
 export const settings = mysqlTable('settings', {
   id: int('id').primaryKey().default(1),
   companyName: varchar('company_name', { length: 200 }),
+  /**
+   * Optional site logo URL (/images/… or /api/files/images/…). Empty/null →
+   * the coded SVG wordmark fallback in components/layout/Logo.tsx.
+   */
+  logo: varchar('logo', { length: 500 }),
+  /**
+   * Optional favicon URL (/images/… or /api/files/images/…). Empty → browser
+   * default / no custom icon in public metadata.
+   */
+  favicon: varchar('favicon', { length: 500 }),
+  /**
+   * Optional footer QR image (/images/… or /api/files/images/…). Empty → no QR.
+   */
+  qrCode: varchar('qr_code', { length: 500 }),
+  /** Optional caption under the footer QR (e.g. “Scan for WhatsApp”). */
+  qrCodeCaption: varchar('qr_code_caption', { length: 120 }),
   phone: varchar('phone', { length: 40 }),
   email: varchar('email', { length: 200 }),
   address: varchar('address', { length: 400 }),
@@ -210,6 +226,27 @@ export const settings = mysqlTable('settings', {
   linkedin: varchar('linkedin', { length: 300 }),
   instagram: varchar('instagram', { length: 300 }),
   youtube: varchar('youtube', { length: 300 }),
+  /* ---- SEO / analytics (stored only in Phase 7; public head comes later) ---- */
+  /** Google Search Console meta verification content token. */
+  seoGoogleVerification: varchar('seo_google_verification', { length: 200 }),
+  /** Bing Webmaster Tools meta verification content. */
+  seoBingVerification: varchar('seo_bing_verification', { length: 200 }),
+  /** GA4 Measurement ID, e.g. G-XXXXXXXX. */
+  seoGa4Id: varchar('seo_ga4_id', { length: 40 }),
+  /** Google Tag Manager container, e.g. GTM-XXXXXX. */
+  seoGtmId: varchar('seo_gtm_id', { length: 40 }),
+  /** Meta (Facebook) Pixel ID — digits only. */
+  seoMetaPixelId: varchar('seo_meta_pixel_id', { length: 40 }),
+  /** Facebook domain verification meta content. */
+  seoFacebookDomainVerification: varchar('seo_facebook_domain_verification', { length: 200 }),
+  seoYandexVerification: varchar('seo_yandex_verification', { length: 200 }),
+  seoPinterestVerification: varchar('seo_pinterest_verification', { length: 200 }),
+  seoAhrefsVerification: varchar('seo_ahrefs_verification', { length: 200 }),
+  /**
+   * Optional raw head snippets for a later public renderer. Never execute in
+   * the dashboard; sanitise/allowlist before any public inject.
+   */
+  seoCustomHeadTags: text('seo_custom_head_tags'),
   updatedAt: timestamp('updated_at').defaultNow().onUpdateNow(),
 });
 

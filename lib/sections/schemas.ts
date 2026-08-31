@@ -279,7 +279,14 @@ export const parentCompanySchema = z.object({
   eyebrow: z.string().optional(),
   index: z.string().optional(),
   logo: image(),
+  /**
+   * Logo plate background. `band` (dark) suits light marks; `paper` suits dark
+   * marks such as the DYNAMIK wordmark.
+   */
+  logoSurface: z.enum(['band', 'paper']).default('band'),
   name: z.string(),
+  /** Optional line under the name (e.g. brand tagline). */
+  tagline: z.string().optional(),
   description: textarea(),
   url: href().optional(),
   linkText: z.string().optional(),

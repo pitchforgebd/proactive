@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -9,9 +12,7 @@ interface CardProps {
   image: string;
   description?: string;
   eyebrow?: string;
-  /** Passed straight to next/image — get this right or the browser over-downloads. */
   sizes?: string;
-  /** Only the first card above the fold should ever set this. */
   priority?: boolean;
   aspect?: 'video' | 'square' | 'portrait';
   className?: string;
@@ -23,9 +24,10 @@ const aspectClass = {
   portrait: 'aspect-[4/5]',
 };
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 /**
- * Content card. Hover paints a registration crosshair in the corner and slides
- * a magenta rule under the title — the small, repeated print gesture.
+ * Content card with Framer hover lift + registration crosshair.
  */
 export default function Card({
   href,
@@ -38,52 +40,60 @@ export default function Card({
   aspect = 'video',
   className,
 }: CardProps) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'group relative flex flex-col overflow-hidden border border-ink/10 bg-paper-2 transition-colors duration-300 hover:border-ink/25',
-        className,
-      )}
-    >
-      <div className={cn('relative overflow-hidden bg-band-2', aspectClass[aspect])}>
-        <Image
-          src={image}
-          alt={title}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-cover transition-transform duration-500 ease-press group-hover:scale-[1.03]"
-        />
-        {/* Registration crosshair — appears on hover, top-right corner. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-3 top-3 h-5 w-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        >
-          <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-cyan" />
-          <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-magenta" />
-        </span>
-      </div>
+  const reduce = useReducedMotion();
 
-      <div className="flex flex-1 flex-col gap-2 p-5">
-        {eyebrow && <span className="eyebrow text-graphite">{eyebrow}</span>}
-        <h3 className="relative inline-flex items-start gap-1.5 text-lg font-semibold leading-snug">
-          <span>
-            {title}
-            <span
-              aria-hidden="true"
-              className="mt-1 block h-px w-0 bg-magenta transition-[width] duration-300 ease-press group-hover:w-full"
-            />
-          </span>
-          <ArrowUpRight
-            aria-hidden="true"
-            className="mt-1 h-4 w-4 shrink-0 text-graphite transition-colors group-hover:text-magenta"
+  return (
+    <motion.div
+      className={cn('h-full', className)}
+      whileHover={reduce ? undefined : { y: -6 }}
+      transition={{ duration: 0.35, ease }}
+    >
+      <Link
+        href={href}
+        className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-ink/10 bg-paper-2 shadow-[0_1px_0_rgba(14,17,22,0.04)] transition-colors duration-300 hover:border-cyan/35 hover:shadow-[0_18px_40px_-28px_rgba(14,17,22,0.45)]"
+      >
+        <div className={cn('relative overflow-hidden bg-band-2', aspectClass[aspect])}>
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes={sizes}
+            priority={priority}
+            className="object-cover transition-transform duration-700 ease-press group-hover:scale-[1.06]"
           />
-        </h3>
-        {description && (
-          <p className="text-sm text-graphite line-clamp-3">{description}</p>
-        )}
-      </div>
-    </Link>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-band/50 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 top-3 h-5 w-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          >
+            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-cyan" />
+            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-magenta" />
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col gap-2 p-5">
+          {eyebrow && <span className="eyebrow text-graphite">{eyebrow}</span>}
+          <h3 className="relative inline-flex items-start gap-1.5 text-lg font-semibold leading-snug">
+            <span>
+              {title}
+              <span
+                aria-hidden="true"
+                className="mt-1 block h-px w-0 bg-magenta transition-[width] duration-300 ease-press group-hover:w-full"
+              />
+            </span>
+            <ArrowUpRight
+              aria-hidden="true"
+              className="mt-1 h-4 w-4 shrink-0 text-graphite transition-colors group-hover:text-magenta"
+            />
+          </h3>
+          {description && (
+            <p className="text-sm text-graphite line-clamp-3">{description}</p>
+          )}
+        </div>
+      </Link>
+    </motion.div>
   );
 }

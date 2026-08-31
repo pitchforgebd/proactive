@@ -5,6 +5,7 @@ import Card from '@/components/ui/Card';
 import RevealOnView from '@/components/motion/RevealOnView';
 import InkStagger from '@/components/motion/InkStagger';
 import RollerLine from '@/components/motion/RollerLine';
+import InkRule from '@/components/motion/InkRule';
 import { stripHtml } from '@/lib/utils';
 import type { CategoryGridData } from '@/lib/sections/schemas';
 
@@ -82,6 +83,10 @@ export default async function CategoryGrid({
           link={linkText ? { href: linkHref || '/products', label: linkText } : undefined}
           invert={invert}
         />
+      )}
+
+      {!rollerLine && hasHeading && (
+        <InkRule tone={invert ? 'ink' : 'paper'} className="mt-10" />
       )}
 
       {rollerLine && <RollerLine className="mt-10" />}

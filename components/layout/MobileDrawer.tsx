@@ -13,7 +13,13 @@ import { cn } from '@/lib/utils';
  * critical path. Locks body scroll, closes on Escape and on route change, and
  * restores focus to the trigger.
  */
-export default function MobileDrawer({ items }: { items: NavItem[] }) {
+export default function MobileDrawer({
+  items,
+  logoSrc,
+}: {
+  items: NavItem[];
+  logoSrc?: string | null;
+}) {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const pathname = usePathname();
@@ -83,7 +89,7 @@ export default function MobileDrawer({ items }: { items: NavItem[] }) {
         )}
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-          <Logo />
+          <Logo src={logoSrc} />
           <button
             type="button"
             onClick={() => {
@@ -150,7 +156,7 @@ export default function MobileDrawer({ items }: { items: NavItem[] }) {
         <div className="border-t border-ink/10 p-5">
           <Link
             href="/contact"
-            className="flex w-full items-center justify-center rounded-sm bg-cyan px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white"
+            className="flex w-full items-center justify-center rounded-md bg-cyan px-6 py-3 font-mono text-xs uppercase text-band transition-colors hover:bg-magenta hover:text-white"
           >
             Get in Touch
           </Link>

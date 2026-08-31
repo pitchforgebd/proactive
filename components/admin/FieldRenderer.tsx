@@ -11,12 +11,12 @@ import { iconNames } from '@/lib/sections/icons';
 const Summernote = dynamic(() => import('@/components/admin/Summernote'), {
   ssr: false,
   loading: () => (
-    <div className="h-[260px] animate-pulse rounded-sm border border-ink/10 bg-ink/[0.04]" />
+    <div className="h-[260px] animate-pulse rounded-md border border-ink/10 bg-ink/[0.04]" />
   ),
 });
 
 const control =
-  'w-full rounded-sm border border-ink/20 bg-paper-2 px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/25';
+  'w-full rounded-md border border-ink/20 bg-paper-2 px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/25';
 
 /**
  * Renders one field from its schema descriptor. Recursive: `objectList` renders
@@ -291,7 +291,7 @@ function ListField<T>({
         {items.map((item, index) => (
           <li
             key={index}
-            className="rounded-sm border border-ink/15 bg-paper-2 p-4"
+            className="rounded-md border border-ink/15 bg-paper-2 p-4"
           >
             <div className="mb-3 flex items-center justify-between gap-2">
               <span className="font-mono text-[11px] text-graphite">
@@ -334,7 +334,7 @@ function ListField<T>({
       <button
         type="button"
         onClick={() => update([...items, structuredClone(blank) as T])}
-        className="mt-3 inline-flex items-center gap-2 rounded-sm border border-dashed border-ink/30 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+        className="mt-3 inline-flex items-center gap-2 rounded-md border border-dashed border-ink/30 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
       >
         <Plus aria-hidden="true" className="h-3.5 w-3.5" />
         Add {field.label.replace(/s$/, '')}
@@ -363,7 +363,7 @@ function IconButton({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className={`rounded-sm border border-ink/15 p-1.5 text-graphite transition-colors disabled:opacity-30 ${
+      className={`rounded-md border border-ink/15 p-1.5 text-graphite transition-colors disabled:opacity-30 ${
         danger ? 'hover:border-magenta hover:text-magenta' : 'hover:border-cyan hover:text-cyan'
       }`}
     >

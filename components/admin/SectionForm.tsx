@@ -132,7 +132,7 @@ function SaveButton({ pending, dirty }: { pending: boolean; dirty: boolean }) {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex items-center gap-2 rounded-sm bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
+        className="inline-flex items-center gap-2 rounded-md bg-cyan px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-band transition-colors hover:bg-magenta hover:text-white disabled:opacity-60"
       >
         {pending ? (
           <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />

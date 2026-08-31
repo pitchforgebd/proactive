@@ -3,6 +3,7 @@ import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
+import { notifyCareerApplication } from '@/lib/mail';
 import { rateLimit } from '@/lib/rate-limit';
 import { careerApplications } from '@/lib/schema';
 import { storeUpload, UploadError } from '@/lib/uploads';
@@ -11,9 +12,9 @@ import { careerSchema, resumeFileSchema } from '@/lib/validation';
 /**
  * PHASE 2 ENDPOINT — career application intake (multipart).
  *
- * Today this validates the fields and the attached CV, then logs. The dashboard
- * team replaces the marked block with a file write to storage plus a
- * CareerApplication record holding the resulting resumeUrl.
+ * Validates fields + CV, stores the resume privately, inserts into
+ * career_applications, and optionally emails the company inbox when SMTP_* is
+ * configured (PHASE2-BACKEND.md §10).
  */
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -110,6 +111,9 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  // DB row is already saved. notify* is no-op without SMTP and never throws.
+  await notifyCareerApplication(application);
 
   return NextResponse.json({ ok: true });
 }

@@ -38,8 +38,8 @@ export default function RichTextProfileAside({
         </RevealOnView>
 
         <RevealOnView delay={80}>
-          <aside className="border border-ink/10 bg-paper-2 p-7 lg:sticky lg:top-[110px]">
-            <div className="relative aspect-[4/5] overflow-hidden bg-band">
+          <aside className="rounded-xl border border-ink/10 bg-paper-2 p-7 lg:sticky lg:top-[110px]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-band">
               <Image
                 src={asideImage}
                 alt={asideImageAlt ?? asideName}
@@ -59,7 +59,7 @@ export default function RichTextProfileAside({
             {asideCtaText && (
               <Link
                 href={asideCtaHref || '/about/founder-message'}
-                className="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:text-magenta"
+                className="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase text-ink transition-colors hover:text-magenta"
               >
                 {asideCtaText}
                 <ArrowRight

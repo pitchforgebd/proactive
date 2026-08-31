@@ -20,6 +20,7 @@ import {
   capabilities,
   companyProfile,
   coreValues,
+  dynamikBrand,
   founderMessage,
   globalSourcing,
   mission,
@@ -533,11 +534,23 @@ export const seedPages: SeedPage[] = [
         eyebrow: parentCompany.role,
         index: '02',
         logo: parentCompany.logo,
+        logoSurface: 'band',
         name: parentCompany.name,
         description: parentCompany.description,
         url: parentCompany.url,
         linkText: `Visit ${parentCompany.name}`,
         tone: 'paper',
+      }),
+
+      sec('parentCompany', {
+        eyebrow: dynamikBrand.role,
+        index: '03',
+        logo: dynamikBrand.logo,
+        logoSurface: 'paper',
+        name: dynamikBrand.name,
+        tagline: dynamikBrand.tagline,
+        description: dynamikBrand.description,
+        tone: 'paper-2',
       }),
 
       sec('cta', {

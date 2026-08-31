@@ -214,12 +214,13 @@ export const sectionRegistry = {
   }),
 
   parentCompany: entry({
-    label: 'Parent Company',
-    hint: 'Group logo plate with the relationship copy and an outbound link.',
+    label: 'Parent / Brand',
+    hint: 'Logo plate with relationship or brand copy and an optional outbound link.',
     group: 'Content',
     schema: S.parentCompanySchema,
     defaults: {
       logo: '/images/about/parent-company-logo.png',
+      logoSurface: 'band',
       name: 'Group name',
       description: '',
       tone: 'paper',

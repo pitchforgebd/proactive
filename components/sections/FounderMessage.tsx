@@ -27,7 +27,7 @@ export default function FounderMessage({
         {/* Portrait */}
         <RevealOnView>
           <figure className="lg:sticky lg:top-[110px]">
-            <div className="relative aspect-[4/5] overflow-hidden bg-band">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-band">
               <Image
                 src={image}
                 alt={imageAlt ?? `Portrait of ${name}`}
@@ -64,7 +64,7 @@ export default function FounderMessage({
               {signatureMark && (
                 <p
                   aria-hidden="true"
-                  className="font-display text-xl italic tracking-tight text-ink/80"
+                  className="font-display text-xl italic text-ink/80"
                   style={{ transform: 'skewX(-8deg)' }}
                 >
                   {signatureMark}

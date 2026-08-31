@@ -3,14 +3,12 @@ import Link from 'next/link';
 import { getGalleryImages } from '@/lib/data';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import RevealOnView from '@/components/motion/RevealOnView';
+import MotionReveal from '@/components/motion/MotionReveal';
 import HalftoneBg from '@/components/motion/HalftoneBg';
 import type { GalleryPreviewData } from '@/lib/sections/schemas';
 
 /**
- * A strip of the photo gallery, read live from the gallery collection. Upload
- * an image in the dashboard and it appears here; only the framing is section
- * content.
+ * Gallery strip — staggered Framer reveals + stronger hover presence.
  */
 export default async function GalleryPreview({
   eyebrow,
@@ -44,10 +42,10 @@ export default async function GalleryPreview({
 
       <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
         {gallery.map((g, i) => (
-          <RevealOnView as="li" key={g.id} delay={i * 40}>
+          <MotionReveal as="li" key={g.id} delay={i * 50}>
             <Link
               href={href}
-              className="group relative block aspect-square overflow-hidden border border-line"
+              className="group relative block aspect-square overflow-hidden rounded-xl border border-line"
             >
               <Image
                 src={g.src}
@@ -55,11 +53,18 @@ export default async function GalleryPreview({
                 fill
                 sizes="(min-width: 1024px) 16vw, (min-width: 768px) 30vw, 45vw"
                 loading="lazy"
-                className="object-cover transition-transform duration-500 ease-press group-hover:scale-105"
+                className="object-cover transition-transform duration-700 ease-press group-hover:scale-110"
               />
-              <span className="absolute inset-0 bg-band/30 transition-opacity duration-300 group-hover:opacity-0" />
+              <span className="absolute inset-0 bg-gradient-to-t from-band/70 via-band/20 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-40" />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute right-2 top-2 h-4 w-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              >
+                <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-cyan" />
+                <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-magenta" />
+              </span>
             </Link>
-          </RevealOnView>
+          </MotionReveal>
         ))}
       </ul>
     </Section>

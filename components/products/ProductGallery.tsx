@@ -24,7 +24,7 @@ export default function ProductGallery({
 
   return (
     <div>
-      <div className="relative aspect-[4/3] overflow-hidden border border-ink/10 bg-band">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-ink/10 bg-band">
         {images.map((src, i) => (
           <Image
             key={src}
@@ -58,7 +58,7 @@ export default function ProductGallery({
                 aria-label={`Show image ${i + 1} of ${images.length}`}
                 aria-pressed={i === active}
                 className={cn(
-                  'relative block aspect-[4/3] w-full overflow-hidden border transition-colors',
+                  'relative block aspect-[4/3] w-full overflow-hidden rounded-lg border transition-colors',
                   i === active
                     ? 'border-cyan'
                     : 'border-ink/10 hover:border-ink/35',

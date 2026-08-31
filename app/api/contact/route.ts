@@ -3,6 +3,7 @@ import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
+import { notifyContactMessage } from '@/lib/mail';
 import { rateLimit } from '@/lib/rate-limit';
 import { contactMessages } from '@/lib/schema';
 import { contactSchema } from '@/lib/validation';
@@ -11,9 +12,8 @@ import { contactSchema } from '@/lib/validation';
  * PHASE 2 ENDPOINT — contact form intake.
  *
  * Validates, rate-limits, then inserts into contact_messages, where the
- * dashboard inbox reads it. The request and response shapes are unchanged from
- * Phase 1 — the public form already depends on them.
- *
+ * dashboard inbox reads it. Optionally emails the company inbox when SMTP_*
+ * is configured (PHASE2-BACKEND.md §10). Request/response shapes match Phase 1.
  */
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -75,6 +75,10 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  // After a successful save only — notify* never throws; mail failure must
+  // not change this 200 response into a DB-looking error.
+  await notifyContactMessage(message);
 
   return NextResponse.json({ ok: true });
 }

@@ -54,7 +54,7 @@ export default function ContactForm() {
 
   if (status === 'sent') {
     return (
-      <div className="border border-cyan/40 bg-paper-2 p-8">
+      <div className="rounded-xl border border-cyan/40 bg-paper-2 p-8">
         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cyan text-band">
           <Check aria-hidden="true" className="h-5 w-5" />
         </span>
@@ -66,7 +66,7 @@ export default function ContactForm() {
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="mt-6 font-mono text-xs uppercase tracking-[0.16em] text-ink underline underline-offset-4 transition-colors hover:text-magenta"
+          className="mt-6 font-mono text-xs uppercase text-ink underline underline-offset-4 transition-colors hover:text-magenta"
         >
           Send another message
         </button>
@@ -149,7 +149,7 @@ export default function ContactForm() {
       </Field>
 
       {status === 'error' && serverError && (
-        <p role="alert" className="border border-magenta/40 bg-magenta/5 px-4 py-3 text-sm text-magenta">
+        <p role="alert" className="rounded-lg border border-magenta/40 bg-magenta/5 px-4 py-3 text-sm text-magenta">
           {serverError} Try again, or email us directly.
         </p>
       )}
@@ -157,7 +157,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="group inline-flex items-center justify-center gap-2 rounded-sm bg-ink px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-paper transition-colors hover:bg-magenta disabled:cursor-not-allowed disabled:opacity-60"
+        className="group inline-flex items-center justify-center gap-2 rounded-md bg-ink px-7 py-3.5 font-mono text-xs uppercase text-paper transition-colors hover:bg-magenta disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === 'submitting' ? (
           <>

@@ -1,0 +1,201 @@
+================================================================================
+PROACTIVE TRADE INTERNATIONAL — PROJECT REPORTS
+Generated: 2026-08-29
+Workspace: c:\laragon\www\proactive
+================================================================================
+
+
+
+################################################################################
+# REPORT 1 — CODEBASE AUDIT
+################################################################################
+
+PURPOSE
+  Snapshot of the repository when continuing development in Cursor after prior
+  Claude Code work. No files were modified during this audit.
+
+DOCUMENTATION FOUND (no docs/ folder)
+  - CLAUDE.md           Phase 1 frontend Spec of Record
+  - PHASE2-BACKEND.md   Active Phase 2 Spec (MySQL + Drizzle + Auth.js + Summernote)
+  - PHASE2_PLAN.md      Earlier planning notes (largely superseded)
+  - TASK_STATE.md       Was stale at audit time (claimed Phase 2 not started)
+  - HANDOFF.md          Original HTTP API contract (superseded by same-app DB)
+  - README.md           Deploy / theming notes (partly outdated vs Phase 2)
+
+ARCHITECTURE (AS BUILT)
+  Public RSC pages
+    -> lib/data/index.ts
+    -> lib/data/remote.ts
+    -> Drizzle ORM
+    -> MySQL
+
+  Marketing pages use getPage() + SectionRenderer (section design in code,
+  content in DB). Catalogue / news / gallery / videos remain collection-driven.
+
+  Admin (/admin) uses Server Actions -> Drizzle -> revalidatePath().
+  Forms post to /api/contact and /api/career -> DB (+ rate limit + honeypot).
+  Uploads live in UPLOAD_DIR outside public/, served via /api/files (images)
+  and /api/admin/resume (private CVs).
+
+STACK
+  Next.js 14 App Router, TypeScript, Tailwind, GSAP/Framer Motion,
+  MySQL, Drizzle, Auth.js (credentials + bcrypt), Summernote (admin),
+  zod, isomorphic-dompurify.
+  Deploy mode: Mode A only (output: 'standalone'). Static export retired.
+
+PHASE 1 — FRONTEND
+  Status: COMPLETE
+  Public site, CMYK design system, forms UI, SEO (sitemap/robots), ISR hooks.
+  Outstanding (client-dependent): real images, FOR CLIENT REVIEW copy,
+  YouTube IDs, company PDF, Lighthouse verification.
+
+PHASE 2 — BACKEND + ADMIN (AT AUDIT TIME)
+  Status: Largely implemented in code despite TASK_STATE saying "not started".
+  Present: schema (13 tables), seed scripts, data layer on DB, section CMS
+  (~23 types), Auth.js + middleware, full admin CRUD, form APIs, uploads,
+  on-demand revalidation, check scripts.
+
+GAPS IDENTIFIED AT AUDIT
+  - Optional SMTP (nodemailer) not wired
+  - deploy.sh missing
+  - Security hardening incomplete (SVG upload XSS risk, no response headers)
+  - TASK_STATE / README / HANDOFF docs stale
+  - Live cPanel production cutover not done
+  - Client content / Lighthouse still open
+
+CURRENT PHASE AT AUDIT
+  Phase 2 at hardening / deploy prep (approx. PHASE2-BACKEND.md §13 steps 9–10).
+
+
+
+################################################################################
+# REPORT 2 — WORK COMPLETED & CURRENT STATUS
+################################################################################
+
+PURPOSE
+  What was finished after the audit in this Cursor session, and what remains.
+
+-------------------------------------------------------------------------------
+A. PHASE 2 STEP 10 — SECURITY PASS + DEPLOY PREP (COMPLETED 2026-08-29)
+-------------------------------------------------------------------------------
+
+CHANGES
+  lib/uploads.ts
+    Rejected SVG uploads (XSS when served as image/svg+xml).
+  components/admin/ImageField.tsx
+    Removed SVG from the file picker accept list.
+  lib/sanitize.ts
+    Force rel="noopener noreferrer" on sanitized target=_blank links.
+  next.config.js
+    Added baseline security headers:
+      X-Content-Type-Options: nosniff
+      X-Frame-Options: SAMEORIGIN
+      Referrer-Policy: strict-origin-when-cross-origin
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+    (HSTS left to the HTTPS vhost so local HTTP is not broken.)
+  auth.ts
+    Production boot fails closed if AUTH_SECRET is missing.
+  deploy.sh
+    New uploads-safe cPanel rebuild script (PHASE2-BACKEND.md §12).
+    Does not run against production by itself — operator executes on host.
+  TASK_STATE.md
+    Updated to match actual Phase 2 status.
+
+CHECKS
+  npm run check — passed (typecheck, lint, sections registry, revalidation).
+  Sanitize hook verified (scripts stripped; noopener applied).
+
+-------------------------------------------------------------------------------
+B. OPTIONAL SMTP NOTIFICATIONS (COMPLETED 2026-08-29)
+-------------------------------------------------------------------------------
+
+NOTE
+  Live cPanel cutover was approved in principle but is not possible from this
+  workspace (no host/SSH access). SMTP was the next code-complete deferred item.
+
+CHANGES
+  lib/mail.ts
+    New nodemailer helper. No-op unless SMTP_HOST, SMTP_USER, and SMTP_PASS
+    are set. Failures are logged only — never turn a saved form into a 500.
+  app/api/contact/route.ts
+    Emails company inbox after successful DB insert.
+  app/api/career/route.ts
+    Same; stale "logs only" comment removed. Resume not attached to email
+    (private admin download at /admin/career).
+  .env.example
+    Documented SMTP_* plus optional SMTP_FROM / SMTP_TO.
+  next.config.js
+    Externalized nodemailer for the server build.
+  package.json
+    Added nodemailer and @types/nodemailer.
+  TASK_STATE.md
+    Marked SMTP done.
+
+RECIPIENT ORDER
+  1. Settings.email (dashboard)
+  2. SMTP_TO (env override)
+  3. SMTP_USER
+
+CHECKS
+  npm run check — passed.
+
+-------------------------------------------------------------------------------
+C. PHASE 2 BUILD ORDER STATUS (PHASE2-BACKEND.md §13)
+-------------------------------------------------------------------------------
+
+  1  Schema + lib/db.ts + db:push                         DONE
+  2  Section registry + prop-driven sections              DONE
+  3  remote.ts + one-file data swap                       DONE
+  4  SectionRenderer + page routes                        DONE
+  5  Seed (npm run db:seed)                               DONE
+  6  Auth.js + /admin middleware                          DONE
+  7  Pages/sections dashboard                             DONE
+  8  Collections CRUD, inboxes, settings, form→DB         DONE
+  9  On-demand revalidation on writes                     DONE
+ 10  Security pass + deploy prep                          DONE
+     Optional SMTP                                        DONE
+     Live cPanel cutover                                  NOT DONE (needs host)
+
+-------------------------------------------------------------------------------
+D. REMAINING (NEEDS APPROVAL / EXTERNAL ACCESS / CLIENT)
+-------------------------------------------------------------------------------
+
+  [ ] Live cPanel cutover
+        Create DB/user, set Node app env vars, db:push / db:seed,
+        run deploy.sh, point domain. Requires operator access.
+  [ ] Doc sync
+        Bring README.md and HANDOFF.md in line with Phase 2 reality.
+  [ ] Client content
+        Real photography, FOR CLIENT REVIEW copy, YouTube IDs,
+        company PDF, aboutBody confirmation.
+  [ ] Lighthouse
+        Mobile performance pass on a production build with real images.
+
+-------------------------------------------------------------------------------
+E. HOW TO ENABLE SMTP LOCALLY OR ON CPANEL
+-------------------------------------------------------------------------------
+
+  Uncomment / set in .env (or cPanel Node app env):
+
+    SMTP_HOST=mail.proactive.com.bd
+    SMTP_PORT=465
+    SMTP_USER=info@proactive.com.bd
+    SMTP_PASS=<mailbox password>
+    SMTP_FROM=info@proactive.com.bd   # optional
+    SMTP_TO=info@proactive.com.bd     # optional if Settings.email is set
+
+  Leave blank to keep forms DB-only (admin inbox still works).
+
+-------------------------------------------------------------------------------
+F. LOCAL DEV SNAPSHOT
+-------------------------------------------------------------------------------
+
+  Dev server: npm run dev (http://localhost:3000)
+  Local DB:   MySQL database "proactive" via .env
+  Uploads:    ./uploads (gitignored)
+  Admin:      /admin/login (seeded admin from npm run db:seed / create-admin)
+
+
+================================================================================
+END OF REPORTS
+================================================================================

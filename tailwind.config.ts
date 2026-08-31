@@ -35,16 +35,16 @@ const config: Config = {
         sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
-      // Explicit scale — 12/14/16/20/28/40/56/72 with tracking on display sizes.
+      // Explicit scale — 12/14/16/20/28/40/56/72 (normal letter-spacing).
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1.1rem', letterSpacing: '0.06em' }],
+        xs: ['0.75rem', { lineHeight: '1.1rem' }],
         sm: ['0.875rem', { lineHeight: '1.35rem' }],
         base: ['1rem', { lineHeight: '1.65rem' }],
         lg: ['1.25rem', { lineHeight: '1.9rem' }],
-        xl: ['1.75rem', { lineHeight: '2.1rem', letterSpacing: '-0.015em' }],
-        '2xl': ['2.5rem', { lineHeight: '2.75rem', letterSpacing: '-0.025em' }],
-        '3xl': ['3.5rem', { lineHeight: '3.6rem', letterSpacing: '-0.03em' }],
-        '4xl': ['4.5rem', { lineHeight: '4.5rem', letterSpacing: '-0.035em' }],
+        xl: ['1.75rem', { lineHeight: '2.1rem' }],
+        '2xl': ['2.5rem', { lineHeight: '2.75rem' }],
+        '3xl': ['3.5rem', { lineHeight: '3.6rem' }],
+        '4xl': ['4.5rem', { lineHeight: '4.5rem' }],
       },
       maxWidth: {
         container: '84rem',
@@ -52,10 +52,13 @@ const config: Config = {
       },
       borderRadius: {
         none: '0',
-        sm: '2px',
-        DEFAULT: '3px',
-        md: '4px',
-        lg: '6px',
+        // Softer UI corners — buttons, inputs, chips use `rounded-sm`.
+        sm: '0.625rem', // 10px
+        DEFAULT: '0.75rem', // 12px
+        md: '0.875rem', // 14px
+        lg: '1rem', // 16px — cards / panels
+        xl: '1.25rem',
+        '2xl': '1.5rem',
       },
       transitionTimingFunction: {
         press: 'cubic-bezier(0.16, 1, 0.3, 1)',

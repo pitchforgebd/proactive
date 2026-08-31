@@ -108,7 +108,7 @@ export default async function ProductPage({
             {category && (
               <Eyebrow tone="magenta">{category.name}</Eyebrow>
             )}
-            <h1 className="mt-4 text-2xl font-extrabold leading-tight tracking-[-0.025em] md:text-3xl">
+            <h1 className="mt-4 text-2xl font-extrabold leading-tight md:text-3xl">
               {product.name}
             </h1>
             <p className="mt-5 text-base leading-relaxed text-graphite">
@@ -118,13 +118,13 @@ export default async function ProductPage({
             {product.specs && product.specs.length > 0 && (
               <div className="mt-9">
                 <h2 className="eyebrow text-cyan">Specification</h2>
-                <dl className="mt-5 divide-y divide-ink/10 border-y border-ink/10">
+                <dl className="mt-5 overflow-hidden rounded-xl border border-ink/10 divide-y divide-ink/10">
                   {product.specs.map((s) => (
                     <div
                       key={s.label}
-                      className="flex flex-wrap justify-between gap-x-6 gap-y-1 py-3"
+                      className="flex flex-wrap justify-between gap-x-6 gap-y-1 bg-paper-2 px-4 py-3"
                     >
-                      <dt className="font-mono text-xs uppercase tracking-[0.12em] text-graphite">
+                      <dt className="font-mono text-xs uppercase text-graphite">
                         {s.label}
                       </dt>
                       <dd className="text-sm font-medium text-ink">{s.value}</dd>
@@ -137,7 +137,7 @@ export default async function ProductPage({
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 rounded-sm bg-ink px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-paper transition-colors hover:bg-magenta"
+                className="group inline-flex items-center gap-2 rounded-md bg-ink px-7 py-3.5 font-mono text-xs uppercase text-paper transition-colors hover:bg-magenta"
               >
                 Request a Quote
                 <ArrowRight
@@ -147,7 +147,7 @@ export default async function ProductPage({
               </Link>
               <a
                 href={`tel:${settings.phone.replace(/\s/g, '')}`}
-                className="inline-flex items-center gap-2 rounded-sm border border-ink/25 px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors hover:border-magenta hover:text-magenta"
+                className="inline-flex items-center gap-2 rounded-md border border-ink/25 px-7 py-3.5 font-mono text-xs uppercase text-ink transition-colors hover:border-magenta hover:text-magenta"
               >
                 <Phone aria-hidden="true" className="h-3.5 w-3.5" />
                 {settings.phone}

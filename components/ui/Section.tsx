@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import CropMarks from '@/components/motion/CropMarks';
+import PressAtmosphere from '@/components/motion/PressAtmosphere';
 
 type Tone = 'paper' | 'paper-2' | 'ink';
 
@@ -17,6 +18,8 @@ interface SectionProps {
   cropMarks?: boolean;
   /** Halftone dot field. Reads best on ink. */
   halftone?: boolean;
+  /** Futuristic CMYK press scan / orbit (ink bands only). */
+  atmosphere?: boolean | 'soft' | 'normal';
   className?: string;
   containerClassName?: string;
   id?: string;
@@ -29,11 +32,15 @@ export default function Section({
   tone = 'paper',
   cropMarks = false,
   halftone = false,
+  atmosphere = false,
   className,
   containerClassName,
   id,
   as: Tag = 'section',
 }: SectionProps) {
+  const atmosphereMode =
+    atmosphere === true ? 'normal' : atmosphere === false ? null : atmosphere;
+
   return (
     <Tag
       id={id}
@@ -47,6 +54,9 @@ export default function Section({
             tone !== 'ink' && 'halftone-ink',
           )}
         />
+      )}
+      {atmosphereMode && tone === 'ink' && (
+        <PressAtmosphere intensity={atmosphereMode} />
       )}
       <div className={cn('container-page relative', containerClassName)}>
         {cropMarks && <CropMarks tone={tone === 'ink' ? 'light' : 'dark'} />}

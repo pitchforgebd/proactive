@@ -34,7 +34,7 @@ export default async function VideoGalleryPage() {
 
       <Section tone="ink" halftone>
         {videos.length === 0 ? (
-          <div className="border border-dashed border-line p-10 text-center">
+          <div className="rounded-xl border border-dashed border-line p-10 text-center">
             <p className="eyebrow text-onband/60">No videos yet</p>
             <p className="mx-auto mt-4 max-w-md text-base text-onband/60">
               Videos published to our YouTube channel will appear here.

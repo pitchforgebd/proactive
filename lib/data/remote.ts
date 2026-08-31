@@ -62,6 +62,8 @@ import type {
   SiteSettings,
   Video,
 } from '@/lib/types';
+import { emptySiteSeo } from '@/lib/types';
+import { sanitizeCustomHeadTags } from '@/lib/seo/custom-head';
 
 /* -------------------------------------------------------------------------- */
 /* Row → type mapping                                                          */
@@ -114,6 +116,7 @@ function mapCategory(r: CategoryRow): Category {
     image: r.image ?? '',
     order: r.order ?? 0,
     seo: toSeo(r.seoTitle, r.seoDescription),
+    createdAt: r.createdAt ? toIso(r.createdAt) : undefined,
   };
 }
 
@@ -129,6 +132,7 @@ function mapProduct(r: ProductRow): Product {
     specs: toSpecs(r.specs),
     order: r.order ?? 0,
     seo: toSeo(r.seoTitle, r.seoDescription),
+    createdAt: r.createdAt ? toIso(r.createdAt) : undefined,
   };
 }
 
@@ -368,11 +372,16 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     );
     return {
       companyName: 'Proactive Trade International',
+      logo: '',
+      favicon: '',
+      qrCode: '',
+      qrCodeCaption: '',
       phone: '',
       email: '',
       address: '',
       mapQuery: '',
       socials: [],
+      seo: emptySiteSeo(),
     };
   }
 
@@ -389,11 +398,27 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
 
   return {
     companyName: row.companyName ?? 'Proactive Trade International',
+    logo: row.logo?.trim() ?? '',
+    favicon: row.favicon?.trim() ?? '',
+    qrCode: row.qrCode?.trim() ?? '',
+    qrCodeCaption: row.qrCodeCaption?.trim() ?? '',
     phone: row.phone ?? '',
     email: row.email ?? '',
     address: row.address ?? '',
     mapQuery: row.mapQuery ?? row.address ?? '',
     socials,
+    seo: {
+      googleVerification: row.seoGoogleVerification?.trim() ?? '',
+      bingVerification: row.seoBingVerification?.trim() ?? '',
+      ga4Id: row.seoGa4Id?.trim() ?? '',
+      gtmId: row.seoGtmId?.trim() ?? '',
+      metaPixelId: row.seoMetaPixelId?.trim() ?? '',
+      facebookDomainVerification: row.seoFacebookDomainVerification?.trim() ?? '',
+      yandexVerification: row.seoYandexVerification?.trim() ?? '',
+      pinterestVerification: row.seoPinterestVerification?.trim() ?? '',
+      ahrefsVerification: row.seoAhrefsVerification?.trim() ?? '',
+      customHeadTags: sanitizeCustomHeadTags(row.seoCustomHeadTags ?? ''),
+    },
   };
 });
 

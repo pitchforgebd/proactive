@@ -39,7 +39,7 @@ export default async function NewsListPage() {
 
       {posts.length === 0 ? (
         <Section tone="paper-2">
-          <div className="border border-dashed border-ink/20 p-10 text-center">
+          <div className="rounded-xl border border-dashed border-ink/20 p-10 text-center">
             <p className="eyebrow text-graphite">No articles yet</p>
             <p className="mx-auto mt-4 max-w-md text-base text-graphite">
               Company updates will be published here.
@@ -55,7 +55,7 @@ export default async function NewsListPage() {
                 href={`/media/news/${lead.slug}`}
                 className="group grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center"
               >
-                <div className="relative aspect-[16/10] overflow-hidden border border-ink/10 bg-band">
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-ink/10 bg-band">
                   <Image
                     src={lead.coverImage}
                     alt={lead.title}
@@ -70,7 +70,7 @@ export default async function NewsListPage() {
                   <Eyebrow tone="magenta">Latest</Eyebrow>
                   <time
                     dateTime={isoDate(lead.publishedAt)}
-                    className="mt-4 block font-mono text-xs uppercase tracking-[0.16em] text-graphite"
+                    className="mt-4 block font-mono text-xs uppercase text-graphite"
                   >
                     {formatDate(lead.publishedAt)}
                   </time>
@@ -80,7 +80,7 @@ export default async function NewsListPage() {
                   <p className="mt-5 max-w-xl text-base leading-relaxed text-graphite">
                     {lead.excerpt}
                   </p>
-                  <span className="mt-7 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-ink transition-colors group-hover:text-magenta">
+                  <span className="mt-7 inline-flex items-center gap-2 font-mono text-xs uppercase text-ink transition-colors group-hover:text-magenta">
                     Read article
                     <ArrowRight
                       aria-hidden="true"

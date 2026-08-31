@@ -2,6 +2,10 @@ import type { JobOpening, SiteSettings } from '@/lib/types';
 
 export const siteSettings: SiteSettings = {
   companyName: 'Proactive Trade International',
+  logo: '',
+  favicon: '',
+  qrCode: '',
+  qrCodeCaption: '',
   phone: '+880 1855 939 450',
   email: 'info@proactive.com.bd',
   address:
@@ -14,6 +18,18 @@ export const siteSettings: SiteSettings = {
     { label: 'Instagram', href: 'https://www.instagram.com/proactivetradeint' },
     { label: 'YouTube', href: 'https://www.youtube.com/@proactivetradeint' },
   ],
+  seo: {
+    googleVerification: '',
+    bingVerification: '',
+    ga4Id: '',
+    gtmId: '',
+    metaPixelId: '',
+    facebookDomainVerification: '',
+    yandexVerification: '',
+    pinterestVerification: '',
+    ahrefsVerification: '',
+    customHeadTags: '',
+  },
 };
 
 /** Optional openings listed above the career form. Empty array is a valid state. */

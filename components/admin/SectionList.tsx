@@ -90,7 +90,7 @@ export default function SectionList({
 
   if (rows.length === 0) {
     return (
-      <p className="border border-dashed border-ink/25 px-6 py-10 text-center text-sm text-graphite">
+      <p className="rounded-xl border border-dashed border-ink/25 px-6 py-10 text-center text-sm text-graphite">
         This page has no sections yet. Add one below and it will appear on the live
         page as soon as you save it.
       </p>
@@ -132,7 +132,7 @@ export default function SectionList({
               setOverIndex(null);
             }}
             className={[
-              'flex items-center gap-4 rounded-sm border bg-paper-2 px-4 py-3 transition-colors',
+              'flex items-center gap-4 rounded-lg border bg-paper-2 px-4 py-3 transition-colors',
               overIndex === index && dragIndex !== null
                 ? 'border-cyan'
                 : 'border-ink/15',
@@ -152,12 +152,12 @@ export default function SectionList({
               <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-ink">
                 {row.typeLabel}
                 {!row.known && (
-                  <span className="rounded-sm bg-magenta/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-magenta">
+                  <span className="rounded-md bg-magenta/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-magenta">
                     unknown type — not rendered
                   </span>
                 )}
                 {!row.visible && (
-                  <span className="rounded-sm bg-ink/[0.07] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-graphite">
+                  <span className="rounded-md bg-ink/[0.07] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-graphite">
                     hidden
                   </span>
                 )}
@@ -198,7 +198,7 @@ export default function SectionList({
                   href={`/admin/pages/${pageSlug}/sections/${row.id}`}
                   aria-label={`Edit ${row.typeLabel}`}
                   title="Edit"
-                  className="rounded-sm border border-ink/15 p-1.5 text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                  className="rounded-md border border-ink/15 p-1.5 text-graphite transition-colors hover:border-cyan hover:text-cyan"
                 >
                   <Pencil aria-hidden="true" className="h-4 w-4" />
                 </Link>
@@ -235,7 +235,7 @@ function Action({
       disabled={disabled}
       aria-label={label}
       title={label}
-      className={`rounded-sm border border-ink/15 p-1.5 text-graphite transition-colors disabled:opacity-30 ${
+      className={`rounded-md border border-ink/15 p-1.5 text-graphite transition-colors disabled:opacity-30 ${
         danger
           ? 'hover:border-magenta hover:text-magenta'
           : 'hover:border-cyan hover:text-cyan'

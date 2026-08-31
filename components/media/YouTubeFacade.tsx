@@ -27,7 +27,7 @@ export default function YouTubeFacade({
   return (
     <div
       className={cn(
-        'relative aspect-video overflow-hidden border border-line bg-band',
+        'relative aspect-video overflow-hidden rounded-xl border border-line bg-band',
         className,
       )}
     >

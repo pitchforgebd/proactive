@@ -50,7 +50,7 @@ export default function ImageField({
       <div className="flex items-start gap-4">
         {/* Preview. A plain <img> on purpose: the source is arbitrary admin
             input, and next/image would need every possible path configured. */}
-        <div className="relative flex h-[74px] w-[110px] shrink-0 items-center justify-center overflow-hidden rounded-sm border border-ink/15 bg-ink/[0.04]">
+        <div className="relative flex h-[74px] w-[110px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-ink/15 bg-ink/[0.04]">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -73,7 +73,7 @@ export default function ImageField({
             aria-describedby={describedBy}
             onChange={(e) => onChange(e.target.value)}
             placeholder="/images/… or upload a file"
-            className="w-full rounded-sm border border-ink/20 bg-paper-2 px-3 py-2 font-mono text-xs text-ink outline-none focus:border-cyan"
+            className="w-full rounded-md border border-ink/20 bg-paper-2 px-3 py-2 font-mono text-xs text-ink outline-none focus:border-cyan"
           />
 
           <div className="flex flex-wrap items-center gap-2">
@@ -81,7 +81,7 @@ export default function ImageField({
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={busy}
-              className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan disabled:opacity-60"
             >
               {busy ? (
                 <Loader2 aria-hidden="true" className="h-3.5 w-3.5 animate-spin" />
@@ -95,7 +95,7 @@ export default function ImageField({
               <button
                 type="button"
                 onClick={() => onChange('')}
-                className="inline-flex items-center gap-1.5 rounded-sm border border-ink/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
+                className="inline-flex items-center gap-1.5 rounded-md border border-ink/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-magenta hover:text-magenta"
               >
                 <X aria-hidden="true" className="h-3.5 w-3.5" />
                 Clear
@@ -108,7 +108,7 @@ export default function ImageField({
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/avif,image/svg+xml"
+        accept="image/jpeg,image/png,image/webp,image/avif"
         hidden
         onChange={(e) => {
           const file = e.target.files?.[0];

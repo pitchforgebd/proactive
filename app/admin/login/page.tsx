@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
           </h1>
         </div>
 
-        <div className="border border-ink/10 bg-paper-2 p-7">
+        <div className="rounded-xl border border-ink/10 bg-paper-2 p-7">
           {/* useSearchParams needs a Suspense boundary to stay statically rendered. */}
           <Suspense fallback={null}>
             <LoginForm />

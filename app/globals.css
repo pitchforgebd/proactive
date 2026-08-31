@@ -29,7 +29,7 @@
   color-scheme: light;
 
   --header-h: 72px;
-  --radius: 3px;
+  --radius: 0.75rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -93,7 +93,7 @@
   :focus-visible {
     outline: 2px solid var(--cyan);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius);
   }
 
   ::selection {
@@ -127,13 +127,13 @@
     }
   }
 
-  /* Mono "press-sheet annotation" label — part of the identity. */
+  /* Mono label for section / field captions. */
   .eyebrow {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.75rem;
-    letter-spacing: 0.18em;
+    letter-spacing: normal;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.2;
   }
 
   /* Halftone dot field — background of dark sections. */
@@ -383,7 +383,6 @@
 
   .prose h2 {
     font-size: 1.75rem;
-    letter-spacing: -0.015em;
     margin-top: 2em;
     color: var(--ink);
   }
@@ -509,6 +508,183 @@
     transform: scaleX(1);
     opacity: 0;
   }
+}
+
+/* Futuristic press atmosphere — orbit, scan, drifting ink. */
+@keyframes press-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes press-orbit-spin-rev {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes press-scan {
+  0% {
+    transform: translateX(-30%) skewX(-12deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  45% {
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(130%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+@keyframes press-dot-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.15;
+  }
+  40% {
+    transform: translate3d(12px, -18px, 0);
+    opacity: 0.55;
+  }
+  70% {
+    transform: translate3d(-8px, 10px, 0);
+    opacity: 0.3;
+  }
+}
+
+@keyframes press-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes ink-rule-feed {
+  0% {
+    transform: translateX(-20%);
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(220%);
+    opacity: 0.15;
+  }
+}
+
+@keyframes ink-rule-blink {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.35);
+    opacity: 1;
+  }
+}
+
+.press-orbit {
+  animation: press-orbit-spin 48s linear infinite;
+}
+
+.press-orbit__ring--c {
+  transform-origin: 200px 200px;
+  animation: press-orbit-spin 22s linear infinite;
+}
+
+.press-orbit__ring--m {
+  transform-origin: 200px 200px;
+  animation: press-orbit-spin-rev 34s linear infinite;
+}
+
+.press-orbit__ring--y {
+  transform-origin: 200px 200px;
+  animation: press-orbit-spin 56s linear infinite;
+}
+
+.press-pulse {
+  animation: press-pulse 2.8s ease-in-out infinite;
+}
+
+.press-scan {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: min(28vw, 220px);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--cyan) 35%, transparent) 35%,
+    color-mix(in srgb, var(--magenta) 45%, transparent) 55%,
+    color-mix(in srgb, var(--yellow) 25%, transparent) 70%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  animation: press-scan 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 1.2s;
+}
+
+.press-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  animation: press-dot-drift 7.5s ease-in-out infinite;
+}
+
+.press-dot--c {
+  background: var(--cyan);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 60%, transparent);
+}
+
+.press-dot--m {
+  background: var(--magenta);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--magenta) 55%, transparent);
+}
+
+.press-dot--y {
+  background: var(--yellow);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--yellow) 50%, transparent);
+}
+
+.press-dot--k {
+  background: var(--onband);
+  opacity: 0.35;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+.ink-rule-bar {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cyan),
+    var(--magenta),
+    var(--yellow),
+    transparent
+  );
+  animation: ink-rule-feed 4.5s ease-in-out infinite;
+}
+
+.ink-rule-node {
+  animation: ink-rule-blink 2.4s ease-in-out infinite;
 }
 
 /* ==========================================================================

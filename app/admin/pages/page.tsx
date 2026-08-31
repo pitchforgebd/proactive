@@ -41,7 +41,7 @@ export default async function AdminPagesList() {
       lede="Every page is an ordered list of sections. Section layouts are fixed in code — here you edit their content, reorder them, and hide or show them."
       user={session.user}
     >
-      <ul className="grid gap-px overflow-hidden border border-ink/10 bg-ink/10">
+      <ul className="grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
         {PAGE_SLUGS.map((slug) => {
           const page = bySlug.get(slug);
           const count = countBySlug.get(slug) ?? { total: 0, hidden: 0 };
@@ -71,14 +71,14 @@ export default async function AdminPagesList() {
                     href={pagePathMap[slug]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-sm border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-ink/20 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
                   >
                     <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
                     View
                   </Link>
                   <Link
                     href={`/admin/pages/${slug}`}
-                    className="inline-flex items-center gap-1.5 rounded-sm bg-cyan px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-band transition-colors hover:bg-magenta hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-md bg-cyan px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-band transition-colors hover:bg-magenta hover:text-white"
                   >
                     Edit
                     <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />

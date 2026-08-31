@@ -12,8 +12,8 @@ export interface NavItem {
 }
 
 /**
- * Primary navigation (CLAUDE.md §4). "What We Offer" is filled from the live
- * category list, so a category added in the dashboard appears in the menu.
+ * Primary navigation (CLAUDE.md §4). The Products dropdown is filled from the
+ * live category list, so a category added in the dashboard appears in the menu.
  *
  * Note: on the old site the "Company" menu pointed at an external domain
  * (zexora.com.bd). Here it is a normal internal page — no external redirect.
@@ -30,7 +30,7 @@ export function buildNav(categories: Category[]): NavItem[] {
       ],
     },
     {
-      label: 'What We Offer',
+      label: 'Products',
       href: '/products',
       children: [
         { label: 'All Categories', href: '/products' },
@@ -57,7 +57,7 @@ export function buildNav(categories: Category[]): NavItem[] {
 /** Footer quick links — flat, no dropdowns. */
 export const footerLinks: NavChild[] = [
   { label: 'About Us', href: '/about' },
-  { label: 'What We Offer', href: '/products' },
+  { label: 'Products', href: '/products' },
   { label: 'Vision & Mission', href: '/vision-mission' },
   { label: 'Global Sourcing', href: '/global-sourcing' },
   { label: 'Our Story', href: '/our-story' },
