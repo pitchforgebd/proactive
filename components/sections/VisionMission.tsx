@@ -82,8 +82,8 @@ export default function VisionMission({
             'leading-relaxed',
             isVision ? 'text-ink' : 'text-onband/85',
             panels
-              ? 'mt-5 text-lg md:text-xl md:leading-relaxed'
-              : 'mt-6 text-lg',
+              ? 'mt-4 text-base sm:mt-5 sm:text-lg md:text-xl md:leading-relaxed'
+              : 'mt-4 text-base sm:mt-6 sm:text-lg',
           )}
         >
           {text}

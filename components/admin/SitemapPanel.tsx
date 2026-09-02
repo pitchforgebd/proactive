@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useTransition, type ReactNode } from 'react';
-import { Check, ExternalLink, Loader2, RefreshCw } from 'lucide-react';
+import { ExternalLink, Loader2, RefreshCw } from 'lucide-react';
 
 import {
   refreshSitemap,
   type SitemapRefreshResult,
 } from '@/lib/admin/site-actions';
+import { toastFromResult } from '@/components/admin/AdminToaster';
 import type { SitemapContentTypeConfig } from '@/lib/seo/sitemap-config';
 import type { SitemapUrlBreakdown } from '@/lib/seo/sitemap-summary';
 
@@ -45,14 +46,11 @@ export default function SitemapPanel({
 
   return (
     <div className="max-w-3xl space-y-8">
-      {result?.message && (
+      {result?.message && !result.ok && (
         <p
-          role="status"
-          className={`flex items-start gap-2 border-l-2 px-4 py-3 text-sm ${
-            result.ok ? 'border-cyan bg-cyan/5' : 'border-magenta bg-magenta/5'
-          }`}
+          role="alert"
+          className="flex items-start gap-2 border-l-2 border-magenta bg-magenta/5 px-4 py-3 text-sm"
         >
-          {result.ok && <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />}
           <span>{result.message}</span>
         </p>
       )}
@@ -130,6 +128,7 @@ export default function SitemapPanel({
             startTransition(async () => {
               const next = await refreshSitemap();
               setResult(next);
+              toastFromResult(next, 'Sitemap cache refreshed.');
               if (next.ok && next.breakdown) setBreakdown(next.breakdown);
             });
           }}

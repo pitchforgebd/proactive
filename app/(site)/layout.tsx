@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getSiteSettings } from '@/lib/data';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import WhatsAppFloat from '@/components/layout/WhatsAppFloat';
 import RouteSweep from '@/components/motion/RouteSweep';
 import CursorRegistration from '@/components/motion/CursorRegistration';
 import SiteAnalytics from '@/components/seo/SiteAnalytics';
@@ -78,6 +79,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <Header />
       <main id="main">{children}</main>
       <Footer />
+      <WhatsAppFloat number={settings.whatsapp} />
 
       <SiteAnalytics seo={settings.seo} />
 

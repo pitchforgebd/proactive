@@ -42,7 +42,7 @@ export default function Capabilities({
             </Eyebrow>
           )}
 
-          <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">
+          <h2 className="mt-4 text-lg font-bold leading-snug sm:mt-5 sm:text-xl sm:leading-tight md:text-2xl">
             {phrases.map((phrase, i) => (
               <span key={phrase} className="block">
                 <span

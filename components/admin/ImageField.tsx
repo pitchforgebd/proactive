@@ -3,6 +3,8 @@
 import { useRef, useState } from 'react';
 import { ImageOff, Loader2, Upload, X } from 'lucide-react';
 
+import { toastError, toastSuccess } from '@/components/admin/AdminToaster';
+
 /**
  * Image picker for section `image` fields.
  *
@@ -33,12 +35,17 @@ export default function ImageField({
       const res = await fetch('/api/admin/upload', { method: 'POST', body });
       const json = await res.json();
       if (!res.ok || !json.ok) {
-        setError(json.message ?? 'The upload failed.');
+        const msg = json.message ?? 'The upload failed.';
+        setError(msg);
+        toastError(msg);
         return;
       }
       onChange(json.url);
+      toastSuccess('Image uploaded.');
     } catch {
-      setError('The upload failed. Check your connection and try again.');
+      const msg = 'The upload failed. Check your connection and try again.';
+      setError(msg);
+      toastError(msg);
     } finally {
       setBusy(false);
       if (inputRef.current) inputRef.current.value = '';

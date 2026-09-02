@@ -72,6 +72,11 @@ export async function getProducts(): Promise<Product[]> {
   return source.getProducts();
 }
 
+/** Featured products for the home “What We Offer” grid (default limit 8). */
+export async function getFeaturedProducts(limit = 8): Promise<Product[]> {
+  return source.getFeaturedProducts(limit);
+}
+
 export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
   return source.getProductsByCategory(categorySlug);
 }

@@ -46,7 +46,7 @@ export default function SectionHeading({
         )}
         <h2
           className={cn(
-            'mt-4 text-xl font-bold leading-tight md:text-2xl',
+            'mt-3 text-lg font-bold leading-snug sm:mt-4 sm:text-xl sm:leading-tight md:text-2xl',
             invert ? 'text-onband' : 'text-ink',
           )}
         >
@@ -55,7 +55,7 @@ export default function SectionHeading({
         {lede && (
           <p
             className={cn(
-              'mt-4 text-base leading-relaxed',
+              'mt-3 text-sm leading-relaxed sm:mt-4 sm:text-base',
               invert ? 'text-onband/65' : 'text-graphite',
             )}
           >

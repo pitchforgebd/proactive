@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import { signOutAction } from '@/app/admin/actions';
+import AdminToaster from '@/components/admin/AdminToaster';
 import Logo from '@/components/layout/Logo';
 
 /**
@@ -129,6 +130,7 @@ export default function AdminShell({
         </header>
         {children}
       </main>
+      <AdminToaster />
     </div>
   );
 }

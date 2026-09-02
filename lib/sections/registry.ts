@@ -229,12 +229,17 @@ export const sectionRegistry = {
 
   /* ---- Collections (content comes from the database, not this section) --- */
   categoryGrid: entry({
-    label: 'Product Categories',
-    hint: 'Cards for the product categories. Reads the Categories collection live.',
+    label: 'Product Categories / Featured',
+    hint: 'cards4 = home “What We Offer” (up to 8 featured products, square). cards2 = category listing on /products.',
     group: 'Collections',
     schema: S.categoryGridSchema,
     defaults: {
-      limit: 0,
+      eyebrow: 'What We Offer',
+      title: 'Featured products.',
+      lede: '',
+      linkText: 'Explore all products',
+      linkHref: '/products',
+      limit: 8,
       variant: 'cards4',
       showCount: false,
       rollerLine: false,

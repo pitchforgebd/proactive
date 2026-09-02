@@ -52,7 +52,7 @@ export default function Stats({ items, tone }: StatsData) {
                 </dt>
                 <dd
                   className={cn(
-                    'mt-3 font-display text-2xl font-bold leading-none md:text-3xl',
+                    'mt-3 font-display text-xl font-bold leading-none sm:text-2xl md:text-3xl',
                     invert ? 'text-onband' : 'text-ink',
                   )}
                 >

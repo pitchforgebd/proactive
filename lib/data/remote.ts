@@ -65,6 +65,9 @@ import type {
 import { emptySiteSeo } from '@/lib/types';
 import { sanitizeCustomHeadTags } from '@/lib/seo/custom-head';
 
+const DEFAULT_FOOTER_TAGLINE =
+  'One-stop printing & packaging solutions — machineries, press room chemicals, inks, coatings and consumables, backed by dedicated technical support across Bangladesh.';
+
 /* -------------------------------------------------------------------------- */
 /* Row → type mapping                                                          */
 /* -------------------------------------------------------------------------- */
@@ -130,6 +133,7 @@ function mapProduct(r: ProductRow): Product {
     summary: r.summary ?? '',
     content: r.content ?? '',
     specs: toSpecs(r.specs),
+    featured: Boolean(r.featured),
     order: r.order ?? 0,
     seo: toSeo(r.seoTitle, r.seoDescription),
     createdAt: r.createdAt ? toIso(r.createdAt) : undefined,
@@ -283,6 +287,17 @@ export const getProducts = cache(async (): Promise<Product[]> => {
   return rows.map(mapProduct);
 });
 
+/** Home “What We Offer” — featured products, capped (default 8). */
+export const getFeaturedProducts = cache(async (limit = 8): Promise<Product[]> => {
+  const rows = await db
+    .select()
+    .from(productsTable)
+    .where(eq(productsTable.featured, true))
+    .orderBy(asc(productsTable.order))
+    .limit(limit);
+  return rows.map(mapProduct);
+});
+
 export const getProductsByCategory = cache(
   async (categorySlug: string): Promise<Product[]> => {
     const rows = await db
@@ -373,10 +388,14 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     return {
       companyName: 'Proactive Trade International',
       logo: '',
+      logoTitle: 'Proactive',
+      logoSubtitle: "Trade Int'l",
+      footerTagline: DEFAULT_FOOTER_TAGLINE,
       favicon: '',
       qrCode: '',
       qrCodeCaption: '',
       phone: '',
+      whatsapp: '',
       email: '',
       address: '',
       mapQuery: '',
@@ -399,10 +418,14 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   return {
     companyName: row.companyName ?? 'Proactive Trade International',
     logo: row.logo?.trim() ?? '',
+    logoTitle: row.logoTitle?.trim() || 'Proactive',
+    logoSubtitle: row.logoSubtitle?.trim() || "Trade Int'l",
+    footerTagline: row.footerTagline?.trim() || DEFAULT_FOOTER_TAGLINE,
     favicon: row.favicon?.trim() ?? '',
     qrCode: row.qrCode?.trim() ?? '',
     qrCodeCaption: row.qrCodeCaption?.trim() ?? '',
     phone: row.phone ?? '',
+    whatsapp: row.whatsapp?.trim() ?? '',
     email: row.email ?? '',
     address: row.address ?? '',
     mapQuery: row.mapQuery ?? row.address ?? '',

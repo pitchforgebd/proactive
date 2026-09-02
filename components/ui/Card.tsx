@@ -74,9 +74,9 @@ export default function Card({
           </span>
         </div>
 
-        <div className="flex flex-1 flex-col gap-2 p-5">
-          {eyebrow && <span className="eyebrow text-graphite">{eyebrow}</span>}
-          <h3 className="relative inline-flex items-start gap-1.5 text-lg font-semibold leading-snug">
+        <div className="flex flex-1 flex-col gap-1.5 p-3.5 sm:gap-2 sm:p-5">
+          {eyebrow && <span className="eyebrow text-[10px] text-graphite sm:text-xs">{eyebrow}</span>}
+          <h3 className="relative inline-flex items-start gap-1.5 text-sm font-semibold leading-snug sm:text-lg">
             <span>
               {title}
               <span
@@ -90,7 +90,7 @@ export default function Card({
             />
           </h3>
           {description && (
-            <p className="text-sm text-graphite line-clamp-3">{description}</p>
+            <p className="text-xs text-graphite line-clamp-3 sm:text-sm">{description}</p>
           )}
         </div>
       </Link>

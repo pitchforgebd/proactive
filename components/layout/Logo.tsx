@@ -6,27 +6,35 @@ import { cn } from '@/lib/utils';
  * Site mark for header / footer / mobile drawer.
  *
  * When `src` is set (from Settings.logo), render the uploaded/public image.
- * Otherwise fall back to the coded CMYK registration wordmark — no request,
- * inherits colour via `invert` on always-dark bands (footer).
+ * Otherwise fall back to the coded CMYK registration wordmark — title and
+ * subtitle come from Settings (`logoTitle` / `logoSubtitle`).
  */
 export default function Logo({
   src,
+  title = 'Proactive',
+  subtitle = "Trade Int'l",
   invert = false,
   className,
 }: {
   /** Empty/undefined → SVG wordmark fallback. */
   src?: string | null;
+  /** Primary wordmark line (Settings → Logo title). */
+  title?: string;
+  /** Secondary wordmark line (Settings → Logo subtitle). */
+  subtitle?: string;
   invert?: boolean;
   className?: string;
 }) {
   const imageSrc = src?.trim() || '';
+  const titleLine = title.trim() || 'Proactive';
+  const subtitleLine = subtitle.trim() || "Trade Int'l";
 
   if (imageSrc) {
     return (
       <span className={cn('relative flex h-9 w-[min(100%,180px)] items-center', className)}>
         <Image
           src={imageSrc}
-          alt="Proactive Trade International"
+          alt={`${titleLine} ${subtitleLine}`.trim()}
           width={180}
           height={36}
           className="h-9 w-auto max-w-full object-contain object-left"
@@ -69,7 +77,7 @@ export default function Logo({
             invert ? 'text-onband' : 'text-ink',
           )}
         >
-          Proactive
+          {titleLine}
         </span>
         <span
           className={cn(
@@ -77,7 +85,7 @@ export default function Logo({
             invert ? 'text-onband/55' : 'text-graphite',
           )}
         >
-          Trade Int&apos;l
+          {subtitleLine}
         </span>
       </span>
     </span>

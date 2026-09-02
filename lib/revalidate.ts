@@ -69,6 +69,7 @@ export function revalidateProduct(
   previous?: { categorySlug: string; slug: string },
 ) {
   revalidatePath('/products');
+  revalidatePage('home');
   if (categorySlug) revalidatePath(`/products/${categorySlug}`);
   if (categorySlug && slug) revalidatePath(`/products/${categorySlug}/${slug}`);
 

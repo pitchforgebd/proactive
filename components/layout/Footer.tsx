@@ -40,11 +40,14 @@ export default async function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
           {/* Identity + socials */}
           <div className="lg:col-span-4">
-            <Logo invert src={settings.logo || undefined} />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-onband/60">
-              One-stop printing &amp; packaging solutions — machineries, press room
-              chemicals, inks, coatings and consumables, backed by dedicated
-              technical support across Bangladesh.
+            <Logo
+              invert
+              src={settings.logo || undefined}
+              title={settings.logoTitle}
+              subtitle={settings.logoSubtitle}
+            />
+            <p className="footer-tagline mt-5 max-w-sm text-sm leading-relaxed text-onband/60">
+              {settings.footerTagline}
             </p>
 
             <ul className="mt-6 flex gap-2">
@@ -97,12 +100,12 @@ export default async function Footer() {
           {/* Quick links */}
           <nav aria-label="Footer" className="lg:col-span-2">
             <h2 className="eyebrow text-cyan">Explore</h2>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="footer-links mt-5 flex list-none flex-col items-start gap-2.5 p-0">
               {footerLinks.map((l) => (
-                <li key={l.href}>
+                <li key={l.href} className="w-auto max-w-full">
                   <Link
                     href={l.href}
-                    className="text-sm text-onband/60 transition-colors hover:text-onband"
+                    className="inline-block text-left text-sm text-onband/60 transition-colors hover:text-onband"
                   >
                     {l.label}
                   </Link>
@@ -111,15 +114,15 @@ export default async function Footer() {
             </ul>
           </nav>
 
-          {/* Categories */}
+          {/* Categories — always one link per line, never justified */}
           <nav aria-label="Product categories" className="lg:col-span-3">
             <h2 className="eyebrow text-magenta">What We Offer</h2>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="footer-links mt-5 flex list-none flex-col items-start gap-2.5 p-0">
               {categories.map((c) => (
-                <li key={c.slug}>
+                <li key={c.slug} className="w-auto max-w-full">
                   <Link
                     href={`/products/${c.slug}`}
-                    className="text-sm text-onband/60 transition-colors hover:text-onband"
+                    className="inline-block text-left text-sm leading-snug text-onband/60 transition-colors hover:text-onband"
                   >
                     {c.name}
                   </Link>
@@ -131,12 +134,12 @@ export default async function Footer() {
           {/* Contact + map */}
           <div className="lg:col-span-3">
             <h2 className="eyebrow text-cyan">Contact</h2>
-            <ul className="mt-5 space-y-4 text-sm text-onband/60">
-              <li className="flex gap-3">
+            <ul className="mt-5 space-y-4 text-start text-sm text-onband/60">
+              <li className="flex gap-3 text-start">
                 <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <address className="not-italic leading-relaxed">{settings.address}</address>
               </li>
-              <li className="flex gap-3">
+              <li className="flex gap-3 text-start">
                 <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <a
                   href={`tel:${settings.phone.replace(/\s/g, '')}`}
@@ -145,7 +148,7 @@ export default async function Footer() {
                   {settings.phone}
                 </a>
               </li>
-              <li className="flex gap-3">
+              <li className="flex gap-3 text-start">
                 <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
                 <a
                   href={`mailto:${settings.email}`}
@@ -166,8 +169,8 @@ export default async function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Proactive Trade International. All rights reserved.</p>
-          <p>DHAKA · BANGLADESH</p>
+          <p className="text-start">© 2026 Proactive Trade International. All rights reserved.</p>
+          <p className="text-start">DHAKA · BANGLADESH</p>
         </div>
       </div>
     </footer>

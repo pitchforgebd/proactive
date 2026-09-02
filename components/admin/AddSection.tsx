@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import { Loader2, Plus } from 'lucide-react';
 
 import { addSection } from '@/app/admin/pages/actions';
+import { toastError } from '@/components/admin/AdminToaster';
 
 export interface SectionTypeOption {
   type: string;
@@ -35,7 +36,14 @@ export default function AddSection({
   function add(type: string) {
     setAdding(type);
     // The action redirects into the new section's editor on success.
-    startTransition(() => addSection(pageSlug, type));
+    startTransition(async () => {
+      try {
+        await addSection(pageSlug, type);
+      } catch {
+        toastError('Could not add section.');
+        setAdding(null);
+      }
+    });
   }
 
   if (!open) {

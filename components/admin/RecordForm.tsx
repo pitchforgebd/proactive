@@ -3,10 +3,11 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Check, Loader2, Save, Trash2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Save, Trash2 } from 'lucide-react';
 
 import { deleteRecord, saveRecord, type CrudResult } from '@/lib/admin/collection-actions';
 import FieldRenderer from '@/components/admin/FieldRenderer';
+import { toastError, toastFromResult, toastSuccess } from '@/components/admin/AdminToaster';
 import { slugify } from '@/lib/collections';
 import type { FieldDescriptor } from '@/lib/sections/introspect';
 
@@ -66,6 +67,10 @@ export default function RecordForm({
     startTransition(async () => {
       const outcome = await saveRecord(collection, recordId, JSON.stringify(data));
       setResult(outcome);
+      toastFromResult(
+        outcome,
+        recordId ? `${singular} saved.` : `${singular} created.`,
+      );
       if (outcome.ok) {
         setDirty(false);
         if (!recordId && outcome.id) router.replace(`/admin/${collection}/${outcome.id}`);
@@ -79,8 +84,13 @@ export default function RecordForm({
     if (!window.confirm(`Delete this ${singular}? This cannot be undone.`)) return;
     startTransition(async () => {
       const outcome = await deleteRecord(collection, recordId);
-      if (outcome.ok) router.push(backHref);
-      else setResult(outcome);
+      if (outcome.ok) {
+        toastSuccess(`${singular} deleted.`);
+        router.push(backHref);
+      } else {
+        setResult(outcome);
+        toastError(outcome.message || `Could not delete this ${singular}.`);
+      }
     });
   }
 
@@ -132,14 +142,11 @@ export default function RecordForm({
         </div>
       </div>
 
-      {result?.message && (
+      {result?.message && !result.ok && (
         <p
-          role="status"
-          className={`mb-6 flex items-center gap-2 border-l-2 px-4 py-3 text-sm ${
-            result.ok ? 'border-cyan bg-cyan/5' : 'border-magenta bg-magenta/5'
-          }`}
+          role="alert"
+          className="mb-6 flex items-center gap-2 border-l-2 border-magenta bg-magenta/5 px-4 py-3 text-sm"
         >
-          {result.ok && <Check aria-hidden="true" className="h-4 w-4 text-cyan" />}
           {result.message}
         </p>
       )}

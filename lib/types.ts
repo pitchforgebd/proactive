@@ -32,6 +32,8 @@ export interface Product {
   /** Rich HTML — render through <RichText />. */
   content: string;
   specs?: { label: string; value: string }[];
+  /** Home “What We Offer” grid when true (max 8 shown). */
+  featured?: boolean;
   order: number;
   seo?: Seo;
   /** ISO 8601 — used by sitemap lastModified when present. */
@@ -136,6 +138,14 @@ export interface SiteSettings {
   companyName: string;
   /** Empty string → UI uses the coded SVG wordmark fallback. */
   logo: string;
+  /** Wordmark primary line when `logo` is empty. Default “Proactive”. */
+  logoTitle: string;
+  /** Wordmark secondary line when `logo` is empty. Default “Trade Int'l”. */
+  logoSubtitle: string;
+  /**
+   * Plain-text blurb under the footer logo. Empty → default marketing line.
+   */
+  footerTagline: string;
   /** Empty string → no custom favicon in public `<head>`. */
   favicon: string;
   /** Empty string → footer omits the QR block. */
@@ -143,6 +153,11 @@ export interface SiteSettings {
   /** Optional caption under the footer QR. */
   qrCodeCaption: string;
   phone: string;
+  /**
+   * WhatsApp number for the floating button. Empty → button hidden.
+   * Display/form value; public link uses digits only.
+   */
+  whatsapp: string;
   email: string;
   address: string;
   mapQuery: string;

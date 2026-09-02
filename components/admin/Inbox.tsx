@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Download, Mail, MailOpen, Trash2 } from 'lucide-react';
 
 import { deleteSubmission, markRead } from '@/lib/admin/site-actions';
+import { toastError, toastSuccess } from '@/components/admin/AdminToaster';
 import { formatDate } from '@/lib/utils';
 
 export interface InboxEntry {
@@ -139,8 +140,15 @@ export default function Inbox({
                       type="button"
                       onClick={() =>
                         startTransition(async () => {
-                          await markRead(kind, entry.id, !entry.read);
-                          router.refresh();
+                          try {
+                            await markRead(kind, entry.id, !entry.read);
+                            toastSuccess(
+                              entry.read ? 'Marked unread.' : 'Marked read.',
+                            );
+                            router.refresh();
+                          } catch {
+                            toastError('Could not update status.');
+                          }
                         })
                       }
                       className="rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-cyan hover:text-cyan"
@@ -152,8 +160,13 @@ export default function Inbox({
                       onClick={() => {
                         if (!window.confirm('Delete this submission permanently?')) return;
                         startTransition(async () => {
-                          await deleteSubmission(kind, entry.id);
-                          router.refresh();
+                          try {
+                            await deleteSubmission(kind, entry.id);
+                            toastSuccess('Submission deleted.');
+                            router.refresh();
+                          } catch {
+                            toastError('Could not delete submission.');
+                          }
                         });
                       }}
                       className="inline-flex items-center gap-2 rounded-md border border-ink/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-graphite transition-colors hover:border-magenta hover:text-magenta"

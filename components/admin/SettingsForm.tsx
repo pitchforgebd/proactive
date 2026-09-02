@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Check, Loader2, Save } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 
 import ImageField from '@/components/admin/ImageField';
+import { toastFromResult } from '@/components/admin/AdminToaster';
 import { saveSettings, type SettingsResult } from '@/lib/admin/site-actions';
 
 type Values = Record<string, string>;
@@ -14,6 +15,11 @@ const control =
 const fields: { name: string; label: string; hint?: string; type?: string }[] = [
   { name: 'companyName', label: 'Company name' },
   { name: 'phone', label: 'Phone', hint: 'Shown in the footer and every CTA band.' },
+  {
+    name: 'whatsapp',
+    label: 'WhatsApp number',
+    hint: 'Floating chat button on the right. Use country code, e.g. +880 1855 939 450. Empty hides the button.',
+  },
   { name: 'email', label: 'Email', type: 'email' },
   { name: 'address', label: 'Address' },
   {
@@ -94,18 +100,19 @@ export default function SettingsForm({ initial }: { initial: Values }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        startTransition(async () => setResult(await saveSettings(JSON.stringify(values))));
+        startTransition(async () => {
+          const outcome = await saveSettings(JSON.stringify(values));
+          setResult(outcome);
+          toastFromResult(outcome, 'Settings saved.');
+        });
       }}
       className="max-w-2xl space-y-7"
     >
-      {result?.message && (
+      {result?.message && !result.ok && (
         <p
-          role="status"
-          className={`flex items-center gap-2 border-l-2 px-4 py-3 text-sm ${
-            result.ok ? 'border-cyan bg-cyan/5' : 'border-magenta bg-magenta/5'
-          }`}
+          role="alert"
+          className="flex items-center gap-2 border-l-2 border-magenta bg-magenta/5 px-4 py-3 text-sm"
         >
-          {result.ok && <Check aria-hidden="true" className="h-4 w-4 text-cyan" />}
           {result.message}
         </p>
       )}
@@ -136,6 +143,53 @@ export default function SettingsForm({ initial }: { initial: Values }) {
         {result?.errors?.logo && (
           <p id="logo-error" role="alert" className="mt-1.5 text-xs text-magenta">
             {result.errors.logo}
+          </p>
+        )}
+      </div>
+
+      <Row
+        name="logoTitle"
+        label="Logo title"
+        value={values.logoTitle ?? ''}
+        onChange={set}
+        error={result?.errors?.logoTitle}
+        hint="Primary wordmark line when no logo image is set (header & footer). Default: Proactive."
+      />
+      <Row
+        name="logoSubtitle"
+        label="Logo subtitle"
+        value={values.logoSubtitle ?? ''}
+        onChange={set}
+        error={result?.errors?.logoSubtitle}
+        hint="Secondary wordmark line. Default: Trade Int'l."
+      />
+
+      <div>
+        <label
+          htmlFor="footerTagline"
+          className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite"
+        >
+          Footer tagline
+        </label>
+        <p className="mt-1 text-xs text-graphite">
+          Short blurb under the footer logo. Leave empty to restore the default
+          marketing line.
+        </p>
+        <textarea
+          id="footerTagline"
+          name="footerTagline"
+          rows={4}
+          value={values.footerTagline ?? ''}
+          onChange={(e) => set('footerTagline', e.target.value)}
+          className={`mt-2 ${control}`}
+          aria-invalid={Boolean(result?.errors?.footerTagline)}
+          aria-describedby={
+            result?.errors?.footerTagline ? 'footerTagline-error' : undefined
+          }
+        />
+        {result?.errors?.footerTagline && (
+          <p id="footerTagline-error" role="alert" className="mt-1.5 text-xs text-magenta">
+            {result.errors.footerTagline}
           </p>
         )}
       </div>

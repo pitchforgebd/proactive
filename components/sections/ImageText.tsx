@@ -43,7 +43,7 @@ export default function ImageText({
       )}
       <h2
         className={cn(
-          'text-xl font-bold leading-tight md:text-2xl',
+          'text-lg font-bold leading-snug sm:text-xl sm:leading-tight md:text-2xl',
           eyebrow && 'mt-5',
           invert && 'text-onband',
         )}

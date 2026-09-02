@@ -6,6 +6,37 @@ Format: newest first.
 
 ---
 
+## 2026-09-02 — Floating WhatsApp button
+
+- `settings.whatsapp`; Admin Settings field; public fixed bottom-right button
+  (`wa.me`) when set; empty hides it.
+
+## 2026-09-02 — Admin toast alerts on save / CRUD
+
+- `AdminToaster` in dashboard shell: success/error toasts for collection save
+  / delete, settings, section save / reorder / visibility / delete, page SEO,
+  sitemap refresh, inbox mark/delete, and image uploads.
+
+## 2026-09-02 — Footer tagline editable in Settings
+
+- `settings.footer_tagline`; Admin Settings textarea; footer reads
+  `getSiteSettings().footerTagline` (default copy if empty).
+
+## 2026-09-02 — Mobile typography + shorter hero slider
+
+- Hero: fixed short height on phones (`~52svh` / max 400px), not full viewport;
+  compact type/CTAs; stats hidden until `sm`.
+- Site titles/ledes/cards/page heroes scale down on mobile; body `0.9375rem` on xs.
+- Headings wrap safely (`overflow-wrap`); tighter container padding on small screens.
+
+- Hero slider: shorter mobile height / padding (no full-viewport stretch on phones).
+- Site-wide `text-align: justify` for body copy; `.prose` / Summernote excluded.
+- Home “What We Offer” (`categoryGrid` cards4): up to 8 **featured** products with
+  square images + **Explore all products** → `/products`. Admin Products checkbox
+  `featured`; `products.featured` column + `getFeaturedProducts()`.
+- Partner logos always full colour (no grayscale / colour-on-hover).
+- Settings: `logoTitle` / `logoSubtitle` for wordmark text in header & footer.
+
 ## 2026-08-31 — Futuristic press atmosphere
 
 - `PressAtmosphere`: CMYK orbit rings, print-head scan, drifting ink dots on

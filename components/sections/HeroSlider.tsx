@@ -58,7 +58,7 @@ export default function HeroSlider({
           loading={i === 0 ? undefined : 'lazy'}
           quality={72}
           className={cn(
-            'object-cover transition-opacity duration-1000 ease-press',
+            'object-cover object-center transition-opacity duration-1000 ease-press',
             i === index ? 'opacity-100' : 'opacity-0',
           )}
         />
@@ -70,12 +70,12 @@ export default function HeroSlider({
 
       {/* Slide indicators — decorative, the slider carries no content. */}
       {mountRest && slides.length > 1 && (
-        <div className="absolute bottom-8 right-6 flex gap-1.5 md:right-10">
+        <div className="absolute bottom-4 right-4 flex gap-1.5 sm:bottom-6 sm:right-6 md:bottom-8 md:right-10">
           {slides.map((s, i) => (
             <span
               key={s.src}
               className={cn(
-                'h-px w-8 transition-colors duration-500',
+                'h-px w-5 transition-colors duration-500 sm:w-8',
                 i === index ? 'bg-cyan' : 'bg-white/25',
               )}
             />

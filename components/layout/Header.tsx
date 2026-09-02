@@ -40,7 +40,11 @@ export default async function Header() {
           aria-label="Proactive Trade International — home"
           className="shrink-0"
         >
-          <Logo src={logoSrc} />
+          <Logo
+            src={logoSrc}
+            title={settings.logoTitle}
+            subtitle={settings.logoSubtitle}
+          />
         </Link>
 
         <Nav items={nav} />
@@ -55,7 +59,12 @@ export default async function Header() {
             Get in Touch
           </Link>
 
-          <MobileDrawer items={nav} logoSrc={logoSrc} />
+          <MobileDrawer
+            items={nav}
+            logoSrc={logoSrc}
+            logoTitle={settings.logoTitle}
+            logoSubtitle={settings.logoSubtitle}
+          />
         </div>
       </div>
     </header>

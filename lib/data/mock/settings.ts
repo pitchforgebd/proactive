@@ -3,10 +3,15 @@ import type { JobOpening, SiteSettings } from '@/lib/types';
 export const siteSettings: SiteSettings = {
   companyName: 'Proactive Trade International',
   logo: '',
+  logoTitle: 'Proactive',
+  logoSubtitle: "Trade Int'l",
+  footerTagline:
+    'One-stop printing & packaging solutions — machineries, press room chemicals, inks, coatings and consumables, backed by dedicated technical support across Bangladesh.',
   favicon: '',
   qrCode: '',
   qrCodeCaption: '',
   phone: '+880 1855 939 450',
+  whatsapp: '+880 1855 939 450',
   email: 'info@proactive.com.bd',
   address:
     '292, Inner Circular Road, Shatabdi Centre, Fakirapool, Motijheel, Dhaka-1000',

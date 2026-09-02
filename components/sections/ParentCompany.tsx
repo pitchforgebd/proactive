@@ -46,7 +46,7 @@ export default function ParentCompany({
               {eyebrow}
             </Eyebrow>
           )}
-          <h2 className="mt-5 text-xl font-bold leading-tight md:text-2xl">{name}</h2>
+          <h2 className="mt-4 text-lg font-bold leading-snug sm:mt-5 sm:text-xl sm:leading-tight md:text-2xl">{name}</h2>
           {tagline && (
             <p className="mt-3 max-w-2xl font-display text-base font-semibold leading-snug text-ink md:text-lg">
               {tagline}

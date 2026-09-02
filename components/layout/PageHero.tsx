@@ -52,16 +52,16 @@ export default function PageHero({
       <div
         className={cn(
           'container-page relative z-[1]',
-          compact ? 'py-14 md:py-16' : 'py-16 md:py-24',
+          compact ? 'py-10 sm:py-14 md:py-16' : 'py-12 sm:py-16 md:py-24',
         )}
       >
-        {crumbs && <Breadcrumbs items={crumbs} invert className="mb-8" />}
+        {crumbs && <Breadcrumbs items={crumbs} invert className="mb-6 sm:mb-8" />}
         {eyebrow && <Eyebrow tone="cyan">{eyebrow}</Eyebrow>}
-        <h1 className="mt-4 max-w-4xl text-2xl font-extrabold uppercase leading-[1.02] md:text-3xl">
+        <h1 className="mt-3 max-w-4xl text-xl font-extrabold uppercase leading-snug sm:mt-4 sm:text-2xl sm:leading-[1.02] md:text-3xl">
           {title}
         </h1>
         {lede && (
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-onband/65">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-onband/65 sm:mt-6 sm:text-base">
             {lede}
           </p>
         )}

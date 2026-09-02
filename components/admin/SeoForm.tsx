@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Check, Loader2, Save } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 
 import { savePageSeo, type ActionResult } from '@/app/admin/pages/actions';
 import ImageField from '@/components/admin/ImageField';
+import { toastFromResult } from '@/components/admin/AdminToaster';
 
 const control =
   'w-full rounded-md border border-ink/20 bg-paper-2 px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-cyan focus:ring-2 focus:ring-cyan/25';
@@ -30,25 +31,22 @@ export default function SeoForm({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        startTransition(async () =>
-          setResult(
-            await savePageSeo(
-              pageSlug,
-              JSON.stringify({ title, seoTitle, seoDescription, ogImage }),
-            ),
-          ),
-        );
+        startTransition(async () => {
+          const outcome = await savePageSeo(
+            pageSlug,
+            JSON.stringify({ title, seoTitle, seoDescription, ogImage }),
+          );
+          setResult(outcome);
+          toastFromResult(outcome, 'Page SEO saved.');
+        });
       }}
       className="max-w-2xl space-y-7"
     >
-      {result && (
+      {result && !result.ok && (
         <p
-          role="status"
-          className={`flex items-center gap-2 border-l-2 px-4 py-3 text-sm ${
-            result.ok ? 'border-cyan bg-cyan/5' : 'border-magenta bg-magenta/5'
-          }`}
+          role="alert"
+          className="flex items-center gap-2 border-l-2 border-magenta bg-magenta/5 px-4 py-3 text-sm"
         >
-          {result.ok && <Check aria-hidden="true" className="h-4 w-4 text-cyan" />}
           {result.message}
         </p>
       )}

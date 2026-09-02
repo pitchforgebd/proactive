@@ -16,9 +16,13 @@ import { cn } from '@/lib/utils';
 export default function MobileDrawer({
   items,
   logoSrc,
+  logoTitle,
+  logoSubtitle,
 }: {
   items: NavItem[];
   logoSrc?: string | null;
+  logoTitle?: string;
+  logoSubtitle?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -89,7 +93,7 @@ export default function MobileDrawer({
         )}
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-          <Logo src={logoSrc} />
+          <Logo src={logoSrc} title={logoTitle} subtitle={logoSubtitle} />
           <button
             type="button"
             onClick={() => {

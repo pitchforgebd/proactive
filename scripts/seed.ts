@@ -139,7 +139,7 @@ async function seedCollections() {
 
   await db.delete(schema.products);
   await db.insert(schema.products).values(
-    mockProducts.map((p) => ({
+    mockProducts.map((p, i) => ({
       id: p.id,
       slug: p.slug,
       categorySlug: p.categorySlug,
@@ -148,6 +148,7 @@ async function seedCollections() {
       summary: p.summary,
       content: sanitizeHtml(p.content),
       specs: p.specs ?? null,
+      featured: i < 8,
       order: p.order,
       seoTitle: p.seo?.title ?? null,
       seoDescription: p.seo?.description ?? null,
@@ -235,10 +236,14 @@ async function seedSettings() {
     id: 1,
     companyName: siteSettings.companyName,
     logo: siteSettings.logo || null,
+    logoTitle: 'Proactive',
+    logoSubtitle: "Trade Int'l",
+    footerTagline: siteSettings.footerTagline || null,
     favicon: siteSettings.favicon || null,
     qrCode: siteSettings.qrCode || null,
     qrCodeCaption: siteSettings.qrCodeCaption || null,
     phone: siteSettings.phone,
+    whatsapp: siteSettings.whatsapp || null,
     email: siteSettings.email,
     address: siteSettings.address,
     mapQuery: siteSettings.mapQuery,

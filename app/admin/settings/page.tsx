@@ -28,10 +28,16 @@ export default async function SettingsPage() {
         initial={{
           companyName: row?.companyName ?? '',
           logo: row?.logo ?? '',
+          logoTitle: row?.logoTitle ?? 'Proactive',
+          logoSubtitle: row?.logoSubtitle ?? "Trade Int'l",
+          footerTagline:
+            row?.footerTagline ??
+            'One-stop printing & packaging solutions — machineries, press room chemicals, inks, coatings and consumables, backed by dedicated technical support across Bangladesh.',
           favicon: row?.favicon ?? '',
           qrCode: row?.qrCode ?? '',
           qrCodeCaption: row?.qrCodeCaption ?? '',
           phone: row?.phone ?? '',
+          whatsapp: row?.whatsapp ?? '',
           email: row?.email ?? '',
           address: row?.address ?? '',
           mapQuery: row?.mapQuery ?? '',

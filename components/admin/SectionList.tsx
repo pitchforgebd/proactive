@@ -18,6 +18,7 @@ import {
   reorderSections,
   setSectionVisible,
 } from '@/app/admin/pages/actions';
+import { toastError, toastSuccess } from '@/components/admin/AdminToaster';
 
 export interface SectionRowView {
   id: string;
@@ -58,7 +59,11 @@ export default function SectionList({
         next.map((r) => r.id),
       );
       if (outcome && !outcome.ok) {
-        setError(outcome.message ?? 'The new order could not be saved.');
+        const msg = outcome.message ?? 'The new order could not be saved.';
+        setError(msg);
+        toastError(msg);
+      } else {
+        toastSuccess('Section order saved.');
       }
     });
   }
@@ -76,7 +81,14 @@ export default function SectionList({
       r.id === row.id ? { ...r, visible: !r.visible } : r,
     );
     setRows(next);
-    startTransition(() => setSectionVisible(pageSlug, row.id, !row.visible));
+    startTransition(async () => {
+      try {
+        await setSectionVisible(pageSlug, row.id, !row.visible);
+        toastSuccess(row.visible ? 'Section hidden.' : 'Section visible.');
+      } catch {
+        toastError('Could not update visibility.');
+      }
+    });
   }
 
   function remove(row: SectionRowView) {
@@ -85,7 +97,14 @@ export default function SectionList({
     );
     if (!confirmed) return;
     setRows(rows.filter((r) => r.id !== row.id));
-    startTransition(() => deleteSection(pageSlug, row.id));
+    startTransition(async () => {
+      try {
+        await deleteSection(pageSlug, row.id);
+        toastSuccess('Section deleted.');
+      } catch {
+        toastError('Could not delete section.');
+      }
+    });
   }
 
   if (rows.length === 0) {

@@ -100,6 +100,11 @@ export const products = mysqlTable(
     content: longtext('content'),
     /** { label, value }[] */
     specs: json('specs'),
+    /**
+     * When true, eligible for the home “What We Offer” featured grid
+     * (up to 8 products). Editors toggle this in Admin → Products.
+     */
+    featured: boolean('featured').notNull().default(false),
     order: int('order').default(0),
     seoTitle: varchar('seo_title', { length: 200 }),
     seoDescription: varchar('seo_description', { length: 320 }),
@@ -205,6 +210,19 @@ export const settings = mysqlTable('settings', {
    */
   logo: varchar('logo', { length: 500 }),
   /**
+   * Wordmark primary line when no logo image is set (header / footer / drawer).
+   * Empty → “Proactive”.
+   */
+  logoTitle: varchar('logo_title', { length: 80 }),
+  /**
+   * Wordmark secondary line. Empty → “Trade Int'l”.
+   */
+  logoSubtitle: varchar('logo_subtitle', { length: 80 }),
+  /**
+   * Short blurb under the footer logo. Empty → coded default copy.
+   */
+  footerTagline: text('footer_tagline'),
+  /**
    * Optional favicon URL (/images/… or /api/files/images/…). Empty → browser
    * default / no custom icon in public metadata.
    */
@@ -216,6 +234,11 @@ export const settings = mysqlTable('settings', {
   /** Optional caption under the footer QR (e.g. “Scan for WhatsApp”). */
   qrCodeCaption: varchar('qr_code_caption', { length: 120 }),
   phone: varchar('phone', { length: 40 }),
+  /**
+   * WhatsApp number for the floating chat button (digits / + / spaces).
+   * Empty → button is hidden on the public site.
+   */
+  whatsapp: varchar('whatsapp', { length: 40 }),
   email: varchar('email', { length: 200 }),
   address: varchar('address', { length: 400 }),
   /** Plain-text query the lazy map facade geocodes (SiteSettings.mapQuery). */

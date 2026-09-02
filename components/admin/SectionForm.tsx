@@ -2,10 +2,11 @@
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Check, Loader2, Save } from 'lucide-react';
+import { ArrowLeft, Loader2, Save } from 'lucide-react';
 
 import { saveSection, type ActionResult } from '@/app/admin/pages/actions';
 import FieldRenderer from '@/components/admin/FieldRenderer';
+import { toastFromResult } from '@/components/admin/AdminToaster';
 import type { FieldDescriptor } from '@/lib/sections/introspect';
 
 /**
@@ -51,6 +52,7 @@ export default function SectionForm({
     startTransition(async () => {
       const outcome = await saveSection(pageSlug, sectionId, JSON.stringify(data));
       setResult(outcome);
+      toastFromResult(outcome, 'Section saved.');
       if (outcome.ok) setDirty(false);
     });
   }
@@ -80,16 +82,11 @@ export default function SectionForm({
         <SaveButton pending={pending} dirty={dirty} />
       </div>
 
-      {result && (
+      {result && !result.ok && (
         <p
-          role="status"
-          className={`mb-6 flex items-center gap-2 border-l-2 px-4 py-3 text-sm ${
-            result.ok
-              ? 'border-cyan bg-cyan/5 text-ink'
-              : 'border-magenta bg-magenta/5 text-ink'
-          }`}
+          role="alert"
+          className="mb-6 flex items-center gap-2 border-l-2 border-magenta bg-magenta/5 px-4 py-3 text-sm text-ink"
         >
-          {result.ok && <Check aria-hidden="true" className="h-4 w-4 text-cyan" />}
           {result.message}
         </p>
       )}
