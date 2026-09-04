@@ -30,6 +30,8 @@ export const categoryInput = z.object({
   name: z.string().min(1, 'A name is required.').max(200),
   description: z.string().default(''),
   image: z.string().default(''),
+  /** Show on the home “What We Offer” grid. */
+  featured: z.boolean().default(false),
   order: z.number().int().min(0).default(0),
   seoTitle: z.string().max(200).default(''),
   seoDescription: z.string().max(320).default(''),
@@ -45,8 +47,6 @@ export const productInput = z.object({
   specs: z
     .array(z.object({ label: z.string(), value: z.string() }))
     .default([]),
-  /** Show on the home “What We Offer” grid (up to 8). */
-  featured: z.boolean().default(false),
   order: z.number().int().min(0).default(0),
   seoTitle: z.string().max(200).default(''),
   seoDescription: z.string().max(320).default(''),
@@ -145,7 +145,7 @@ export const collections: Record<CollectionKey, CollectionDef> = {
     key: 'categories',
     label: 'Categories',
     singular: 'category',
-    lede: 'The four solution lines. These drive /products and the Products menu. Featured products for the home grid are set on each product.',
+    lede: 'The four solution lines. These drive /products and the Products menu. Mark Featured to show a category on the home “What We Offer” grid.',
     schema: categoryInput,
     titleField: 'name',
     subtitleField: 'slug',
@@ -154,13 +154,14 @@ export const collections: Record<CollectionKey, CollectionDef> = {
     fields: [
       f('name', 'Name', 'text', { required: true }),
       f('slug', 'URL slug', 'text', { required: true }),
+      f('featured', 'Featured on home (What We Offer)', 'boolean'),
       f('image', 'Image', 'image'),
       f('description', 'Description', 'html'),
       f('order', 'Order', 'number'),
       ...seoFields,
     ],
     blank: {
-      slug: '', name: '', description: '', image: '', order: 0,
+      slug: '', name: '', description: '', image: '', featured: false, order: 0,
       seoTitle: '', seoDescription: '',
     },
   },
@@ -169,7 +170,7 @@ export const collections: Record<CollectionKey, CollectionDef> = {
     key: 'products',
     label: 'Products',
     singular: 'product',
-    lede: 'Everything under a category. Mark Featured to include a product on the home “What We Offer” grid (up to 8).',
+    lede: 'Everything under a category. Each product gets its own page with a gallery, summary and full description.',
     schema: productInput,
     titleField: 'name',
     subtitleField: 'categorySlug',
@@ -179,7 +180,6 @@ export const collections: Record<CollectionKey, CollectionDef> = {
       f('slug', 'URL slug', 'text', { required: true }),
       // Options are filled in at render time from the live category list.
       f('categorySlug', 'Category', 'select', { required: true, options: [] }),
-      f('featured', 'Featured on home (What We Offer)', 'boolean'),
       f('images', 'Images', 'objectList', {
         fields: [f('src', 'Image', 'image')],
         itemDefault: { src: '' },
@@ -195,7 +195,7 @@ export const collections: Record<CollectionKey, CollectionDef> = {
     ],
     blank: {
       slug: '', categorySlug: '', name: '', images: [], summary: '', content: '',
-      specs: [], featured: false, order: 0, seoTitle: '', seoDescription: '',
+      specs: [], order: 0, seoTitle: '', seoDescription: '',
     },
   },
 

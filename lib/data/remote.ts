@@ -117,6 +117,7 @@ function mapCategory(r: CategoryRow): Category {
     name: r.name,
     description: r.description ?? '',
     image: r.image ?? '',
+    featured: Boolean(r.featured),
     order: r.order ?? 0,
     seo: toSeo(r.seoTitle, r.seoDescription),
     createdAt: r.createdAt ? toIso(r.createdAt) : undefined,
@@ -133,7 +134,6 @@ function mapProduct(r: ProductRow): Product {
     summary: r.summary ?? '',
     content: r.content ?? '',
     specs: toSpecs(r.specs),
-    featured: Boolean(r.featured),
     order: r.order ?? 0,
     seo: toSeo(r.seoTitle, r.seoDescription),
     createdAt: r.createdAt ? toIso(r.createdAt) : undefined,
@@ -269,6 +269,17 @@ export const getCategories = cache(async (): Promise<Category[]> => {
   return rows.map(mapCategory);
 });
 
+/** Home “What We Offer” — featured categories (default all featured, capped). */
+export const getFeaturedCategories = cache(async (limit = 8): Promise<Category[]> => {
+  const rows = await db
+    .select()
+    .from(categoriesTable)
+    .where(eq(categoriesTable.featured, true))
+    .orderBy(asc(categoriesTable.order))
+    .limit(limit);
+  return rows.map(mapCategory);
+});
+
 export const getCategory = cache(async (slug: string): Promise<Category | null> => {
   const [row] = await db
     .select()
@@ -284,17 +295,6 @@ export const getCategory = cache(async (slug: string): Promise<Category | null> 
 
 export const getProducts = cache(async (): Promise<Product[]> => {
   const rows = await db.select().from(productsTable).orderBy(asc(productsTable.order));
-  return rows.map(mapProduct);
-});
-
-/** Home “What We Offer” — featured products, capped (default 8). */
-export const getFeaturedProducts = cache(async (limit = 8): Promise<Product[]> => {
-  const rows = await db
-    .select()
-    .from(productsTable)
-    .where(eq(productsTable.featured, true))
-    .orderBy(asc(productsTable.order))
-    .limit(limit);
   return rows.map(mapProduct);
 });
 

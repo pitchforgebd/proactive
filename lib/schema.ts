@@ -80,6 +80,11 @@ export const categories = mysqlTable('categories', {
   /** Rich HTML. */
   description: longtext('description'),
   image: varchar('image', { length: 500 }),
+  /**
+   * When true, eligible for the home “What We Offer” grid.
+   * Editors toggle this in Admin → Categories.
+   */
+  featured: boolean('featured').notNull().default(false),
   order: int('order').default(0),
   seoTitle: varchar('seo_title', { length: 200 }),
   seoDescription: varchar('seo_description', { length: 320 }),
@@ -100,11 +105,6 @@ export const products = mysqlTable(
     content: longtext('content'),
     /** { label, value }[] */
     specs: json('specs'),
-    /**
-     * When true, eligible for the home “What We Offer” featured grid
-     * (up to 8 products). Editors toggle this in Admin → Products.
-     */
-    featured: boolean('featured').notNull().default(false),
     order: int('order').default(0),
     seoTitle: varchar('seo_title', { length: 200 }),
     seoDescription: varchar('seo_description', { length: 320 }),

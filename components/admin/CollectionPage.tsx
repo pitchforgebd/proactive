@@ -120,7 +120,7 @@ export async function CollectionListPage({ collection }: { collection: Collectio
                       <span className="block truncate text-sm font-semibold text-ink">
                         {title}
                       </span>
-                      {collection === 'products' && row.featured ? (
+                      {collection === 'categories' && row.featured ? (
                         <span className="shrink-0 rounded bg-cyan/15 px-1.5 py-0.5 font-mono text-[9px] uppercase text-cyan">
                           Featured
                         </span>
@@ -192,6 +192,8 @@ export async function CollectionEditPage({
       const images = Array.isArray(row.images) ? (row.images as string[]) : [];
       initial.images = images.map((src) => ({ src }));
       initial.specs = Array.isArray(row.specs) ? row.specs : [];
+    }
+    if (collection === 'categories') {
       initial.featured = Boolean(row.featured);
     }
     for (const key of ['publishedAt'] as const) {

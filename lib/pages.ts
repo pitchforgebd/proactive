@@ -17,7 +17,7 @@
 export const PAGE_SLUGS = [
   'home',
   'about',
-  'founder-message',
+  'leadership-message',
   'vision-mission',
   'products',
   'global-sourcing',
@@ -33,7 +33,7 @@ export type PageSlug = (typeof PAGE_SLUGS)[number];
 export const pagePathMap: Record<PageSlug, string> = {
   home: '/',
   about: '/about',
-  'founder-message': '/about/founder-message',
+  'leadership-message': '/about/leadership-message',
   'vision-mission': '/vision-mission',
   products: '/products',
   'global-sourcing': '/global-sourcing',
@@ -48,7 +48,7 @@ export const pagePathMap: Record<PageSlug, string> = {
 export const pageLabels: Record<PageSlug, string> = {
   home: 'Home',
   about: 'About Us',
-  'founder-message': 'Message from Founder & CEO',
+  'leadership-message': 'Leadership Message',
   'vision-mission': 'Vision & Mission',
   products: 'What We Offer',
   'global-sourcing': 'Global Sourcing',
@@ -89,7 +89,7 @@ export const sitemapPageMeta: Partial<
 > = {
   home: { priority: 1, changeFrequency: 'weekly' },
   about: { priority: 0.8, changeFrequency: 'monthly' },
-  'founder-message': { priority: 0.6, changeFrequency: 'monthly' },
+  'leadership-message': { priority: 0.6, changeFrequency: 'monthly' },
   products: { priority: 0.9, changeFrequency: 'weekly' },
   'vision-mission': { priority: 0.6, changeFrequency: 'monthly' },
   'global-sourcing': { priority: 0.6, changeFrequency: 'monthly' },

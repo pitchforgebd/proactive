@@ -60,6 +60,11 @@ export async function getCategories(): Promise<Category[]> {
   return source.getCategories();
 }
 
+/** Featured categories for the home “What We Offer” grid. */
+export async function getFeaturedCategories(limit = 8): Promise<Category[]> {
+  return source.getFeaturedCategories(limit);
+}
+
 export async function getCategory(slug: string): Promise<Category | null> {
   return source.getCategory(slug);
 }
@@ -70,11 +75,6 @@ export async function getCategory(slug: string): Promise<Category | null> {
 
 export async function getProducts(): Promise<Product[]> {
   return source.getProducts();
-}
-
-/** Featured products for the home “What We Offer” grid (default limit 8). */
-export async function getFeaturedProducts(limit = 8): Promise<Product[]> {
-  return source.getFeaturedProducts(limit);
 }
 
 export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { getCategories, getFeaturedProducts, getProducts } from '@/lib/data';
+import { getCategories, getFeaturedCategories, getProducts } from '@/lib/data';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Card from '@/components/ui/Card';
@@ -12,11 +12,11 @@ import { stripHtml } from '@/lib/utils';
 import type { CategoryGridData } from '@/lib/sections/schemas';
 
 /**
- * Product categories OR featured products, depending on `variant`:
+ * Product categories, depending on `variant`:
  *
- *   cards4 — home “What We Offer”: up to 8 featured products, square images,
+ *   cards4 — home “What We Offer”: featured categories, square images,
  *            + “Explore all products” → /products
- *   cards2 — /products hub: category cards with product counts
+ *   cards2 — /products hub: every category with product counts
  */
 export default async function CategoryGrid({
   eyebrow,
@@ -38,7 +38,7 @@ export default async function CategoryGrid({
 
   if (!wide) {
     return (
-      <FeaturedProductsGrid
+      <FeaturedCategoriesGrid
         eyebrow={eyebrow}
         index={index}
         title={title}
@@ -112,7 +112,7 @@ export default async function CategoryGrid({
   );
 }
 
-async function FeaturedProductsGrid({
+async function FeaturedCategoriesGrid({
   eyebrow,
   index,
   title,
@@ -139,12 +139,12 @@ async function FeaturedProductsGrid({
   hasHeading: boolean;
   invert: boolean;
 }) {
-  let products = await getFeaturedProducts(limit);
-  // Before any product is marked Featured, keep the section useful.
-  if (products.length === 0) {
-    products = (await getProducts()).slice(0, limit);
+  let categories = await getFeaturedCategories(limit);
+  // Before any category is marked Featured, keep the section useful.
+  if (categories.length === 0) {
+    categories = (await getCategories()).slice(0, limit);
   }
-  if (products.length === 0) return null;
+  if (categories.length === 0) return null;
 
   const exploreHref = linkHref || '/products';
   const exploreLabel = linkText || 'Explore all products';
@@ -168,13 +168,13 @@ async function FeaturedProductsGrid({
       {rollerLine && <RollerLine className="mt-10" />}
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-        {products.map((p, i) => (
-          <RevealOnView key={`${p.categorySlug}-${p.slug}`} delay={i * 50}>
+        {categories.map((c, i) => (
+          <RevealOnView key={c.slug} delay={i * 50}>
             <Card
-              href={`/products/${p.categorySlug}/${p.slug}`}
-              title={p.name}
-              image={p.images[0] ?? ''}
-              description={stripHtml(p.summary, 90)}
+              href={`/products/${c.slug}`}
+              title={c.name}
+              image={c.image}
+              description={stripHtml(c.description, 90)}
               eyebrow={`${String(i + 1).padStart(2, '0')}`}
               aspect="square"
               sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 45vw"

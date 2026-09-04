@@ -16,6 +16,8 @@ export interface Category {
   /** Rich HTML (Summernote output later) — render through <RichText />. */
   description: string;
   image: string;
+  /** Home “What We Offer” grid when true. */
+  featured?: boolean;
   order: number;
   seo?: Seo;
   /** ISO 8601 — used by sitemap lastModified when present. */
@@ -32,8 +34,6 @@ export interface Product {
   /** Rich HTML — render through <RichText />. */
   content: string;
   specs?: { label: string; value: string }[];
-  /** Home “What We Offer” grid when true (max 8 shown). */
-  featured?: boolean;
   order: number;
   seo?: Seo;
   /** ISO 8601 — used by sitemap lastModified when present. */

@@ -280,7 +280,7 @@ export const seedPages: SeedPage[] = [
         asideText:
           'Over 15 years of expertise in printing and packaging machineries and consumables — and the reason this company measures itself on uptime rather than order volume.',
         asideCtaText: 'Read his message',
-        asideCtaHref: '/about/founder-message',
+        asideCtaHref: '/about/leadership-message',
       }),
 
       sec('cta', {
@@ -291,19 +291,19 @@ export const seedPages: SeedPage[] = [
     ],
   },
 
-  /* ---- Founder message -------------------------------------------------- */
+  /* ---- Leadership message ----------------------------------------------- */
   {
-    slug: 'founder-message',
-    title: 'Message from Founder & CEO',
-    seoTitle: 'Message from Founder & CEO',
+    slug: 'leadership-message',
+    title: 'Leadership Message',
+    seoTitle: 'Leadership Message',
     seoDescription:
-      'A message from Mr. Billal Hossain Bappi, Founder & CEO of Proactive Trade International, on why the company was built around service and local stock.',
+      'A leadership message from Mr. Billal Hossain Bappi, Founder & CEO of Proactive Trade International, on why the company was built around service and local stock.',
     sections: [
       sec('pageHero', {
         eyebrow: 'About Us',
-        title: 'Message from Founder & CEO',
+        title: 'Leadership Message',
         compact: false,
-        crumbs: [HOME, { label: 'About Us', href: '/about' }, { label: 'Founder Message' }],
+        crumbs: [HOME, { label: 'About Us', href: '/about' }, { label: 'Leadership Message' }],
       }),
 
       sec('founderMessage', {

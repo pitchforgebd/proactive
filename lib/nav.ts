@@ -26,7 +26,7 @@ export function buildNav(categories: Category[]): NavItem[] {
       href: '/about',
       children: [
         { label: 'About Us', href: '/about' },
-        { label: 'Message from Founder & CEO', href: '/about/founder-message' },
+        { label: 'LEADERSHIP MESSAGE', href: '/about/leadership-message' },
       ],
     },
     {

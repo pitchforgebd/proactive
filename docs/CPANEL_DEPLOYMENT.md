@@ -215,32 +215,103 @@ Then in **Admin → Settings**:
 
 ## Part 2 — Repeatable updates (later deploys)
 
-From the app root on the server:
+### Pre-flight (every time — avoids the failures we hit on bdix14)
+
+1. **Stop** the Node app in cPanel → Setup Node.js App (frees LVE process slots).
+2. SSH in and **activate the Node virtualenv** (plain SSH has no `npm`):
 
 ```bash
+# Copy the exact line from the Node app panel if paths differ
+source ~/nodevenv/proactive-app/20/bin/activate
 cd ~/proactive-app
-./deploy.sh
 ```
 
-`deploy.sh` does:
+Prompt must show `[proactive-app (20)]` (or your Node version).
+
+3. Kill leftover Next/Passenger workers (multiple `next-server` → `EAGAIN` / cagefs fork errors):
+
+```bash
+pkill -u $USER -f "next-server" || true
+pkill -u $USER -f "next build" || true
+pkill -u $USER -f "drizzle-kit" || true
+ps -u $USER -o pid,cmd | grep -E 'node|next' | grep -v grep   # should be empty
+```
+
+4. Confirm `node_modules` is a **symlink** to the venv (never a real folder uploaded from local):
+
+```bash
+ls -la node_modules
+# Expect: node_modules -> /home/.../nodevenv/proactive-app/20/lib/node_modules
+```
+
+If it is a real directory:
+
+```bash
+rm -rf node_modules
+ln -s ~/nodevenv/proactive-app/20/lib/node_modules ~/proactive-app/node_modules
+```
+
+### Deploy commands (preferred)
+
+```bash
+chmod +x deploy.sh   # once, if Permission denied
+bash deploy.sh       # or ./deploy.sh after chmod
+```
+
+`deploy.sh` (current):
 
 1. `git pull`
-2. `npm ci`
-3. `npm run build`
+2. `NODE_ENV=development npm install --include=dev` (devDeps required for `next build` — e.g. `tailwindcss`)
+3. `npm run build` with low-memory env (`NODE_OPTIONS`, `RAYON_NUM_THREADS=1`)
 4. Copy `.next/static` + `public` into `.next/standalone`
-5. Touch `tmp/restart.txt` (Passenger reload)
+5. Touch `tmp/restart.txt`
 
-**Uploads directory is never deleted.**
+Then cPanel → **Start** / **Restart** the Node app.
+
+**Manual equivalent** (if `deploy.sh` is awkward):
+
+```bash
+git pull
+export NODE_OPTIONS="--max-old-space-size=1536"
+export RAYON_NUM_THREADS=1
+export UV_THREADPOOL_SIZE=1
+# AUTH_SECRET must be available to the build if any server code reads it
+export AUTH_SECRET="…from panel…"
+
+NODE_ENV=development npm install --include=dev --no-audit --no-fund
+ls node_modules/tailwindcss/package.json   # must exist
+
+npm run build
+
+mkdir -p .next/standalone/.next
+rm -rf .next/standalone/.next/static
+cp -r .next/static .next/standalone/.next/static
+rm -rf .next/standalone/public
+cp -r public .next/standalone/public
+mkdir -p tmp && touch tmp/restart.txt
+```
+
+Startup file stays: `.next/standalone/server.js`.
 
 ### If the database schema changed
 
+**Do not rely on interactive `drizzle-kit push` over jailshell** — it often hangs waiting for a prompt you cannot see.
+
+**Preferred on this host:** phpMyAdmin → SQL → run the `ALTER TABLE … ADD COLUMN` statements for the new columns (safe additive changes). Duplicate-column errors mean that column is already there — skip it.
+
+Optional CLI (may hang; Ctrl+C if stuck >2 min):
+
 ```bash
-npm run db:push
-# or, if you use migrations:
-# npm run db:generate && npm run db:migrate
+yes | npx drizzle-kit push --force
 ```
 
-Do **not** re-run `db:seed` on production unless you intentionally want to reset seed content (seed is destructive for some tables).
+Do **not** run `db:seed` on production (destructive for content tables).
+
+### After deploy — content checks
+
+- Admin → Settings → **WhatsApp number** (floating button)
+- Admin → Products → **Featured** (home What We Offer, up to 8)
+- Logo title / subtitle / footer tagline if needed
 
 ---
 
@@ -249,40 +320,49 @@ Do **not** re-run `db:seed` on production unless you intentionally want to reset
 ```text
 /home/CPANEL_USER/
   proactive-app/                 ← Node application root
+    node_modules → symlink       ← MUST be symlink into nodevenv (not a real folder)
     .next/standalone/
       server.js                  ← startup file
-      .next/static/              ← copied after build
-      public/                    ← copied after build
+      .next/static/              ← copied after every build
+      public/                    ← copied after every build
     deploy.sh
     .env                         ← optional; prefer panel env
+  nodevenv/proactive-app/20/     ← CloudLinux Node virtualenv
   proactive-uploads/             ← UPLOAD_DIR (persistent)
 ```
 
 ---
 
-## Part 4 — Troubleshooting
+## Part 4 — Troubleshooting (battle-tested 2026-09)
 
-| Symptom | Likely cause |
-|---|---|
-| CSS / JS 404 | Forgot to copy `.next/static` into standalone |
-| Images 404 for `/images/...` | Forgot to copy `public` into standalone |
-| Uploaded images 404 | Wrong `UPLOAD_DIR`, or app not reading absolute path |
-| Uploads disappear after deploy | Files were stored under `public/` — move to `UPLOAD_DIR` |
-| Admin login fails / loops | `AUTH_SECRET` / `NEXTAUTH_URL` mismatch or wrong site URL |
-| DB connection error | Wrong `DB_*`, user not granted on DB, wrong host |
-| Blank page / 503 | Node app stopped; check panel logs; restart app |
-| Forms save but no email | SMTP not set (OK by design) — check Admin inbox |
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `npm: command not found` | Virtualenv not activated | `source ~/nodevenv/…/bin/activate` from Node panel |
+| `./deploy.sh: Permission denied` | Not executable | `chmod +x deploy.sh` or `bash deploy.sh` |
+| `cagefs_enter: Unable to fork` / LVE | Process or PMEM limit | Stop Node app; kill `next-server`; wait; retry; ask host to raise limits |
+| `spawn … node EAGAIN` during build | Too many `next-server` / workers | Stop app; `pkill` next-server; `experimental.cpus: 1` + `workerThreads: false` (already in `next.config.js`); low `NODE_OPTIONS` |
+| `Cannot find module 'tailwindcss'` | Prod install skipped devDeps | `NODE_ENV=development npm install --include=dev` |
+| CloudLinux “store node modules… symlink” | Real `node_modules` folder in app root | `rm -rf node_modules` then symlink to `nodevenv/…/lib/node_modules` |
+| `drizzle-kit push` hangs / “atke” | Waiting for interactive confirm | Ctrl+C; use phpMyAdmin SQL or `yes \| npx drizzle-kit push --force` |
+| CSS / JS 404 | Forgot standalone static copy | Copy `.next/static` → `.next/standalone/.next/static` |
+| Images 404 for `/images/...` | Forgot `public` copy | Copy `public` → `.next/standalone/public` |
+| Uploaded images 404 | Wrong `UPLOAD_DIR` | Absolute path outside app wipe |
+| Admin login fails / loops | `AUTH_SECRET` typo (`AUTH_SECRE`) or `NEXTAUTH_URL` | Fix panel env names exactly; restart app |
+| Blank page / 503 | App stopped or bad startup file | Start app; startup = `.next/standalone/server.js` |
+| Forms save but no email | SMTP unset | OK — check Admin inbox |
 
-Logs: cPanel Node app → **stdout/stderr** / error log for the application.
+**Build still fails with EAGAIN after cleanup:** build on a local PC (`npm run build`), upload `.next/standalone/`, plus `.next/static` into `.next/standalone/.next/static`, plus `public` into `.next/standalone/public`, then Start the app.
+
+Logs: cPanel Node app → stdout/stderr / error log.
 
 ---
 
 ## Part 5 — Security checklist
 
-- [ ] Unique strong `AUTH_SECRET`
+- [ ] Unique strong `AUTH_SECRET` (never commit; rotate if pasted in chat/SSH history)
 - [ ] No `.env` or passwords in git
 - [ ] `UPLOAD_DIR` outside deploy wipe paths
-- [ ] HTTPS live; rotate any seed default admin password
+- [ ] HTTPS live; rotate any weak/default admin password
 - [ ] SMTP password only if mail is required
 - [ ] Restrict SSH / cPanel access to operators
 
@@ -294,7 +374,7 @@ App already sends baseline headers (`X-Content-Type-Options`, `X-Frame-Options`,
 
 | What | How |
 |---|---|
-| Code | Previous git commit + `./deploy.sh` |
+| Code | Previous git commit + rebuild/deploy |
 | Content | MySQL dump |
 | Media / CVs | Copy of `UPLOAD_DIR` |
 
@@ -302,19 +382,34 @@ The standalone build is disposable. **MySQL + uploads** are the durable state.
 
 ---
 
-## Quick reference commands
+## Quick reference — safe update (copy/paste)
 
 ```bash
-# First time
-npm ci && npm run db:push && npm run db:seed && npm run build
+# 0) Stop Node app in cPanel first
+source ~/nodevenv/proactive-app/20/bin/activate
+cd ~/proactive-app
+pkill -u $USER -f "next-server" || true
+
+git pull
+ls -la node_modules   # must be symlink
+
+export NODE_OPTIONS="--max-old-space-size=1536"
+export RAYON_NUM_THREADS=1
+export UV_THREADPOOL_SIZE=1
+
+NODE_ENV=development npm install --include=dev --no-audit --no-fund
+npm run build
+
 mkdir -p .next/standalone/.next
+rm -rf .next/standalone/.next/static .next/standalone/public
 cp -r .next/static .next/standalone/.next/static
 cp -r public .next/standalone/public
-
-# Later
-./deploy.sh
+mkdir -p tmp && touch tmp/restart.txt
+# Start Node app in cPanel
 ```
+
+Schema: prefer phpMyAdmin `ALTER TABLE` — avoid interactive `db:push` on this host. Never `db:seed` on production.
 
 ---
 
-*Aligned with `next.config.js`, `deploy.sh`, `.env.example`, and `docs/DEPLOYMENT.md`.*
+*Aligned with `next.config.js` (`cpus: 1`, `workerThreads: false`), `deploy.sh`, `.env.example`, and `docs/DEPLOYMENT.md`. Updated after 2026-09 production deploy pain points.*

@@ -49,7 +49,21 @@ const nextConfig = {
     ];
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/about/founder-message',
+        destination: '/about/leadership-message',
+        permanent: true,
+      },
+    ];
+  },
+
   experimental: {
+    // Shared hosting (CloudLinux LVE): one compile worker — avoids EAGAIN /
+    // "Unable to fork" when Next tries to spawn jest-worker children.
+    cpus: 1,
+    workerThreads: false,
     // Keeps the client bundle lean: only the icons actually used get bundled.
     optimizePackageImports: ['lucide-react', 'framer-motion'],
     // Never bundle these into the server build — they load natively at runtime.

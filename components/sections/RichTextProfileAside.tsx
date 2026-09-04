@@ -58,7 +58,7 @@ export default function RichTextProfileAside({
             )}
             {asideCtaText && (
               <Link
-                href={asideCtaHref || '/about/founder-message'}
+                href={asideCtaHref || '/about/leadership-message'}
                 className="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase text-ink transition-colors hover:text-magenta"
               >
                 {asideCtaText}

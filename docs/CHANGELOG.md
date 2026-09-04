@@ -6,6 +6,25 @@ Format: newest first.
 
 ---
 
+## 2026-09-04 — Leadership Message rename
+
+- Nav/page label: **Leadership Message** (nav: `LEADERSHIP MESSAGE`); route `/about/leadership-message`.
+- Old `/about/founder-message` redirects permanently.
+
+## 2026-09-04 — What We Offer: featured categories (not products)
+
+- Home `categoryGrid` cards4 shows **featured categories** (square cards + Explore CTA).
+- `categories.featured` admin checkbox; removed featured from products.
+- `getFeaturedCategories()`; fallback to first N categories if none featured.
+
+## 2026-09-04 — cPanel deploy playbook (post-incident)
+
+- Expanded `docs/CPANEL_DEPLOYMENT.md` Part 2–4 with battle-tested steps from the
+  Sep 2026 production deploy: Node venv activate, stop app + kill `next-server`
+  before build, `node_modules` symlink rule, `NODE_ENV=development` + `--include=dev`,
+  low-memory build / `cpus:1`, hanging `db:push` → phpMyAdmin SQL, `deploy.sh`
+  permission, AUTH_SECRET naming, copy-paste quick reference.
+
 ## 2026-09-02 — Floating WhatsApp button
 
 - `settings.whatsapp`; Admin Settings field; public fixed bottom-right button

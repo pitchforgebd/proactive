@@ -131,6 +131,7 @@ async function seedCollections() {
       name: c.name,
       description: sanitizeHtml(c.description),
       image: c.image,
+      featured: true,
       order: c.order,
       seoTitle: c.seo?.title ?? null,
       seoDescription: c.seo?.description ?? null,
@@ -139,7 +140,7 @@ async function seedCollections() {
 
   await db.delete(schema.products);
   await db.insert(schema.products).values(
-    mockProducts.map((p, i) => ({
+    mockProducts.map((p) => ({
       id: p.id,
       slug: p.slug,
       categorySlug: p.categorySlug,
@@ -148,7 +149,6 @@ async function seedCollections() {
       summary: p.summary,
       content: sanitizeHtml(p.content),
       specs: p.specs ?? null,
-      featured: i < 8,
       order: p.order,
       seoTitle: p.seo?.title ?? null,
       seoDescription: p.seo?.description ?? null,

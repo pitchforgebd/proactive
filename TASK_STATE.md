@@ -1,6 +1,6 @@
 # TASK_STATE — Proactive Trade International website
 
-Last updated: 2026-09-02 — Home UX polish (featured products, mobile hero, justify, partners, logo text).
+Last updated: 2026-09-04 — What We Offer uses featured **categories** (not products).
 
 ## Continuity (Cursor-primary)
 
@@ -8,42 +8,29 @@ Last updated: 2026-09-02 — Home UX polish (featured products, mobile hero, jus
 |---|---|
 | `.cursor/rules/project.mdc` | Permanent always-on Cursor development rules |
 | **`TASK_STATE.md` (this file)** | **Live progress tracker** |
-| `docs/*` | Verified architecture / development / deployment / changelog |
+| `docs/CPANEL_DEPLOYMENT.md` | **Deploy playbook** — Part 2 pre-flight + Part 4 battle-tested troubleshooting |
 
 **Primary development environment: Cursor.**
 
 ---
 
-## Latest completed (2026-09-02)
+## Deploy reminder (production)
+
+Before every update: **Stop Node app** → activate `nodevenv` → kill stray `next-server` → ensure `node_modules` is a **symlink** → `NODE_ENV=development npm install --include=dev` → `npm run build` → copy static/public into standalone → Start app. Schema: phpMyAdmin SQL preferred over hanging `db:push`. Details: `docs/CPANEL_DEPLOYMENT.md` Part 2–4.
+
+---
+
+## Latest product work
 
 | Item | Status |
 |---|---|
-| Mobile-friendly hero height | DONE |
-| Justify body text (exclude `.prose`) | DONE |
-| Featured products on What We Offer (8, square, admin + CTA) | DONE — run `npm run db:push` |
-| Partners logos always colour | DONE |
-| Dynamic logo wordmark title/subtitle in Settings | DONE — run `npm run db:push` |
-
-**Ops:** After deploy, run `npm run db:push`, then in Admin → Products mark up to 8 as Featured. Optionally set Settings → Logo title / subtitle. Update home section link text to “Explore all products” if still “View More”.
-
----
-
-## Approved improvements track (2026-08-29) — COMPLETE (1–6)
-
-| Phase | Scope | Status |
-|---|---|---|
-| 1–6 | Logo, contrast, Products label, sitemap, SMTP, readiness | DONE |
-
----
-
-## SEO track — COMPLETE (7–11)
-
-| Phase | Scope | Status |
-|---|---|---|
-| **7–11** | SEO settings through final audit | DONE 2026-08-29 |
+| Mobile hero, justify text, partners colour, logo/footer text, WhatsApp float, admin toasts | DONE |
+| What We Offer = featured **categories** (Featured checkbox moved off products) | DONE — needs DB column |
 
 ---
 
 ## Exact next action
 
-Await approval for further work. For live DB: `npm run db:push`, mark featured products, adjust logo text in Settings if needed.
+1. Local/prod MySQL: `ALTER TABLE categories ADD COLUMN featured tinyint(1) NOT NULL DEFAULT 0;` (drop `products.featured` if it exists).
+2. Admin → Categories → check **Featured on home** for ones that should appear.
+3. Deploy when ready per `docs/CPANEL_DEPLOYMENT.md`.
