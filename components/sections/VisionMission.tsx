@@ -42,52 +42,65 @@ export default function VisionMission({
       <MotionReveal
         delay={delay}
         className={cn(
-          'relative overflow-hidden p-8 md:p-12',
+          'group relative overflow-hidden p-8 md:p-12',
           isVision ? 'bg-paper-2' : 'bg-band text-onband',
         )}
       >
-        <span
-          aria-hidden="true"
-          className={cn(
-            'absolute bottom-0 left-0 top-0 w-1',
-            isVision ? 'bg-cyan' : 'bg-magenta',
-          )}
-        />
-        <span
-          aria-hidden="true"
-          className={cn(
-            'pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-20 blur-2xl',
-            isVision ? 'bg-cyan' : 'bg-magenta',
-          )}
-        />
+        {/* Accent bar. The dark panel takes cyan — navy on navy is invisible. */}
+        {panels && (
+          <span
+            aria-hidden="true"
+            className={cn(
+              'absolute bottom-0 left-0 top-0 w-1',
+              isVision ? 'bg-magenta' : 'bg-cyan',
+            )}
+          />
+        )}
 
         {panels && show && (
           <span
             className={cn(
               'inline-flex h-12 w-12 items-center justify-center rounded-xl',
-              isVision ? 'bg-cyan/15 text-cyan' : 'bg-magenta/20 text-magenta',
+              isVision ? 'bg-magenta/10 text-magenta' : 'bg-cyan/15 text-cyan',
             )}
           >
             <Icon aria-hidden="true" className="h-6 w-6" />
           </span>
         )}
+
+        {/* Each half is one plate of the pair, so it carries its own index. */}
         <Eyebrow
-          tone={isVision ? 'cyan' : 'magenta'}
-          className={cn(panels && show ? 'mt-6' : undefined, !isVision && 'text-magenta')}
+          index={panels ? undefined : isVision ? '01' : '02'}
+          tone={isVision ? 'magenta' : 'cyan'}
+          className={cn(panels && show && 'mt-6')}
         >
           {label}
         </Eyebrow>
+
         <p
           className={cn(
-            'leading-relaxed',
+            // Opt out of the site-wide justify: at this measure it opens
+            // rivers of white space between the words.
+            'text-left leading-relaxed',
             isVision ? 'text-ink' : 'text-onband/85',
             panels
               ? 'mt-4 text-base sm:mt-5 sm:text-lg md:text-xl md:leading-relaxed'
-              : 'mt-4 text-base sm:mt-6 sm:text-lg',
+              : 'mt-5 text-base sm:mt-6 sm:text-lg sm:leading-[1.65]',
           )}
         >
           {text}
         </p>
+
+        {/* Press mark that runs out under the statement on hover. */}
+        {!panels && (
+          <span
+            aria-hidden="true"
+            className={cn(
+              'mt-7 block h-px w-8 transition-[width] duration-500 ease-press group-hover:w-20',
+              isVision ? 'bg-magenta/50' : 'bg-cyan/60',
+            )}
+          />
+        )}
       </MotionReveal>
     );
   };
@@ -96,12 +109,24 @@ export default function VisionMission({
     <Section tone={tone} cropMarks={cropMarks}>
       <div
         className={cn(
-          'grid overflow-hidden rounded-xl border border-ink/10',
+          'relative grid overflow-hidden rounded-2xl border border-ink/10',
           panels ? 'lg:grid-cols-2' : 'md:grid-cols-2',
         )}
       >
         {panel('vision', visionTitle, visionText, VisionIcon, Boolean(visionIcon), 0)}
         {panel('mission', missionTitle, missionText, MissionIcon, Boolean(missionIcon), 90)}
+
+        {/* Registration seam — the line where the two plates meet, marked at
+            its centre the way a press sheet carries a register diamond. Only
+            once the halves actually sit side by side. */}
+        {!panels && (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-cyan/40 md:block"
+          >
+            <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-cyan" />
+          </span>
+        )}
       </div>
 
       {linkText && (

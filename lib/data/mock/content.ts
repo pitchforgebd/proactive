@@ -177,6 +177,72 @@ export const globalSourcing = {
   ],
 };
 
+/** Shared copy for the "globalNetwork" section — home teaser and the
+ *  Global Sourcing page lead with the same claim, in the same words. */
+export const globalNetworkBody =
+  'Proactive Trade International maintains an active, verified sourcing network connecting Bangladeshi printing and packaging companies with internationally recognised manufacturers of machinery, press room chemicals, inks, coatings and specialty consumables. We source from the industry\'s leading manufacturing nations, so every installation meets international quality standards at a competitive, landed price.';
+
+export const globalNetworkStats = [
+  { value: '9+', label: 'Sourcing Countries' },
+  { value: '100%', label: 'Verified Suppliers' },
+];
+
+export interface SourcingCountry {
+  /** ISO 3166-1 alpha-2 — the flag is derived from this, never stored separately. */
+  code: string;
+  name: string;
+  text: string;
+}
+
+/** FOR CLIENT REVIEW — confirm the exact manufacturer relationships per market. */
+export const sourcingCountries: SourcingCountry[] = [
+  {
+    code: 'CN',
+    name: 'China',
+    text: 'Offset and digital press manufacturing, CTP/CTCP equipment, printing consumables and packaging machinery.',
+  },
+  {
+    code: 'IN',
+    name: 'India',
+    text: 'Specialty inks, coatings, adhesives and packaging material components.',
+  },
+  {
+    code: 'DE',
+    name: 'Germany',
+    text: 'Precision offset and post-press engineering, high-grade printing chemistry and plates.',
+  },
+  {
+    code: 'KR',
+    name: 'South Korea',
+    text: 'Digital and UV printing technology, consumables and precision components.',
+  },
+  {
+    code: 'SG',
+    name: 'Singapore',
+    text: 'Regional trading hub — specialty chemical sourcing and logistics support.',
+  },
+  {
+    code: 'MY',
+    name: 'Malaysia',
+    text: 'Packaging substrates, adhesives and raw materials for consumables manufacturing.',
+  },
+  {
+    code: 'JP',
+    name: 'Japan',
+    text: 'High-performance printing plates, precision machinery and coating technology.',
+  },
+  {
+    code: 'TR',
+    name: 'Turkey',
+    text: 'Printing chemicals, dyes and industrial raw materials.',
+  },
+  {
+    code: 'TW',
+    name: 'Taiwan',
+    text: 'Machinery components, digital printing hardware and precision parts.',
+  },
+];
+
 export interface TimelineEntry {
   year: string;
   title: string;

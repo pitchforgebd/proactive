@@ -5,19 +5,27 @@ import { cn } from '@/lib/utils';
 /**
  * Site mark for header / footer / mobile drawer.
  *
- * When `src` is set (from Settings.logo), render the uploaded/public image.
- * Otherwise fall back to the coded CMYK registration wordmark — title and
- * subtitle come from Settings (`logoTitle` / `logoSubtitle`).
+ * Two images may be supplied: `src` (light theme) and `srcDark`. When both are
+ * present BOTH are rendered and CSS picks one via the `dark:` variant, which is
+ * mapped to `[data-theme="dark"]` in tailwind.config.ts. That matters because
+ * the theme is applied by a blocking script before first paint — swapping in
+ * JavaScript instead would flash the wrong mark and risk a hydration mismatch.
+ *
+ * With no image at all, it falls back to the coded registration wordmark;
+ * title and subtitle come from Settings (`logoTitle` / `logoSubtitle`).
  */
 export default function Logo({
   src,
+  srcDark,
   title = 'Proactive',
   subtitle = "Trade Int'l",
   invert = false,
   className,
 }: {
-  /** Empty/undefined → SVG wordmark fallback. */
+  /** Light-theme image. Empty/undefined → SVG wordmark fallback. */
   src?: string | null;
+  /** Dark-theme image. Empty/undefined → `src` is used in both themes. */
+  srcDark?: string | null;
   /** Primary wordmark line (Settings → Logo title). */
   title?: string;
   /** Secondary wordmark line (Settings → Logo subtitle). */
@@ -25,21 +33,41 @@ export default function Logo({
   invert?: boolean;
   className?: string;
 }) {
-  const imageSrc = src?.trim() || '';
+  const lightSrc = src?.trim() || '';
+  const darkSrc = srcDark?.trim() || '';
   const titleLine = title.trim() || 'Proactive';
   const subtitleLine = subtitle.trim() || "Trade Int'l";
+  const alt = `${titleLine} ${subtitleLine}`.trim();
 
-  if (imageSrc) {
+  if (lightSrc || darkSrc) {
+    // Only one uploaded → use it in both themes rather than leaving a gap.
+    const light = lightSrc || darkSrc;
+    const dark = darkSrc || lightSrc;
+    const hasPair = Boolean(lightSrc && darkSrc) && light !== dark;
+
     return (
       <span className={cn('relative flex h-9 w-[min(100%,180px)] items-center', className)}>
         <Image
-          src={imageSrc}
-          alt={`${titleLine} ${subtitleLine}`.trim()}
+          src={light}
+          alt={alt}
           width={180}
           height={36}
-          className="h-9 w-auto max-w-full object-contain object-left"
+          className={cn(
+            'h-9 w-auto max-w-full object-contain object-left',
+            hasPair && 'dark:hidden',
+          )}
           priority
         />
+        {hasPair && (
+          <Image
+            src={dark}
+            alt={alt}
+            width={180}
+            height={36}
+            className="hidden h-9 w-auto max-w-full object-contain object-left dark:block"
+            priority
+          />
+        )}
       </span>
     );
   }

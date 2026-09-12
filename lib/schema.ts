@@ -205,10 +205,20 @@ export const settings = mysqlTable('settings', {
   id: int('id').primaryKey().default(1),
   companyName: varchar('company_name', { length: 200 }),
   /**
-   * Optional site logo URL (/images/… or /api/files/images/…). Empty/null →
-   * the coded SVG wordmark fallback in components/layout/Logo.tsx.
+   * Header logo for the LIGHT theme (/images/… or /api/files/images/…).
+   * Empty/null → the coded SVG wordmark fallback in components/layout/Logo.tsx.
    */
   logo: varchar('logo', { length: 500 }),
+  /**
+   * Header logo for the DARK theme. Empty/null → `logo` is used in both
+   * themes, so a single-logo site needs no second upload.
+   */
+  logoDark: varchar('logo_dark', { length: 500 }),
+  /**
+   * Footer logo — one image, used in both themes (the footer sits on a navy
+   * band that does not flip with the theme). Empty/null → falls back to `logo`.
+   */
+  logoFooter: varchar('logo_footer', { length: 500 }),
   /**
    * Wordmark primary line when no logo image is set (header / footer / drawer).
    * Empty → “Proactive”.

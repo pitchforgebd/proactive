@@ -29,7 +29,7 @@ export default function SectionHeading({
   return (
     <div
       className={cn(
-        'flex flex-col gap-6 md:flex-row md:items-end md:justify-between',
+        'flex flex-col gap-8 md:flex-row md:items-end md:justify-between',
         align === 'center' && 'md:flex-col md:items-center md:text-center',
         className,
       )}
@@ -46,7 +46,7 @@ export default function SectionHeading({
         )}
         <h2
           className={cn(
-            'mt-3 text-lg font-bold leading-snug sm:mt-4 sm:text-xl sm:leading-tight md:text-2xl',
+            'mt-4 text-lg font-bold leading-snug sm:mt-5 sm:text-xl sm:leading-tight md:text-2xl',
             invert ? 'text-onband' : 'text-ink',
           )}
         >
@@ -55,7 +55,7 @@ export default function SectionHeading({
         {lede && (
           <p
             className={cn(
-              'mt-3 text-sm leading-relaxed sm:mt-4 sm:text-base',
+              'mt-4 max-w-xl text-sm leading-relaxed sm:mt-5 sm:text-base',
               invert ? 'text-onband/65' : 'text-graphite',
             )}
           >

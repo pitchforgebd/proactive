@@ -36,14 +36,10 @@ export default function CTABandClient({
       <HalftoneBg grid fade={false} className="opacity-70" />
       <PressAtmosphere intensity="normal" />
 
-      {/* Soft cyan/magenta blooms */}
+      {/* One soft bloom, not two competing ones. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-cyan/20 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-magenta/20 blur-3xl"
+        className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-cyan/10 blur-3xl"
       />
 
       <div className="container-page relative py-16 md:py-20">
@@ -93,7 +89,7 @@ export default function CTABandClient({
                 href={`mailto:${email}`}
                 className="inline-flex items-center gap-2 transition-colors hover:text-cyan"
               >
-                <Mail aria-hidden="true" className="h-3.5 w-3.5 text-magenta" />
+                <Mail aria-hidden="true" className="h-3.5 w-3.5 text-cyan" />
                 {email}
               </a>
             </div>

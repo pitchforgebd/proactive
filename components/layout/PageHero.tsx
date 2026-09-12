@@ -52,7 +52,7 @@ export default function PageHero({
       <div
         className={cn(
           'container-page relative z-[1]',
-          compact ? 'py-10 sm:py-14 md:py-16' : 'py-12 sm:py-16 md:py-24',
+          compact ? 'py-12 sm:py-16 md:py-20' : 'py-14 sm:py-20 md:py-28',
         )}
       >
         {crumbs && <Breadcrumbs items={crumbs} invert className="mb-6 sm:mb-8" />}

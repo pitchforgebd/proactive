@@ -44,7 +44,7 @@ export default function Section({
   return (
     <Tag
       id={id}
-      className={cn('relative py-12 sm:py-16 md:py-24', toneClass[tone], className)}
+      className={cn('relative py-14 sm:py-20 md:py-28', toneClass[tone], className)}
     >
       {halftone && (
         <div

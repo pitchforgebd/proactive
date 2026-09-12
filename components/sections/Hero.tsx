@@ -37,7 +37,7 @@ export default function Hero({
         <svg
           aria-hidden="true"
           viewBox="0 0 400 400"
-          className="pointer-events-none absolute -right-24 top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.55] lg:block"
+          className="pointer-events-none absolute -right-24 top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.3] lg:block"
         >
           <g className="p-layer" style={{ '--p-depth': '26px' } as React.CSSProperties}>
             <circle cx="200" cy="200" r="120" fill="none" stroke="var(--cyan)" strokeWidth="1" />
@@ -79,7 +79,7 @@ export default function Hero({
         </RegistrationHero>
 
         {lede && (
-          <p className="mt-3 max-w-xl text-[13px] leading-snug text-onband/70 sm:mt-5 sm:text-sm sm:leading-relaxed md:mt-7 md:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-onband/70 sm:mt-6 sm:leading-relaxed md:mt-7 md:text-base">
             {lede}
           </p>
         )}

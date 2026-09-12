@@ -144,7 +144,7 @@ export const valueGridSchema = z.object({
     )
     .min(1),
   /** Coded layouts — the admin picks one, never authors it. */
-  variant: z.enum(['hairline', 'rule', 'numbered']).default('hairline'),
+  variant: z.enum(['hairline', 'rule', 'numbered', 'proof']).default('hairline'),
   columns: z.enum(['2', '3', '4', '5']).default('4'),
   tone: tone().default('paper-2'),
   halftone: z.boolean().default(false),
@@ -199,6 +199,36 @@ export const capabilitiesSchema = z.object({
     .array(z.object({ step: z.string(), detail: z.string() }))
     .default([]),
   ...ctaFields,
+});
+
+export const globalNetworkSchema = z.object({
+  eyebrow: z.string().optional(),
+  /** One line per newline — last line renders in the accent colour. */
+  heading: textarea(),
+  html: html(),
+  stats: z
+    .array(z.object({ value: z.string(), label: z.string() }))
+    .max(4)
+    .default([]),
+  mapIcon: icon().optional(),
+  mapHeading: z.string().default('Global Reach'),
+  mapText: textarea().optional(),
+  tone: tone().default('paper-2'),
+});
+
+export const countriesGridSchema = z.object({
+  ...headingFields,
+  countries: z
+    .array(
+      z.object({
+        /** ISO 3166-1 alpha-2 — also used to render the flag. */
+        code: z.string().length(2),
+        name: z.string(),
+        text: textarea().optional(),
+      }),
+    )
+    .min(1),
+  tone: tone().default('paper'),
 });
 
 export const categoryGridSchema = z.object({
@@ -364,6 +394,8 @@ export type TimelineData = z.infer<typeof timelineSchema>;
 export type VisionMissionData = z.infer<typeof visionMissionSchema>;
 export type SolutionsData = z.infer<typeof solutionsSchema>;
 export type CapabilitiesData = z.infer<typeof capabilitiesSchema>;
+export type GlobalNetworkData = z.infer<typeof globalNetworkSchema>;
+export type CountriesGridData = z.infer<typeof countriesGridSchema>;
 export type CategoryGridData = z.infer<typeof categoryGridSchema>;
 export type GalleryPreviewData = z.infer<typeof galleryPreviewSchema>;
 export type PartnersData = z.infer<typeof partnersSchema>;

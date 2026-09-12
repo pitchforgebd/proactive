@@ -3,6 +3,8 @@ import type { JobOpening, SiteSettings } from '@/lib/types';
 export const siteSettings: SiteSettings = {
   companyName: 'Proactive Trade International',
   logo: '',
+  logoDark: '',
+  logoFooter: '',
   logoTitle: 'Proactive',
   logoSubtitle: "Trade Int'l",
   footerTagline:

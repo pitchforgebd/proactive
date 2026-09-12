@@ -3,28 +3,53 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   Design tokens — "CMYK Precision"
+   Design tokens — "Proactive Blue" (navy + sky, from the logo mark)
    Single source of truth. tailwind.config.ts only maps names onto these.
+
+   The whole palette derives from the two logo colours — a deep registration
+   navy and a bright signal sky-blue. No neutral black/grey survives: every
+   "dark" surface is a tinted navy, every "light" surface a cool blue-white.
+   Token NAMES (ink/cyan/magenta/yellow/band…) are kept as-is on purpose —
+   they're wired through 60+ components — only their VALUES moved to the
+   brand duo, so the whole site re-themes from this one block.
    ========================================================================== */
 :root {
-  --ink: #0e1116; /* rich near-black "key" */
-  --ink-2: #171b21; /* elevated dark surface */
-  --paper: #f4f6f8; /* cool paper stock */
-  --paper-2: #ffffff;
-  --graphite: #3a4048; /* muted UI text / borders */
-  --cyan: #00aeef; /* process cyan — signature accent 1 */
-  --magenta: #ec008c; /* process magenta — signature accent 2 */
-  --yellow: #ffd400; /* process yellow — rare highlight only */
-  --line: rgba(255, 255, 255, 0.08); /* hairline on dark */
-  --line-ink: rgba(14, 17, 22, 0.12); /* hairline on paper */
+  /* Channels, not colours. Tailwind maps each name to
+     `rgb(var(--x-rgb) / <alpha-value>)` so opacity modifiers (text-onband/55,
+     bg-cyan/10, border-ink/10 …) actually compile — with a bare `var(--x)`
+     colour Tailwind silently drops every one of those utilities. */
+  --ink-rgb: 14 23 48; /* deep navy "key" — primary text on paper */
+  --ink-2-rgb: 21 34 74; /* elevated dark surface */
+  --paper-rgb: 244 247 252; /* cool paper stock, faint blue tint */
+  --paper-2-rgb: 255 255 255;
+  --graphite-rgb: 62 76 107; /* muted UI text / borders, navy-tinted */
+  --cyan-rgb: 18 169 230; /* logo sky-blue — signature accent 1 */
+  --magenta-rgb: 23 59 138; /* logo navy — signature accent 2 (was pink/magenta) */
+  --yellow-rgb: 91 143 224; /* mid brand-blue — rare highlight only (was yellow) */
 
   /* Always-dark band. `--ink` doubles as primary TEXT, so it flips with the
-     theme; these do not. An ink section stays an ink section in dark mode. */
-  --band: #0e1116;
-  --band-2: #171b21;
-  --onband: #f4f6f8;
+     theme; these do not. A navy section stays a navy section in dark mode. */
+  --band-rgb: 11 31 77;
+  --band-2-rgb: 18 42 99;
+  --onband-rgb: 242 247 255;
 
-  --halftone-on-paper: rgba(14, 17, 22, 0.1);
+  /* Ready-made colours for hand-written CSS (`stroke: var(--cyan)` etc.). */
+  --ink: rgb(var(--ink-rgb));
+  --ink-2: rgb(var(--ink-2-rgb));
+  --paper: rgb(var(--paper-rgb));
+  --paper-2: rgb(var(--paper-2-rgb));
+  --graphite: rgb(var(--graphite-rgb));
+  --cyan: rgb(var(--cyan-rgb));
+  --magenta: rgb(var(--magenta-rgb));
+  --yellow: rgb(var(--yellow-rgb));
+  --band: rgb(var(--band-rgb));
+  --band-2: rgb(var(--band-2-rgb));
+  --onband: rgb(var(--onband-rgb));
+
+  --line: rgba(180, 208, 255, 0.12); /* hairline on dark */
+  --line-ink: rgba(23, 59, 138, 0.14); /* hairline on paper */
+
+  --halftone-on-paper: rgba(23, 59, 138, 0.08);
 
   color-scheme: light;
 
@@ -41,18 +66,20 @@
    and dark sections instead of turning into a photographic negative.
    -------------------------------------------------------------------------- */
 :root[data-theme='dark'] {
-  --ink: #edf1f5; /* now the primary TEXT colour */
-  --ink-2: #f4f6f8;
-  --paper: #0c0f13; /* page surface */
-  --paper-2: #12171d; /* elevated surface — cards, panels, inputs */
-  --graphite: #98a2ad; /* muted text, still AA on --paper */
-  --line-ink: rgba(255, 255, 255, 0.12);
+  /* Only the channels move — the `--x` colours above are derived from these,
+     so both Tailwind's alpha utilities and raw CSS follow automatically. */
+  --ink-rgb: 234 242 255; /* now the primary TEXT colour */
+  --ink-2-rgb: 245 249 255;
+  --paper-rgb: 8 22 51; /* page surface — deep navy, never neutral black */
+  --paper-2-rgb: 15 32 73; /* elevated surface — cards, panels, inputs */
+  --graphite-rgb: 147 174 222; /* muted text, still AA on --paper */
+  --line-ink: rgba(200, 222, 255, 0.16);
 
   /* Bands sit deeper than the page so the alternation survives. */
-  --band: #06080a;
-  --band-2: #0f141a;
+  --band-rgb: 5 15 38;
+  --band-2-rgb: 11 29 69;
 
-  --halftone-on-paper: rgba(255, 255, 255, 0.06);
+  --halftone-on-paper: rgba(180, 208, 255, 0.07);
 
   color-scheme: dark;
 }
@@ -197,25 +224,21 @@
     line-height: 1.2;
   }
 
-  /* Halftone dot field — background of dark sections. */
+  /* Halftone dot field / registration grid — previously a background texture
+     on dark sections (hero bands, footer, CTA band). Retired: it read as
+     graph-paper clutter rather than a printing accent. `<HalftoneBg>` /
+     `.halftone` and `.reg-grid` are still rendered by components (so no JSX
+     had to change) but now paint nothing — surfaces are left clean. */
   .halftone {
-    background-image: radial-gradient(
-      var(--halftone-color, rgba(255, 255, 255, 0.11)) 1px,
-      transparent 1.15px
-    );
-    background-size: var(--halftone-size, 7px) var(--halftone-size, 7px);
+    background-image: none;
   }
 
   .halftone-ink {
     --halftone-color: var(--halftone-on-paper);
   }
 
-  /* Faint registration grid used behind hero / feature bands. */
   .reg-grid {
-    background-image:
-      linear-gradient(to right, var(--line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size: 72px 72px;
+    background-image: none;
   }
 
   /* ---- CMYK registration snap (signature element) ----------------------
@@ -413,6 +436,39 @@
     opacity: 0.55;
   }
 
+  /* ---- Outlined numerals (Core Values ledger) --------------------------
+     Hairline-stroked figures rather than filled ones — the register-mark
+     numbering on a press sheet. Falls back to a faint filled numeral where
+     text-stroke is unavailable, so the figure is never invisible. */
+  .numeral-outline {
+    color: rgb(var(--ink-rgb) / 0.16);
+    transition: color 500ms ease, -webkit-text-stroke-color 500ms ease;
+  }
+
+  .numeral-outline--invert {
+    color: rgb(var(--onband-rgb) / 0.22);
+  }
+
+  @supports (-webkit-text-stroke: 1px black) {
+    .numeral-outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgb(var(--ink-rgb) / 0.3);
+    }
+
+    .numeral-outline--invert {
+      color: transparent;
+      -webkit-text-stroke-color: rgb(var(--onband-rgb) / 0.4);
+    }
+
+    .group:hover .numeral-outline {
+      -webkit-text-stroke-color: rgb(var(--cyan-rgb) / 0.95);
+    }
+  }
+
+  .group:hover .numeral-outline {
+    color: rgb(var(--cyan-rgb) / 0.55);
+  }
+
   /* Ink-spread scroll reveal, driven by the RevealOnView wrapper. */
   .ink-reveal {
     opacity: 0;
@@ -604,16 +660,18 @@
   }
 }
 
+/* Toned down — was a much brighter sweep that added to the busy/"gathered"
+   look of dark bands stacked with the (now-removed) grid/halftone texture. */
 @keyframes press-scan {
   0% {
     transform: translateX(-30%) skewX(-12deg);
     opacity: 0;
   }
   8% {
-    opacity: 0.85;
+    opacity: 0.4;
   }
   45% {
-    opacity: 0.55;
+    opacity: 0.25;
   }
   70% {
     opacity: 0;
@@ -624,19 +682,20 @@
   }
 }
 
+/* Toned down to a quiet flicker rather than a visible pulse. */
 @keyframes press-dot-drift {
   0%,
   100% {
     transform: translate3d(0, 0, 0);
-    opacity: 0.15;
+    opacity: 0.08;
   }
   40% {
     transform: translate3d(12px, -18px, 0);
-    opacity: 0.55;
+    opacity: 0.25;
   }
   70% {
     transform: translate3d(-8px, 10px, 0);
-    opacity: 0.3;
+    opacity: 0.14;
   }
 }
 
@@ -760,6 +819,72 @@
 
 .ink-rule-node {
   animation: ink-rule-blink 2.4s ease-in-out infinite;
+}
+
+/* ---- Sourcing-network map (components/motion/WorldMap.tsx) --------------
+   Pure CSS so the map stays a static, zero-JS server-rendered SVG. */
+.map-pin {
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: var(--cyan);
+}
+
+.map-pin--hub {
+  fill: var(--magenta);
+  animation: map-pin-pulse 2.4s ease-in-out infinite;
+}
+
+.map-pin--source {
+  animation: map-pin-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes map-pin-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.35);
+  }
+}
+
+.map-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  stroke: var(--magenta);
+  stroke-width: 0.22;
+  animation: map-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.map-ping--b {
+  animation-delay: 1.3s;
+}
+
+@keyframes map-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.map-route {
+  stroke: var(--cyan);
+  stroke-width: 0.22;
+  opacity: 0.55;
+  stroke-dasharray: 1 2.6;
+  animation: map-flow 22s linear infinite;
+}
+
+@keyframes map-flow {
+  to {
+    stroke-dashoffset: -400;
+  }
 }
 
 /* ==========================================================================

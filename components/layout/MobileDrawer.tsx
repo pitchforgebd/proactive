@@ -16,11 +16,13 @@ import { cn } from '@/lib/utils';
 export default function MobileDrawer({
   items,
   logoSrc,
+  logoDarkSrc,
   logoTitle,
   logoSubtitle,
 }: {
   items: NavItem[];
   logoSrc?: string | null;
+  logoDarkSrc?: string | null;
   logoTitle?: string;
   logoSubtitle?: string;
 }) {
@@ -93,7 +95,7 @@ export default function MobileDrawer({
         )}
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-          <Logo src={logoSrc} title={logoTitle} subtitle={logoSubtitle} />
+          <Logo src={logoSrc} srcDark={logoDarkSrc} title={logoTitle} subtitle={logoSubtitle} />
           <button
             type="button"
             onClick={() => {

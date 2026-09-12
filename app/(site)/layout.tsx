@@ -4,6 +4,7 @@ import { getSiteSettings } from '@/lib/data';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import WhatsAppFloat from '@/components/layout/WhatsAppFloat';
+import ScrollToTop from '@/components/layout/ScrollToTop';
 import RouteSweep from '@/components/motion/RouteSweep';
 import CursorRegistration from '@/components/motion/CursorRegistration';
 import SiteAnalytics from '@/components/seo/SiteAnalytics';
@@ -80,6 +81,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="main">{children}</main>
       <Footer />
       <WhatsAppFloat number={settings.whatsapp} />
+      <ScrollToTop />
 
       <SiteAnalytics seo={settings.seo} />
 

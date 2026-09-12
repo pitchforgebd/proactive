@@ -388,6 +388,8 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     return {
       companyName: 'Proactive Trade International',
       logo: '',
+      logoDark: '',
+      logoFooter: '',
       logoTitle: 'Proactive',
       logoSubtitle: "Trade Int'l",
       footerTagline: DEFAULT_FOOTER_TAGLINE,
@@ -418,6 +420,8 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   return {
     companyName: row.companyName ?? 'Proactive Trade International',
     logo: row.logo?.trim() ?? '',
+    logoDark: row.logoDark?.trim() ?? '',
+    logoFooter: row.logoFooter?.trim() ?? '',
     logoTitle: row.logoTitle?.trim() || 'Proactive',
     logoSubtitle: row.logoSubtitle?.trim() || "Trade Int'l",
     footerTagline: row.footerTagline?.trim() || DEFAULT_FOOTER_TAGLINE,

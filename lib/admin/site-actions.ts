@@ -66,6 +66,8 @@ const optionalPixel = z
 const settingsInput = z.object({
   companyName: z.string().trim().min(1, 'The company name is required.').max(200),
   logo: optionalLogo,
+  logoDark: optionalLogo,
+  logoFooter: optionalLogo,
   logoTitle: z.string().trim().max(80),
   logoSubtitle: z.string().trim().max(80),
   footerTagline: z.string().trim().max(600),
@@ -148,6 +150,8 @@ export async function saveSettings(rawJson: string): Promise<SettingsResult> {
     seoPinterestVerification: parsed.data.seoPinterestVerification || null,
     seoAhrefsVerification: parsed.data.seoAhrefsVerification || null,
     logo: parsed.data.logo || null,
+    logoDark: parsed.data.logoDark || null,
+    logoFooter: parsed.data.logoFooter || null,
     logoTitle: parsed.data.logoTitle || null,
     logoSubtitle: parsed.data.logoSubtitle || null,
     footerTagline: parsed.data.footerTagline || null,

@@ -127,11 +127,12 @@ export default function SettingsForm({ initial }: { initial: Values }) {
 
       <div>
         <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
-          Site logo
+          Header logo — light theme
         </p>
         <p className="mt-1 text-xs text-graphite">
-          Optional. Upload a PNG/WebP/JPG (or paste a /images/… path). Clear the
-          field to restore the default CMYK wordmark in the header and footer.
+          Shown in the navbar while the site is in light mode. Upload a
+          PNG/WebP/JPG (or paste a /images/… path). Clear it to restore the
+          coded wordmark.
         </p>
         <div className="mt-3">
           <ImageField
@@ -143,6 +144,52 @@ export default function SettingsForm({ initial }: { initial: Values }) {
         {result?.errors?.logo && (
           <p id="logo-error" role="alert" className="mt-1.5 text-xs text-magenta">
             {result.errors.logo}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
+          Header logo — dark theme
+        </p>
+        <p className="mt-1 text-xs text-graphite">
+          Shown in the navbar while the site is in dark mode — use the light /
+          reversed version of the mark here. Leave empty to use the light-theme
+          logo in both modes.
+        </p>
+        <div className="mt-3">
+          <ImageField
+            value={values.logoDark ?? ''}
+            onChange={(url) => set('logoDark', url)}
+            describedBy={result?.errors?.logoDark ? 'logoDark-error' : undefined}
+          />
+        </div>
+        {result?.errors?.logoDark && (
+          <p id="logoDark-error" role="alert" className="mt-1.5 text-xs text-magenta">
+            {result.errors.logoDark}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-graphite">
+          Footer logo
+        </p>
+        <p className="mt-1 text-xs text-graphite">
+          One image for the footer in both themes — the footer band stays navy,
+          so use the light / reversed mark. Leave empty to fall back to the
+          header logo.
+        </p>
+        <div className="mt-3">
+          <ImageField
+            value={values.logoFooter ?? ''}
+            onChange={(url) => set('logoFooter', url)}
+            describedBy={result?.errors?.logoFooter ? 'logoFooter-error' : undefined}
+          />
+        </div>
+        {result?.errors?.logoFooter && (
+          <p id="logoFooter-error" role="alert" className="mt-1.5 text-xs text-magenta">
+            {result.errors.logoFooter}
           </p>
         )}
       </div>

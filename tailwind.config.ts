@@ -14,20 +14,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Colours resolve through the `--*-rgb` CHANNEL variables, not the ready-
+      // made `--ink` / `--cyan` colours. With a bare `var(--x)` Tailwind cannot
+      // inject an alpha channel, so every `text-onband/55`, `bg-cyan/10`,
+      // `border-ink/10` in the codebase silently compiled to nothing. The
+      // `<alpha-value>` placeholder is what makes those utilities real.
       colors: {
-        ink: 'var(--ink)',
-        'ink-2': 'var(--ink-2)',
+        ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
+        'ink-2': 'rgb(var(--ink-2-rgb) / <alpha-value>)',
         // Always-dark section grounds + the text that sits on them. These do
         // NOT flip with the theme — an ink band stays an ink band in dark mode.
-        band: 'var(--band)',
-        'band-2': 'var(--band-2)',
-        onband: 'var(--onband)',
-        paper: 'var(--paper)',
-        'paper-2': 'var(--paper-2)',
-        graphite: 'var(--graphite)',
-        cyan: 'var(--cyan)',
-        magenta: 'var(--magenta)',
-        yellow: 'var(--yellow)',
+        band: 'rgb(var(--band-rgb) / <alpha-value>)',
+        'band-2': 'rgb(var(--band-2-rgb) / <alpha-value>)',
+        onband: 'rgb(var(--onband-rgb) / <alpha-value>)',
+        paper: 'rgb(var(--paper-rgb) / <alpha-value>)',
+        'paper-2': 'rgb(var(--paper-2-rgb) / <alpha-value>)',
+        graphite: 'rgb(var(--graphite-rgb) / <alpha-value>)',
+        cyan: 'rgb(var(--cyan-rgb) / <alpha-value>)',
+        magenta: 'rgb(var(--magenta-rgb) / <alpha-value>)',
+        yellow: 'rgb(var(--yellow-rgb) / <alpha-value>)',
+        // Already an rgba() hairline — no alpha modifier is used on it.
         line: 'var(--line)',
       },
       fontFamily: {

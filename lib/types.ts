@@ -136,8 +136,12 @@ export interface PageWithSections {
 /** Editable-from-dashboard globals (contact block, socials, map, logo, SEO). */
 export interface SiteSettings {
   companyName: string;
-  /** Empty string → UI uses the coded SVG wordmark fallback. */
+  /** Header logo, LIGHT theme. Empty → coded SVG wordmark fallback. */
   logo: string;
+  /** Header logo, DARK theme. Empty → `logo` is used in both themes. */
+  logoDark: string;
+  /** Footer logo (one image, both themes). Empty → falls back to `logo`. */
+  logoFooter: string;
   /** Wordmark primary line when `logo` is empty. Default “Proactive”. */
   logoTitle: string;
   /** Wordmark secondary line when `logo` is empty. Default “Trade Int'l”. */

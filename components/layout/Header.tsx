@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { getCategories, getSiteSettings } from '@/lib/data';
 import { buildNav } from '@/lib/nav';
 import Logo from '@/components/layout/Logo';
@@ -21,16 +22,17 @@ export default async function Header() {
   ]);
   const nav = buildNav(categories);
   const logoSrc = settings.logo || undefined;
+  const logoDarkSrc = settings.logoDark || undefined;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper-2">
-      {/* CMYK registration rule — the site's signature hairline. */}
+    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper-2 shadow-[0_1px_0_rgb(var(--ink-rgb)/0.04)]">
+      {/* Registration rule — the site's signature hairline, sky into navy. */}
       <div
         aria-hidden="true"
         className="h-0.5 w-full"
         style={{
           background:
-            'linear-gradient(90deg, var(--cyan) 0%, var(--cyan) 33%, var(--magenta) 33%, var(--magenta) 66%, var(--yellow) 66%, var(--yellow) 100%)',
+            'linear-gradient(90deg, var(--cyan) 0%, var(--magenta) 55%, var(--cyan) 100%)',
         }}
       />
 
@@ -42,6 +44,7 @@ export default async function Header() {
         >
           <Logo
             src={logoSrc}
+            srcDark={logoDarkSrc}
             title={settings.logoTitle}
             subtitle={settings.logoSubtitle}
           />
@@ -54,14 +57,19 @@ export default async function Header() {
 
           <Link
             href="/contact"
-            className="hidden rounded-md bg-ink px-5 py-2.5 font-mono text-xs uppercase text-paper transition-colors hover:bg-magenta sm:inline-flex"
+            className="group hidden items-center gap-2 rounded-lg bg-magenta px-5 py-2.5 font-mono text-xs uppercase text-white shadow-[0_10px_24px_-14px_rgb(var(--magenta-rgb)/0.9)] transition-all duration-300 ease-press hover:bg-cyan hover:text-band hover:shadow-[0_12px_26px_-12px_rgb(var(--cyan-rgb)/0.8)] sm:inline-flex"
           >
             Get in Touch
+            <ArrowRight
+              aria-hidden="true"
+              className="h-3.5 w-3.5 transition-transform duration-300 ease-press group-hover:translate-x-0.5"
+            />
           </Link>
 
           <MobileDrawer
             items={nav}
             logoSrc={logoSrc}
+            logoDarkSrc={logoDarkSrc}
             logoTitle={settings.logoTitle}
             logoSubtitle={settings.logoSubtitle}
           />

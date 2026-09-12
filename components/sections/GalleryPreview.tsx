@@ -40,7 +40,7 @@ export default async function GalleryPreview({
         invert={invert}
       />
 
-      <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+      <ul className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         {gallery.map((g, i) => (
           <MotionReveal as="li" key={g.id} delay={i * 50}>
             <Link
@@ -56,13 +56,6 @@ export default async function GalleryPreview({
                 className="object-cover transition-transform duration-700 ease-press group-hover:scale-110"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-band/70 via-band/20 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-40" />
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute right-2 top-2 h-4 w-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              >
-                <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-cyan" />
-                <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-magenta" />
-              </span>
             </Link>
           </MotionReveal>
         ))}

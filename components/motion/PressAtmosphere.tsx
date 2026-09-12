@@ -27,11 +27,11 @@ export default function PressAtmosphere({
         className,
       )}
     >
-      {/* Orbiting registration target */}
+      {/* Orbiting registration target — kept quiet, not a focal element. */}
       <div
         className={cn(
           'press-orbit absolute -right-[12%] top-1/2 hidden aspect-square w-[min(72vw,560px)] -translate-y-1/2 lg:block',
-          soft ? 'opacity-40' : 'opacity-55',
+          soft ? 'opacity-[0.18]' : 'opacity-[0.28]',
         )}
       >
         <svg viewBox="0 0 400 400" className="h-full w-full">
@@ -81,13 +81,10 @@ export default function PressAtmosphere({
       {/* Press scan — sheet of light travelling like a print head */}
       <div className={cn('press-scan', soft && 'opacity-50')} />
 
-      {/* Drifting process dots (halftone “ink in air”) */}
+      {/* Drifting process dots (halftone “ink in air”) — thinned from six to three. */}
       <span className="press-dot press-dot--c" style={{ top: '18%', left: '12%' }} />
       <span className="press-dot press-dot--m" style={{ top: '62%', left: '8%', animationDelay: '1.6s' }} />
-      <span className="press-dot press-dot--y" style={{ top: '28%', left: '42%', animationDelay: '2.8s' }} />
       <span className="press-dot press-dot--c" style={{ top: '74%', left: '58%', animationDelay: '0.9s' }} />
-      <span className="press-dot press-dot--m" style={{ top: '22%', left: '78%', animationDelay: '3.4s' }} />
-      <span className="press-dot press-dot--k" style={{ top: '48%', left: '88%', animationDelay: '2.1s' }} />
     </div>
   );
 }

@@ -32,6 +32,19 @@ export function stripHtml(html: string, maxLength = 160): string {
   return `${text.slice(0, maxLength).replace(/\s+\S*$/, '')}…`;
 }
 
+/**
+ * ISO 3166-1 alpha-2 country code → flag emoji (regional indicator symbols).
+ * No image asset, no icon library — renders natively wherever emoji do.
+ */
+export function countryFlagEmoji(code: string): string {
+  const letters = code.trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(letters)) return '';
+  const A = 0x1f1e6;
+  return String.fromCodePoint(
+    ...letters.split('').map((c) => A + (c.charCodeAt(0) - 65)),
+  );
+}
+
 /** Canonical site URL — used by metadata, sitemap and OG tags. */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://proactive.com.bd'

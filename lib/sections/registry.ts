@@ -149,7 +149,7 @@ export const sectionRegistry = {
 
   valueGrid: entry({
     label: 'Value / Feature Grid',
-    hint: 'Icon, title and text cells. Three coded layouts: hairline, rule or numbered.',
+    hint: 'Icon, title and text cells. Coded layouts: hairline (cards), proof (registration-corner frames), rule (open ledger with outlined numerals) or numbered.',
     group: 'Content',
     schema: S.valueGridSchema,
     defaults: {
@@ -223,6 +223,36 @@ export const sectionRegistry = {
       logoSurface: 'band',
       name: 'Group name',
       description: '',
+      tone: 'paper',
+    },
+  }),
+
+  globalNetwork: entry({
+    label: 'Global Sourcing Network',
+    hint: 'Copy + stat rail beside an animated, real-geography sourcing map converging on Dhaka.',
+    group: 'Content',
+    schema: S.globalNetworkSchema,
+    defaults: {
+      eyebrow: 'Strategic Network',
+      heading: 'World-Class Quality,\nSourced Globally.',
+      html: '<p>Supporting copy.</p>',
+      stats: [],
+      mapIcon: 'Globe2',
+      mapHeading: 'Global Reach',
+      mapText: '',
+      tone: 'paper-2',
+    },
+  }),
+
+  countriesGrid: entry({
+    label: 'Countries We Source From',
+    hint: 'A coded card grid of sourcing countries — flag, name and what is sourced there.',
+    group: 'Content',
+    schema: S.countriesGridSchema,
+    defaults: {
+      title: 'Countries We Source From',
+      lede: 'A strategic footprint across key industrial manufacturing hubs globally.',
+      countries: [{ code: 'CN', name: 'China', text: '' }],
       tone: 'paper',
     },
   }),

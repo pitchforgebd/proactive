@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import type { NavItem } from '@/lib/nav';
 import { cn } from '@/lib/utils';
 
@@ -41,8 +41,14 @@ export default function Nav({ items }: { items: NavItem[] }) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }, []);
 
-  const isActive = (href: string) =>
+  const matches = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+  // A parent also counts as active when one of its children is the current
+  // page — a dropdown may list a route that lives outside the parent's own
+  // path (Vision & Mission sits under About Us but at /vision-mission).
+  const isActive = (item: NavItem) =>
+    matches(item.href) || (item.children?.some((c) => matches(c.href)) ?? false);
 
   const cancelClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -56,9 +62,9 @@ export default function Nav({ items }: { items: NavItem[] }) {
 
   return (
     <nav ref={navRef} aria-label="Primary" className="hidden shrink-0 xl:block">
-      <ul className="flex items-center gap-0.5">
+      <ul className="flex items-center gap-1">
         {items.map((item, i) => {
-          const active = isActive(item.href);
+          const active = isActive(item);
           const open = openIndex === i;
 
           if (!item.children) {
@@ -68,16 +74,19 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   href={item.href}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'relative block whitespace-nowrap px-2.5 py-2 text-sm transition-colors hover:text-magenta',
-                    active ? 'text-ink' : 'text-graphite',
+                    'relative block whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                    active
+                      ? 'bg-magenta/5 text-ink'
+                      : 'text-graphite hover:bg-ink/5 hover:text-ink',
                   )}
                 >
                   {item.label}
+                  {/* Short registration bar, centred under the label. */}
                   <span
                     aria-hidden="true"
                     className={cn(
-                      'absolute inset-x-2.5 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
-                      active ? 'scale-x-100' : 'scale-x-0',
+                      'absolute inset-x-3 bottom-1 mx-auto h-0.5 w-4 rounded-full bg-cyan transition-all duration-300 ease-press',
+                      active ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0',
                     )}
                   />
                 </Link>
@@ -108,8 +117,10 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   }
                 }}
                 className={cn(
-                  'relative flex items-center gap-1 whitespace-nowrap px-2.5 py-2 text-sm transition-colors hover:text-magenta',
-                  active ? 'text-ink' : 'text-graphite',
+                  'relative flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                  active || open
+                    ? 'bg-magenta/5 text-ink'
+                    : 'text-graphite hover:bg-ink/5 hover:text-ink',
                 )}
               >
                 {item.label}
@@ -117,14 +128,14 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   aria-hidden="true"
                   className={cn(
                     'h-3.5 w-3.5 transition-transform duration-200',
-                    open && 'rotate-180',
+                    open ? 'rotate-180 text-cyan' : 'text-graphite/70',
                   )}
                 />
                 <span
                   aria-hidden="true"
                   className={cn(
-                    'absolute inset-x-2.5 bottom-0.5 h-px bg-magenta transition-transform duration-300 ease-press',
-                    active ? 'scale-x-100' : 'scale-x-0',
+                    'absolute inset-x-3 bottom-1 mx-auto h-0.5 w-4 rounded-full bg-cyan transition-all duration-300 ease-press',
+                    active ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0',
                   )}
                 />
               </button>
@@ -134,27 +145,41 @@ export default function Nav({ items }: { items: NavItem[] }) {
                   onKeyDown={(e) => {
                     if (e.key === 'Escape') setOpenIndex(null);
                   }}
-                  className="absolute left-0 top-full z-50 min-w-[260px] rounded-xl border border-ink/10 bg-paper-2 py-2 shadow-[0_18px_40px_-24px_rgba(14,17,22,.45)]"
+                  className="absolute left-0 top-full z-50 mt-1.5 min-w-[268px] overflow-hidden rounded-xl border border-ink/10 bg-paper-2 p-1.5 shadow-[0_20px_44px_-26px_rgb(var(--ink-rgb)/0.5)]"
                 >
                   {/* Registration tick marking the panel edge. */}
                   <span
                     aria-hidden="true"
-                    className="absolute left-3 top-0 h-px w-8 bg-cyan"
+                    className="absolute left-4 top-0 h-0.5 w-9 rounded-full bg-cyan"
                   />
                   <ul>
-                    {item.children.map((child) => (
-                      <li key={child.href}>
-                        <Link
-                          href={child.href}
-                          className={cn(
-                            'block whitespace-nowrap px-4 py-2.5 text-sm transition-colors hover:bg-paper hover:text-magenta',
-                            pathname === child.href ? 'text-ink' : 'text-graphite',
-                          )}
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {item.children.map((child) => {
+                      const childActive = pathname === child.href;
+                      return (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            className={cn(
+                              'group/item flex items-center justify-between gap-3 whitespace-nowrap rounded-lg px-3.5 py-2.5 text-sm transition-colors duration-200',
+                              childActive
+                                ? 'bg-magenta/5 font-medium text-ink'
+                                : 'text-graphite hover:bg-ink/5 hover:text-ink',
+                            )}
+                          >
+                            {child.label}
+                            <ArrowRight
+                              aria-hidden="true"
+                              className={cn(
+                                'h-3.5 w-3.5 shrink-0 text-cyan transition-all duration-300 ease-press',
+                                childActive
+                                  ? 'translate-x-0 opacity-100'
+                                  : '-translate-x-1 opacity-0 group-hover/item:translate-x-0 group-hover/item:opacity-100',
+                              )}
+                            />
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}

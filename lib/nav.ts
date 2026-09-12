@@ -26,6 +26,7 @@ export function buildNav(categories: Category[]): NavItem[] {
       href: '/about',
       children: [
         { label: 'About Us', href: '/about' },
+        { label: 'Vision & Mission', href: '/vision-mission' },
         { label: 'LEADERSHIP MESSAGE', href: '/about/leadership-message' },
       ],
     },
@@ -37,7 +38,6 @@ export function buildNav(categories: Category[]): NavItem[] {
         ...categories.map((c) => ({ label: c.name, href: `/products/${c.slug}` })),
       ],
     },
-    { label: 'Vision & Mission', href: '/vision-mission' },
     { label: 'Global Sourcing', href: '/global-sourcing' },
     { label: 'Our Story', href: '/our-story' },
     { label: 'Company', href: '/company' },

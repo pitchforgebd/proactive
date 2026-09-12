@@ -25,7 +25,7 @@ export default function Capabilities({
   ctaText,
   ctaHref,
 }: CapabilitiesData) {
-  // Each sentence of the title becomes its own line, bulleted C / M / C / M.
+  // Each sentence of the title becomes its own line, with a navy bullet.
   const phrases = title
     .split('.')
     .map((p) => p.trim())
@@ -43,15 +43,11 @@ export default function Capabilities({
           )}
 
           <h2 className="mt-4 text-lg font-bold leading-snug sm:mt-5 sm:text-xl sm:leading-tight md:text-2xl">
-            {phrases.map((phrase, i) => (
+            {phrases.map((phrase) => (
               <span key={phrase} className="block">
                 <span
                   aria-hidden="true"
-                  className={
-                    i % 2 === 1
-                      ? 'mr-3 inline-block h-1.5 w-1.5 translate-y-[-0.35em] bg-magenta'
-                      : 'mr-3 inline-block h-1.5 w-1.5 translate-y-[-0.35em] bg-cyan'
-                  }
+                  className="mr-3 inline-block h-1.5 w-1.5 translate-y-[-0.35em] bg-magenta"
                 />
                 {phrase}.
               </span>
@@ -71,7 +67,7 @@ export default function Capabilities({
 
           {/* The support surface, scannable. */}
           {services.length > 0 && (
-            <ul className="mt-8 flex flex-wrap gap-2">
+            <ul className="mt-9 flex flex-wrap gap-2.5">
               {services.map((s) => (
                 <li
                   key={s}
@@ -108,12 +104,12 @@ export default function Capabilities({
             <div className="relative">
               <Eyebrow tone="cyan">{approachEyebrow}</Eyebrow>
 
-              <StepFeed className="relative mt-8">
-                {/* Guide rail — draws down before the sheets feed in. */}
+              <StepFeed className="relative mt-9">
+                {/* Feed path — draws down before the sheets travel along it. */}
                 <span
                   data-feed-rail
                   aria-hidden="true"
-                  className="absolute left-[9px] top-2 h-[calc(100%-1rem)] w-px bg-cyan/25"
+                  className="absolute bottom-6 left-[19px] top-5 w-px -translate-x-1/2 bg-gradient-to-b from-cyan/60 via-cyan/25 to-transparent"
                 />
 
                 <ol>
@@ -121,24 +117,31 @@ export default function Capabilities({
                     <li
                       data-feed-item
                       key={a.step}
-                      className="group relative flex gap-5 border-t border-line py-5 last:border-b"
+                      className="group relative flex gap-5 pb-9 last:pb-0"
                     >
-                      <span className="mt-1 font-mono text-xs text-cyan/80">
+                      {/* Registration node sitting on the feed path. */}
+                      <span
+                        aria-hidden="true"
+                        className="relative z-[1] flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full border border-cyan/35 bg-band font-mono text-[11px] text-cyan transition-all duration-300 ease-press group-hover:border-cyan group-hover:bg-cyan group-hover:text-band group-hover:shadow-[0_0_0_4px_rgb(var(--cyan-rgb)/0.12)]"
+                      >
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="flex-1">
-                        <span className="block font-display text-lg font-bold leading-tight text-onband">
-                          {a.step}
+
+                      <span className="flex-1 pt-1.5">
+                        <span className="flex items-center gap-3">
+                          <span className="font-display text-lg font-bold leading-tight text-onband">
+                            {a.step}
+                          </span>
+                          {/* Press mark that runs out as the step is read. */}
+                          <span
+                            aria-hidden="true"
+                            className="h-px w-0 bg-cyan/60 transition-[width] duration-500 ease-press group-hover:w-10"
+                          />
                         </span>
-                        <span className="mt-1 block text-sm text-onband/55">
+                        <span className="mt-1.5 block text-sm leading-relaxed text-onband/55">
                           {a.detail}
                         </span>
                       </span>
-                      {/* Registration tick, right-aligned like a press mark. */}
-                      <span
-                        aria-hidden="true"
-                        className="mt-2 h-px w-6 shrink-0 self-start bg-magenta/60"
-                      />
                     </li>
                   ))}
                 </ol>

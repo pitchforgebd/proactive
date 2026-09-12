@@ -150,30 +150,51 @@ Rules the build must follow:
 
 ---
 
-## 6. Design direction — "CMYK Precision"
+## 6. Design direction — "Proactive Blue" (logo-derived; supersedes the original CMYK palette)
+
+> **Update (2026-09):** the palette below replaces the original black+CMYK
+> scheme. The site now derives its entire color system from the two colors in
+> the Proactive Trade International logo mark — a deep registration navy and a
+> bright signal sky-blue — with **no neutral black/grey surface anywhere**.
+> Token *names* in `globals.css` (`--ink`, `--cyan`, `--magenta`, `--yellow`,
+> `--band`…) were kept as-is since 60+ components already key off them; only
+> their *values* moved to the brand duo. Read `--magenta` as "brand navy" and
+> `--yellow` as "brand mid-blue tint" going forward, not literal pink/yellow.
+> The registration/halftone/crop-mark motion language (§ below) is unchanged —
+> it now plays out entirely in navy + sky-blue instead of CMYK.
 
 This must **not** look like a generic template or the default AI aesthetic
 (cream + serif + terracotta). Anchor the identity in the printing world's own
-materials: **CMYK color separation, registration/crop marks, halftone dots,
-offset press, paper stock.** Modern, futuristic, technical, trustworthy — this is
-a B2B industrial supplier, not a lifestyle brand.
+materials: **registration/crop marks, halftone dots, offset press, paper
+stock** — rendered in the brand's own navy + sky-blue rather than literal
+process-ink colors. Modern, futuristic, technical, trustworthy — this is a B2B
+industrial supplier, not a lifestyle brand.
 
 ### Design tokens
 
-Color (CSS variables in `globals.css`):
+Color (CSS variables in `globals.css`), current values:
 ```
---ink:        #0E1116;   /* rich near-black "key" — primary text/bg dark */
---ink-2:      #171B21;   /* elevated dark surface */
---paper:      #F4F6F8;   /* cool paper-stock white — light surface */
+--ink:        #0E1730;   /* deep navy "key" — primary text on paper */
+--ink-2:      #15224A;   /* elevated dark surface */
+--paper:      #F4F7FC;   /* cool paper-stock white, faint blue tint */
 --paper-2:    #FFFFFF;
---graphite:   #3A4048;   /* muted UI text / borders */
---cyan:       #00AEEF;   /* process cyan  — accent 1 (signature) */
---magenta:    #EC008C;   /* process magenta — accent 2 (signature) */
---yellow:     #FFD400;   /* process yellow — sparing highlight only */
---line:       rgba(255,255,255,.08); /* hairline on dark */
+--graphite:   #3E4C6B;   /* muted UI text / borders, navy-tinted */
+--cyan:       #12A9E6;   /* logo sky-blue — accent 1 (signature) */
+--magenta:    #173B8A;   /* logo navy — accent 2 (signature; was pink) */
+--yellow:     #5B8FE0;   /* mid brand-blue — sparing highlight only (was yellow) */
+--line:       rgba(180,208,255,.12); /* hairline on dark */
+--line-ink:   rgba(23,59,138,.14);   /* hairline on paper */
+--band:       #0B1F4D;   /* always-dark section ground — navy, never black */
+--band-2:     #122A63;
+--onband:     #F2F7FF;
 ```
-Use cyan + magenta as the signature duo (registration/CMYK). Yellow is a rare
-highlight, never a background. Keep 90% of surfaces ink or paper; spend color
+Dark theme (`[data-theme="dark"]`) retints the same roles into deeper navy —
+see `globals.css` for exact values. No token resolves to a neutral black or
+grey in either theme; every "dark" surface is a tinted navy.
+
+Use sky-blue + navy as the signature duo (this *is* the registration pair now
+— what used to be "cyan + magenta"). The mid-blue tint is a rare highlight,
+never a background. Keep 90% of surfaces ink/navy or paper; spend color
 deliberately.
 
 Type (self-hosted via next/font):

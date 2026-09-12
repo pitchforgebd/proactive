@@ -65,18 +65,11 @@ export default function Card({
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-band/50 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"
           />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute right-3 top-3 h-5 w-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          >
-            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-cyan" />
-            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-magenta" />
-          </span>
         </div>
 
-        <div className="flex flex-1 flex-col gap-1.5 p-3.5 sm:gap-2 sm:p-5">
+        <div className="flex flex-1 flex-col gap-2 p-5 sm:gap-2.5 sm:p-6">
           {eyebrow && <span className="eyebrow text-[10px] text-graphite sm:text-xs">{eyebrow}</span>}
-          <h3 className="relative inline-flex items-start gap-1.5 text-sm font-semibold leading-snug sm:text-lg">
+          <h3 className="relative inline-flex items-start gap-2 text-[15px] font-semibold leading-snug sm:text-lg">
             <span>
               {title}
               <span
@@ -90,7 +83,7 @@ export default function Card({
             />
           </h3>
           {description && (
-            <p className="text-xs text-graphite line-clamp-3 sm:text-sm">{description}</p>
+            <p className="text-sm leading-relaxed text-graphite line-clamp-3">{description}</p>
           )}
         </div>
       </Link>

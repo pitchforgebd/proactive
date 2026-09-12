@@ -4,8 +4,6 @@ import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from 'luc
 import { getCategories, getSiteSettings } from '@/lib/data';
 import { footerLinks } from '@/lib/nav';
 import Logo from '@/components/layout/Logo';
-import MapEmbed from '@/components/media/MapEmbed';
-import HalftoneBg from '@/components/motion/HalftoneBg';
 
 const socialIcon: Record<string, typeof Facebook> = {
   Facebook,
@@ -14,6 +12,16 @@ const socialIcon: Record<string, typeof Facebook> = {
   YouTube: Youtube,
 };
 
+/** Small bullet + bold heading used for the two list columns below. */
+function ColumnHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="flex items-center gap-2.5 text-lg font-bold text-onband sm:text-xl">
+      <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-cyan" />
+      {children}
+    </h2>
+  );
+}
+
 export default async function Footer() {
   const [settings, categories] = await Promise.all([
     getSiteSettings(),
@@ -21,36 +29,34 @@ export default async function Footer() {
   ]);
 
   const qrSrc = settings.qrCode.trim();
+  // The footer band is navy in BOTH themes, so it takes a single logo. Falls
+  // back to the header logo when Settings → Footer logo is empty.
+  const footerLogo = settings.logoFooter || settings.logo || undefined;
 
   return (
     <footer className="relative overflow-hidden bg-band text-onband">
-      <HalftoneBg grid fade={false} className="opacity-60" />
-
-      {/* CMYK rule across the top edge. */}
+      {/* Signature rule across the top edge — sky-blue into navy. */}
       <div
         aria-hidden="true"
-        className="relative h-0.5 w-full"
-        style={{
-          background:
-            'linear-gradient(90deg, var(--cyan) 0%, var(--cyan) 33%, var(--magenta) 33%, var(--magenta) 66%, var(--yellow) 66%, var(--yellow) 100%)',
-        }}
+        className="h-0.5 w-full"
+        style={{ background: 'linear-gradient(90deg, var(--cyan), var(--magenta))' }}
       />
 
       <div className="container-page relative py-14 md:py-20">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
-          {/* Identity + socials */}
+        <div className="grid gap-x-8 gap-y-12 lg:grid-cols-12">
+          {/* Identity + tagline + socials */}
           <div className="lg:col-span-4">
             <Logo
               invert
-              src={settings.logo || undefined}
+              src={footerLogo}
               title={settings.logoTitle}
               subtitle={settings.logoSubtitle}
             />
-            <p className="footer-tagline mt-5 max-w-sm text-sm leading-relaxed text-onband/60">
+            <p className="footer-tagline mt-5 max-w-sm text-sm leading-relaxed text-onband/55">
               {settings.footerTagline}
             </p>
 
-            <ul className="mt-6 flex gap-2">
+            <ul className="mt-6 flex gap-2.5">
               {settings.socials.map((s) => {
                 const Icon = socialIcon[s.label] ?? Mail;
                 return (
@@ -60,7 +66,7 @@ export default async function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-onband/[0.04] text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
                     >
                       <Icon aria-hidden="true" className="h-4 w-4" />
                     </a>
@@ -68,61 +74,17 @@ export default async function Footer() {
                 );
               })}
             </ul>
-
-            {qrSrc && (
-              <div className="mt-8">
-                <p className="eyebrow text-cyan">QR code</p>
-                <div className="mt-4 inline-flex flex-col items-start gap-2">
-                  <div className="rounded-lg bg-paper-2 p-2">
-                    <Image
-                      src={qrSrc}
-                      alt={
-                        settings.qrCodeCaption
-                          ? settings.qrCodeCaption
-                          : 'QR code — Proactive Trade International'
-                      }
-                      width={128}
-                      height={128}
-                      sizes="128px"
-                      className="h-28 w-28 rounded-md object-contain"
-                    />
-                  </div>
-                  {settings.qrCodeCaption && (
-                    <p className="max-w-[10rem] text-xs leading-snug text-onband/55">
-                      {settings.qrCodeCaption}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
 
-          {/* Quick links */}
-          <nav aria-label="Footer" className="lg:col-span-2">
-            <h2 className="eyebrow text-cyan">Explore</h2>
-            <ul className="footer-links mt-5 flex list-none flex-col items-start gap-2.5 p-0">
-              {footerLinks.map((l) => (
-                <li key={l.href} className="w-auto max-w-full">
-                  <Link
-                    href={l.href}
-                    className="inline-block text-left text-sm text-onband/60 transition-colors hover:text-onband"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* Categories — always one link per line, never justified */}
+          {/* What We Offer — categories */}
           <nav aria-label="Product categories" className="lg:col-span-3">
-            <h2 className="eyebrow text-magenta">What We Offer</h2>
-            <ul className="footer-links mt-5 flex list-none flex-col items-start gap-2.5 p-0">
+            <ColumnHeading>What We Offer</ColumnHeading>
+            <ul className="footer-links mt-6 flex list-none flex-col items-start gap-4 p-0">
               {categories.map((c) => (
-                <li key={c.slug} className="w-auto max-w-full">
+                <li key={c.slug} className="w-auto max-w-[15rem]">
                   <Link
                     href={`/products/${c.slug}`}
-                    className="inline-block text-left text-sm leading-snug text-onband/60 transition-colors hover:text-onband"
+                    className="inline-block text-left text-[15px] font-medium leading-snug text-onband/65 transition-colors hover:text-cyan"
                   >
                     {c.name}
                   </Link>
@@ -131,44 +93,102 @@ export default async function Footer() {
             </ul>
           </nav>
 
-          {/* Contact + map */}
+          {/* Contact info — icon-boxed rows */}
           <div className="lg:col-span-3">
-            <h2 className="eyebrow text-cyan">Contact</h2>
-            <ul className="mt-5 space-y-4 text-start text-sm text-onband/60">
-              <li className="flex gap-3 text-start">
-                <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
-                <address className="not-italic leading-relaxed">{settings.address}</address>
+            <ColumnHeading>Contact Info</ColumnHeading>
+            <ul className="mt-6 flex flex-col gap-4">
+              <li className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
+                  <Mail aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                </span>
+                <span>
+                  <span className="eyebrow block text-onband/40">Email Us</span>
+                  <a
+                    href={`mailto:${settings.email}`}
+                    className="mt-0.5 block text-sm font-semibold text-onband transition-colors hover:text-cyan"
+                  >
+                    {settings.email}
+                  </a>
+                </span>
               </li>
-              <li className="flex gap-3 text-start">
-                <Phone aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
-                <a
-                  href={`tel:${settings.phone.replace(/\s/g, '')}`}
-                  className="transition-colors hover:text-onband"
-                >
-                  {settings.phone}
-                </a>
+              <li className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
+                  <Phone aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                </span>
+                <span>
+                  <span className="eyebrow block text-onband/40">Call Us</span>
+                  <a
+                    href={`tel:${settings.phone.replace(/\s/g, '')}`}
+                    className="mt-0.5 block text-sm font-semibold text-onband transition-colors hover:text-cyan"
+                  >
+                    {settings.phone}
+                  </a>
+                </span>
               </li>
-              <li className="flex gap-3 text-start">
-                <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-magenta" />
-                <a
-                  href={`mailto:${settings.email}`}
-                  className="transition-colors hover:text-onband"
-                >
-                  {settings.email}
-                </a>
+              <li className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
+                  <MapPin aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                </span>
+                <span>
+                  <span className="eyebrow block text-onband/40">Head Office</span>
+                  <address className="mt-0.5 max-w-[15rem] text-sm font-semibold not-italic leading-relaxed text-onband">
+                    {settings.address}
+                  </address>
+                </span>
               </li>
             </ul>
-
-            <MapEmbed
-              query={settings.mapQuery}
-              title="Proactive Trade International office location"
-              heightClass="h-[180px]"
-              className="mt-6"
-            />
           </div>
+
+          {/* Connect on WhatsApp — a plain uploaded image. The plate is a fixed
+              white, never a theme token: a QR has to stay dark-on-white in both
+              themes or it stops scanning. */}
+          {qrSrc && (
+            <div className="lg:col-span-2">
+              <h2 className="text-lg font-bold leading-snug text-onband sm:text-xl">
+                Connect on
+                <br />
+                WhatsApp
+              </h2>
+
+              <div className="mt-6 flex flex-col items-start gap-3">
+                <div className="rounded-2xl bg-white p-3 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.6)]">
+                  <Image
+                    src={qrSrc}
+                    alt={settings.qrCodeCaption || 'WhatsApp QR code — Proactive Trade International'}
+                    width={152}
+                    height={152}
+                    sizes="152px"
+                    className="h-32 w-32 rounded-md object-contain sm:h-[152px] sm:w-[152px]"
+                  />
+                </div>
+                <p className="max-w-[10rem] text-xs leading-snug text-onband/55">
+                  {settings.qrCodeCaption || 'Scan to chat with us instantly'}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
+        {/* Quick links — one centered row, not a fifth column.
+            NOTE: deliberately NOT the `.footer-links` class — that class
+            forces a left-aligned column (see globals.css) for the stacked
+            sidebar lists; this row needs to stay horizontal + centered. */}
+        <nav aria-label="Footer" className="mt-14 border-t border-line pt-8">
+          <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 p-0">
+            {footerLinks.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="text-[15px] font-semibold text-onband/70 transition-colors hover:text-cyan"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-start">© 2026 Proactive Trade International. All rights reserved.</p>
           <p className="text-start">DHAKA · BANGLADESH</p>
         </div>

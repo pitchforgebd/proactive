@@ -22,11 +22,14 @@ import {
   coreValues,
   dynamikBrand,
   founderMessage,
+  globalNetworkBody,
+  globalNetworkStats,
   globalSourcing,
   mission,
   parentCompany,
   solutions,
   solutionsIntro,
+  sourcingCountries,
   storyTimeline,
   vision,
   whatWeOfferIntro,
@@ -176,7 +179,7 @@ export const seedPages: SeedPage[] = [
         index: '04',
         title: 'Anyone can quote a machine. Fewer can keep it running.',
         items: whyChooseUsItems,
-        variant: 'hairline',
+        variant: 'proof',
         columns: '4',
         tone: 'ink',
         halftone: true,
@@ -194,6 +197,17 @@ export const seedPages: SeedPage[] = [
         approach: capabilities.approach.map((a) => ({ step: a.step, detail: a.detail })),
         ctaText: 'Talk to our technical team',
         ctaHref: '/contact',
+      }),
+
+      sec('globalNetwork', {
+        eyebrow: 'Strategic Network',
+        heading: 'World-Class Quality,\nSourced Globally.',
+        html: `<p>${globalNetworkBody}</p>`,
+        stats: globalNetworkStats,
+        mapIcon: 'Globe2',
+        mapHeading: 'Global Reach',
+        mapText: 'Seamless integration from international manufacturers directly to local industries.',
+        tone: 'paper-2',
       }),
 
       sec('visionMission', {
@@ -426,6 +440,24 @@ export const seedPages: SeedPage[] = [
         image: '/images/about/global-sourcing.png',
         compact: false,
         crumbs: [HOME, { label: 'Global Sourcing' }],
+      }),
+
+      sec('globalNetwork', {
+        eyebrow: 'Strategic Network',
+        heading: 'World-Class Quality,\nSourced Globally.',
+        html: `<p>${globalNetworkBody}</p>`,
+        stats: globalNetworkStats,
+        mapIcon: 'Globe2',
+        mapHeading: 'Global Reach',
+        mapText: 'Seamless integration from international manufacturers directly to local industries.',
+        tone: 'paper-2',
+      }),
+
+      sec('countriesGrid', {
+        title: 'Countries We Source From',
+        lede: 'A strategic footprint across key industrial manufacturing hubs globally.',
+        countries: sourcingCountries,
+        tone: 'paper',
       }),
 
       sec('valueGrid', {
