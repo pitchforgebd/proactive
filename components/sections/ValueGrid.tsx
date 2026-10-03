@@ -36,6 +36,14 @@ export default function ValueGrid({
   const ItemTitle = hasHeading ? 'h3' : 'h2';
   const isOpen = variant === 'rule';
   const isProof = variant === 'proof';
+  const isShowcase = variant === 'showcase';
+  // Showcase has no eyebrow/lede in practice (a plain centred headline, like a
+  // product-tier row), but still centres whatever heading fields ARE given.
+  const headingAlign = isShowcase ? 'center' : 'left';
+  // The one item that gets lifted and inverted — the middle of an odd-length
+  // row, the way a 3-up pricing table features its centre tier. Position-
+  // based and coded, never a per-item flag an editor could leave stale.
+  const showcaseFeaturedIndex = Math.floor((items.length - 1) / 2);
 
   return (
     <Section tone={tone} halftone={halftone} cropMarks={cropMarks}>
@@ -47,6 +55,7 @@ export default function ValueGrid({
           lede={lede}
           link={linkText ? { href: linkHref || '/', label: linkText } : undefined}
           invert={invert}
+          align={headingAlign}
         />
       )}
 
@@ -56,8 +65,9 @@ export default function ValueGrid({
           columnClass[columns],
           hasHeading ? 'mt-14' : '',
           // Open layouts need room around them; the corner frames especially,
-          // or adjacent brackets read as one broken box.
-          isOpen || isProof ? 'gap-8 md:gap-10' : 'gap-5 md:gap-6',
+          // or adjacent brackets read as one broken box. Showcase needs room
+          // top/bottom too, since the featured card lifts out of the row.
+          isOpen || isProof ? 'gap-8 md:gap-10' : isShowcase ? 'gap-6 pt-2 md:gap-8' : 'gap-5 md:gap-6',
         )}
       >
         {items.map((item, i) => {
@@ -67,6 +77,60 @@ export default function ValueGrid({
           // fails contrast on paper anyway.
           const accent = invert ? 'text-cyan' : 'text-magenta';
           const accentBg = invert ? 'bg-cyan/10' : 'bg-magenta/10';
+
+          /* ---- "showcase" — one tier lifted and inverted -------------------
+             A plain, centred card row where the middle item is raised,
+             enlarged and flipped to the ink surface — the way a pricing table
+             marks its recommended tier. The icon plate stays white in both
+             states, so it reads as the same mark on two different grounds. */
+          if (isShowcase) {
+            const featured = i === showcaseFeaturedIndex;
+
+            return (
+              <MotionReveal
+                as="li"
+                key={item.title}
+                delay={i * 70}
+                className={cn(featured && 'lg:z-10 lg:-my-4')}
+              >
+                <div
+                  className={cn(
+                    'flex h-full flex-col items-center rounded-2xl p-8 text-center transition-shadow duration-300 md:p-9',
+                    featured
+                      ? 'bg-band text-onband shadow-[0_28px_60px_-28px_rgb(var(--ink-rgb)/0.5)] lg:py-11'
+                      : 'bg-ink/[0.03] text-ink hover:bg-ink/[0.05]',
+                  )}
+                >
+                  <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-paper-2 shadow-[0_8px_20px_-10px_rgb(var(--ink-rgb)/0.3)]">
+                    <Icon
+                      aria-hidden="true"
+                      className={cn('h-7 w-7', featured ? 'text-magenta' : accent)}
+                    />
+                  </span>
+
+                  <ItemTitle
+                    className={cn(
+                      'mt-6 text-lg font-bold leading-snug',
+                      featured ? 'text-cyan' : 'text-ink',
+                    )}
+                  >
+                    {item.title}
+                  </ItemTitle>
+
+                  {item.text && (
+                    <p
+                      className={cn(
+                        'mt-3 text-sm leading-relaxed',
+                        featured ? 'text-onband/75' : 'text-graphite',
+                      )}
+                    >
+                      {item.text}
+                    </p>
+                  )}
+                </div>
+              </MotionReveal>
+            );
+          }
 
           /* ---- "proof" — the corner-marked proof frame --------------------
              No card, no fill, no full border: each value sits inside four

@@ -149,7 +149,7 @@ export const sectionRegistry = {
 
   valueGrid: entry({
     label: 'Value / Feature Grid',
-    hint: 'Icon, title and text cells. Coded layouts: hairline (cards), proof (registration-corner frames), rule (open ledger with outlined numerals) or numbered.',
+    hint: 'Icon, title and text cells. Coded layouts: hairline (cards), proof (registration-corner frames), rule (open ledger with outlined numerals), numbered, or showcase (centred tiers, the middle one raised — best with 3 items).',
     group: 'Content',
     schema: S.valueGridSchema,
     defaults: {

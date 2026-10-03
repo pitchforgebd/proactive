@@ -144,7 +144,7 @@ export const valueGridSchema = z.object({
     )
     .min(1),
   /** Coded layouts — the admin picks one, never authors it. */
-  variant: z.enum(['hairline', 'rule', 'numbered', 'proof']).default('hairline'),
+  variant: z.enum(['hairline', 'rule', 'numbered', 'proof', 'showcase']).default('hairline'),
   columns: z.enum(['2', '3', '4', '5']).default('4'),
   tone: tone().default('paper-2'),
   halftone: z.boolean().default(false),

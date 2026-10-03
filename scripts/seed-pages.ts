@@ -17,6 +17,7 @@ import type { SectionType, sectionRegistry } from '../lib/sections/registry';
 import {
   aboutBody,
   aboutIntro,
+  businessModels,
   capabilities,
   companyProfile,
   coreValues,
@@ -80,13 +81,6 @@ const whyChooseUsItems = whyChooseUs.map((v) => ({
   icon: v.icon,
   title: v.title,
   text: v.description,
-}));
-
-const sourcingPillarIcons = ['Globe2', 'PackageCheck', 'Users', 'Timer'];
-const sourcingPillarItems = globalSourcing.pillars.map((p, i) => ({
-  icon: sourcingPillarIcons[i] ?? 'Globe2',
-  title: p.title,
-  text: p.description,
 }));
 
 const defaultCta = {
@@ -461,10 +455,11 @@ export const seedPages: SeedPage[] = [
       }),
 
       sec('valueGrid', {
-        items: sourcingPillarItems,
-        variant: 'hairline',
-        columns: '4',
-        tone: 'paper-2',
+        title: 'Our Business Models',
+        items: businessModels,
+        variant: 'showcase',
+        columns: '3',
+        tone: 'paper',
         halftone: false,
         cropMarks: false,
       }),

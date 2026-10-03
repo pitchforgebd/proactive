@@ -157,25 +157,31 @@ export const globalSourcing = {
     arrangements, so consumable stock is planned against your production calendar
     rather than reordered under pressure.</p>
   `,
-  pillars: [
-    {
-      title: 'Global manufacturer network',
-      description: 'Direct relationships across Asia and Europe, assessed on quality, parts and training support.',
-    },
-    {
-      title: 'Local warehousing',
-      description: 'Deep consumable stock held in Dhaka — same-week delivery instead of import lead times.',
-    },
-    {
-      title: 'Channel partnerships',
-      description: 'Regional partners extending our reach into specialist equipment and materials.',
-    },
-    {
-      title: 'Fast response',
-      description: 'Engineering and CRM teams positioned to answer within the shift, not the week.',
-    },
-  ],
 };
+
+/**
+ * Global Sourcing → "Our Business Models" (valueGrid, variant 'showcase').
+ * Replaces the earlier four-pillar list — same section slot, different claim:
+ * not what the network believes in, but the three ways a client can actually
+ * buy through it.
+ */
+export const businessModels = [
+  {
+    icon: 'Ship',
+    title: 'Import & Trading',
+    text: 'We directly import and supply industrial products to manufacturers, factories, and industrial buyers across Bangladesh. Our import operations are supported by structured logistics coordination, customs documentation, and end-to-end delivery management — ensuring our clients receive their products on time and in full compliance.',
+  },
+  {
+    icon: 'Handshake',
+    title: 'Indenting & Sourcing',
+    text: 'For clients requiring specific products from international suppliers, we provide professional indenting and commercial sourcing services. We identify verified suppliers, negotiate competitive pricing, coordinate sampling and quality confirmation, and manage the full commercial process from initial inquiry to final delivery.',
+  },
+  {
+    icon: 'Boxes',
+    title: 'Bulk Industrial Supply',
+    text: 'For clients with continuous and high-volume production requirements, we offer structured bulk supply solutions — including scheduled delivery planning, consistent quality assurance, and dedicated account management. Our bulk supply model is designed to ensure uninterrupted production operations for our industrial partners.',
+  },
+];
 
 /** Shared copy for the "globalNetwork" section — home teaser and the
  *  Global Sourcing page lead with the same claim, in the same words. */
