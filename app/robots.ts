@@ -9,7 +9,14 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      allow: '/',
+      allow: [
+        '/',
+        // Uploaded images are served through /api/files/images/… — the favicon,
+        // logo, product and OG images all live there. Google's favicon and image
+        // crawlers obey robots.txt, so this path must stay crawlable even though
+        // the rest of /api/ is blocked (the longer, more specific rule wins).
+        '/api/files/images/',
+      ],
       disallow: [
         // Form / file / auth handlers — nothing to index.
         '/api/',

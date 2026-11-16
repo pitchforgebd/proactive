@@ -53,6 +53,10 @@
 
   color-scheme: light;
 
+  /* Photo scrim — a single neutral dark, deliberately NOT blue, so hero photos
+     keep their own colour instead of turning into another navy panel. */
+  --scrim-rgb: 10 12 18;
+
   --header-h: 72px;
   --radius: 0.75rem;
 }
@@ -107,6 +111,10 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Decorative crop marks sit slightly outside their container; never let
+       them (or anything else) create a horizontal scrollbar. `clip`, unlike
+       `hidden`, does not break position: sticky on the header. */
+    overflow-x: clip;
   }
 
   @media (min-width: 640px) {
@@ -266,6 +274,32 @@
     --reg-y: 12px;
     animation-delay: 120ms;
     opacity: 0.6;
+  }
+
+  /* ---- Nav dropdown open --------------------------------------------------
+     Short fade + rise; opacity/transform only. Position clamping uses `left`,
+     so the transform is free. */
+  .nav-pop {
+    animation: nav-pop 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: top left;
+  }
+
+  /* ---- Hero slider -------------------------------------------------------
+     One colour at two strengths (heavier behind the headline), plus the slow
+     Ken Burns zoom. Duration is set inline from the slide interval. */
+  .hero-scrim {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--scrim-rgb) / 0.72) 0%,
+      rgb(var(--scrim-rgb) / 0.5) 55%,
+      rgb(var(--scrim-rgb) / 0.4) 100%
+    );
+  }
+
+  .hero-kenburns {
+    animation: hero-kenburns 8s ease-out forwards;
+    transform-origin: 50% 50%;
+    will-change: transform;
   }
 
   /* ---- Pointer parallax (hero registration drift) ----------------------
@@ -615,6 +649,26 @@
 /* ==========================================================================
    Keyframes
    ========================================================================== */
+@keyframes nav-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+
 @keyframes reg-snap {
   0% {
     transform: translate3d(var(--reg-x), var(--reg-y), 0);
@@ -910,6 +964,12 @@
 
   .crosshair-follow__mark {
     display: none;
+  }
+
+  /* No zoom at all (not a frozen final frame). */
+  .hero-kenburns {
+    animation: none !important;
+    transform: none;
   }
 
   .cursor-reg {

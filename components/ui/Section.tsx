@@ -2,11 +2,14 @@ import { cn } from '@/lib/utils';
 import CropMarks from '@/components/motion/CropMarks';
 import PressAtmosphere from '@/components/motion/PressAtmosphere';
 
-type Tone = 'paper' | 'paper-2' | 'ink';
+type Tone = 'paper' | 'paper-2' | 'tint' | 'ink';
 
 const toneClass: Record<Tone, string> = {
   paper: 'bg-paper text-ink',
   'paper-2': 'bg-paper-2 text-ink',
+  /** Pale sky wash — separates a light section from its paper / white
+   *  neighbours without adding another dark-navy band. */
+  tint: 'bg-cyan/[0.08] text-ink',
   ink: 'bg-band text-onband',
 };
 
@@ -40,6 +43,7 @@ export default function Section({
 }: SectionProps) {
   const atmosphereMode =
     atmosphere === true ? 'normal' : atmosphere === false ? null : atmosphere;
+  const dark = tone === 'ink';
 
   return (
     <Tag
@@ -51,15 +55,15 @@ export default function Section({
           aria-hidden="true"
           className={cn(
             'pointer-events-none absolute inset-0 halftone',
-            tone !== 'ink' && 'halftone-ink',
+            !dark && 'halftone-ink',
           )}
         />
       )}
-      {atmosphereMode && tone === 'ink' && (
+      {atmosphereMode && dark && (
         <PressAtmosphere intensity={atmosphereMode} />
       )}
       <div className={cn('container-page relative', containerClassName)}>
-        {cropMarks && <CropMarks tone={tone === 'ink' ? 'light' : 'dark'} />}
+        {cropMarks && <CropMarks tone={dark ? 'light' : 'dark'} />}
         {children}
       </div>
     </Tag>

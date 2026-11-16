@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import Breadcrumbs, { type Crumb } from '@/components/ui/Breadcrumbs';
 import Eyebrow from '@/components/ui/Eyebrow';
-import HalftoneBg from '@/components/motion/HalftoneBg';
-import PressAtmosphere from '@/components/motion/PressAtmosphere';
 import { cn } from '@/lib/utils';
 
+/** Used when a page does not supply its own hero photo. */
+const DEFAULT_HERO_IMAGE = '/images/hero/hero-03.png';
+
 /**
- * Inner-page header band. Dark ground, halftone field, crop-marked frame —
+ * Inner-page header band. Always a photo under a light-to-medium navy overlay —
  * consistent across every non-home page so navigation feels like one system.
  *
- * `image` is optional; when present it is the page's LCP element and gets
- * `priority`.
+ * The photo is the page's LCP element and gets `priority`.
  */
 export default function PageHero({
   eyebrow,
@@ -29,25 +29,30 @@ export default function PageHero({
   imageAlt?: string;
   compact?: boolean;
 }) {
+  // Every page hero carries a photo; pages without their own get the default.
+  const src = image || DEFAULT_HERO_IMAGE;
+
   return (
-    <section className="relative isolate overflow-hidden bg-band text-onband">
-      {image ? (
-        <>
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            quality={70}
-            className="object-cover opacity-45"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-band via-band/80 to-band/40" />
-        </>
-      ) : (
-        <HalftoneBg grid fade={false} className="opacity-70" />
-      )}
-      <PressAtmosphere intensity="soft" />
+    <section className="relative isolate overflow-hidden bg-[rgb(var(--scrim-rgb))] text-onband">
+      <Image
+        src={src}
+        alt={image ? imageAlt : ''}
+        fill
+        priority
+        sizes="100vw"
+        quality={70}
+        className="object-cover"
+      />
+      {/* One navy at reduced opacity: heavier behind the text (left), light on
+          the right so the photo reads clearly. Same colour throughout. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(90deg, rgb(var(--band-rgb) / 0.72) 0%, rgb(var(--band-rgb) / 0.5) 50%, rgb(var(--band-rgb) / 0.28) 100%)',
+        }}
+      />
 
       <div
         className={cn(
@@ -61,7 +66,7 @@ export default function PageHero({
           {title}
         </h1>
         {lede && (
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-onband/65 sm:mt-6 sm:text-base">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-onband/85 sm:mt-6 sm:text-base">
             {lede}
           </p>
         )}

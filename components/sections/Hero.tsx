@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import HeroSlider from '@/components/sections/HeroSlider';
-import RegistrationHero from '@/components/motion/RegistrationHero';
-import PointerParallax from '@/components/motion/PointerParallax';
-import PressAtmosphere from '@/components/motion/PressAtmosphere';
 import PressCounter from '@/components/motion/PressCounter';
 import type { HeroData } from '@/lib/sections/schemas';
 
 /**
- * Home hero — the CMYK registration snap, the signature moment of the site.
+ * Home hero — photo slider (cross-fade + slow zoom) under one neutral scrim.
+ * The print-themed overlays (registration snap, orbit rings, halftone,
+ * parallax) were removed from here on purpose: they fought the photography.
  *
  * Mobile: fixed short band (not full viewport) so the slider does not dominate.
  * Desktop: near-viewport height as before.
@@ -31,55 +30,25 @@ export default function Hero({
       className="relative isolate flex h-[min(52svh,400px)] items-center overflow-hidden text-onband sm:h-[min(58svh,480px)] md:h-auto md:min-h-[calc(100svh-70px)]"
     >
       <HeroSlider slides={slides.map((s) => ({ src: s.image, alt: s.alt ?? '' }))} />
-      <PressAtmosphere intensity="soft" className="z-[1]" />
 
-      <PointerParallax className="absolute inset-0 z-[2]">
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 400 400"
-          className="pointer-events-none absolute -right-24 top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.3] lg:block"
-        >
-          <g className="p-layer" style={{ '--p-depth': '26px' } as React.CSSProperties}>
-            <circle cx="200" cy="200" r="120" fill="none" stroke="var(--cyan)" strokeWidth="1" />
-            <circle cx="200" cy="200" r="164" fill="none" stroke="var(--cyan)" strokeWidth="0.6" opacity="0.6" />
-          </g>
-          <g className="p-layer" style={{ '--p-depth': '-18px' } as React.CSSProperties}>
-            <circle cx="200" cy="200" r="120" fill="none" stroke="var(--magenta)" strokeWidth="1" />
-            <circle cx="200" cy="200" r="164" fill="none" stroke="var(--magenta)" strokeWidth="0.6" opacity="0.6" />
-          </g>
-          <g className="p-layer" style={{ '--p-depth': '8px' } as React.CSSProperties}>
-            <path d="M200 40v320M40 200h320" stroke="var(--onband)" strokeWidth="0.5" opacity="0.35" />
-          </g>
-        </svg>
-
-        <div
-          className="p-layer pointer-events-none absolute inset-0 halftone opacity-[0.35]"
-          style={{ '--p-depth': '-10px', '--halftone-size': '9px' } as React.CSSProperties}
-        />
-      </PointerParallax>
-
-      <div className="container-page relative z-10 py-8 sm:py-12 md:py-28">
+      <div className="container-page relative z-10 py-8 sm:py-12 md:py-28 pb-12 sm:pb-14 md:pb-28">
         {eyebrow && (
-          <p className="eyebrow flex items-center gap-2 text-[10px] text-cyan sm:gap-3 sm:text-xs">
+          <p className="eyebrow flex items-center gap-2 text-[10px] text-white sm:gap-3 sm:text-xs">
             <span aria-hidden="true" className="h-px w-6 bg-cyan sm:w-10" />
             {eyebrow}
           </p>
         )}
 
-        <RegistrationHero
-          className="mt-3 max-w-4xl sm:mt-5"
-          as="h1"
-          textClassName="font-display text-[clamp(1.15rem,5.2vw,2.25rem)] font-extrabold uppercase leading-[1.05] tracking-tight text-onband break-words md:text-4xl md:leading-[0.95]"
-        >
+        <h1 className="mt-3 max-w-4xl font-display text-[clamp(1.15rem,5.2vw,2.25rem)] font-extrabold uppercase leading-[1.05] tracking-tight text-white break-words sm:mt-5 md:text-4xl md:leading-[0.95]">
           {lines.map((line, i) => (
             <span key={line + i} className="block">
               {line}
             </span>
           ))}
-        </RegistrationHero>
+        </h1>
 
         {lede && (
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-onband/70 sm:mt-6 sm:leading-relaxed md:mt-7 md:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:mt-6 sm:leading-relaxed md:mt-7 md:text-base">
             {lede}
           </p>
         )}

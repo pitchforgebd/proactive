@@ -17,7 +17,7 @@ export default function Eyebrow({
 }) {
   const color =
     tone === 'magenta'
-      ? 'text-magenta'
+      ? 'text-magenta dark:text-cyan'
       : tone === 'muted'
         ? 'text-graphite'
         : 'text-cyan';

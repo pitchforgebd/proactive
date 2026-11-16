@@ -23,9 +23,7 @@ export default function Solutions({
   return (
     <Section
       id="solutions"
-      tone="ink"
-      halftone
-      atmosphere="soft"
+      tone="tint"
       className="overflow-hidden"
     >
       <SectionHeading
@@ -34,15 +32,14 @@ export default function Solutions({
         title={title ?? ''}
         lede={lede}
         link={linkText ? { href: linkHref || '/products', label: linkText } : undefined}
-        invert
       />
 
-      <RollerLine tone="ink" className="mt-12" />
+      <RollerLine tone="paper" className="mt-12" />
 
       <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
         {tiles.map((s, i) => (
           <MotionReveal as="li" key={`${s.title}-${i}`} delay={i * 55}>
-            <CrosshairFollow className="group relative overflow-hidden rounded-xl border border-line bg-band">
+            <CrosshairFollow className="group relative overflow-hidden rounded-2xl border border-ink/10 bg-[rgb(var(--scrim-rgb))] shadow-[0_18px_40px_-26px_rgb(var(--ink-rgb)/0.55)] transition-[transform,box-shadow] duration-500 ease-press hover:-translate-y-1 hover:shadow-[0_28px_50px_-24px_rgb(var(--ink-rgb)/0.6)]">
               <div className="relative aspect-square overflow-hidden">
                 <Image
                   src={s.image}
@@ -50,14 +47,15 @@ export default function Solutions({
                   fill
                   sizes="(min-width: 768px) 25vw, 50vw"
                   loading="lazy"
-                  className="object-cover opacity-70 transition-all duration-700 ease-press group-hover:scale-[1.07] group-hover:opacity-95"
+                  className="object-cover transition-transform duration-700 ease-press group-hover:scale-[1.07]"
                 />
+                {/* Neutral bottom scrim only — photo keeps its own colour. */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-band via-band/65 to-band/5"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgb(var(--scrim-rgb)/0.88)] via-[rgb(var(--scrim-rgb)/0.3)] to-transparent"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                  <span className="eyebrow text-cyan/70">
+                  <span className="eyebrow text-white/75">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <h3 className="mt-2.5 text-[15px] font-semibold leading-snug text-onband md:text-base">
