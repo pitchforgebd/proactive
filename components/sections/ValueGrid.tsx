@@ -76,7 +76,6 @@ export default function ValueGrid({
           // of two accents across a 4- or 5-up grid reads as noise, and cyan
           // fails contrast on paper anyway.
           const accent = invert ? 'text-cyan' : 'text-magenta';
-          const accentBg = invert ? 'bg-cyan/10' : 'bg-magenta/10';
 
           /* ---- "showcase" — one tier lifted and inverted -------------------
              A plain, centred card row where the middle item is raised,
@@ -138,9 +137,9 @@ export default function ValueGrid({
              proof. The corners extend and ink in on hover — the one moving
              part, so the grid stays quiet at rest. */
           if (isProof) {
-            const corner = invert
-              ? 'border-onband/40 group-hover:border-cyan'
-              : 'border-ink/20 group-hover:border-magenta';
+            // On a dark band the value sits on a white card, so the card's own
+            // (light-surface) colours apply either way.
+            const corner = 'border-ink/20 group-hover:border-magenta';
 
             return (
               <MotionReveal
@@ -151,7 +150,8 @@ export default function ValueGrid({
                   'group relative p-6 md:p-7',
                   // Soft glass plate on dark: gives each value a surface, so the
                   // copy sits on a lifted panel instead of floating on the gradient.
-                  invert && 'rounded-xl bg-ice/[0.08]',
+                  invert &&
+                    'rounded-2xl bg-paper-2 shadow-[0_22px_44px_-26px_rgb(0_0_0/0.55)]',
                 )}
               >
                 {(
@@ -173,23 +173,17 @@ export default function ValueGrid({
                   />
                 ))}
 
-                <Icon aria-hidden="true" className={cn('h-6 w-6', accent)} />
+                <Icon aria-hidden="true" className="h-6 w-6 text-magenta" />
 
                 <ItemTitle
-                  className={cn(
-                    'mt-6 text-base font-semibold leading-snug',
-                    invert ? 'text-onband' : 'text-ink',
-                  )}
+                  className="mt-6 text-base font-semibold leading-snug text-ink"
                 >
                   {item.title}
                 </ItemTitle>
 
                 {item.text && (
                   <p
-                    className={cn(
-                      'mt-3 text-sm leading-relaxed',
-                      invert ? 'text-onband/90' : 'text-graphite',
-                    )}
+                    className="mt-3 text-left text-sm leading-relaxed text-graphite"
                   >
                     {item.text}
                   </p>
@@ -262,8 +256,9 @@ export default function ValueGrid({
               delay={i * 70}
               className={cn(
                 'group relative overflow-hidden rounded-xl border p-7 transition-shadow duration-300 md:p-8',
+                // White card on a dark band too — light-surface colours throughout.
                 invert
-                  ? 'border-line bg-ice/[0.08] hover:border-cyan/40 hover:shadow-[0_20px_50px_-32px_rgba(0,174,239,0.45)]'
+                  ? 'border-transparent bg-paper-2 shadow-[0_22px_44px_-26px_rgb(0_0_0/0.55)] hover:shadow-[0_28px_54px_-24px_rgb(0_0_0/0.6)]'
                   : 'border-ink/10 bg-paper-2 hover:border-magenta/30 hover:shadow-[0_20px_50px_-32px_rgba(14,17,22,0.35)]',
                 variant === 'numbered' && 'p-8',
               )}
@@ -273,15 +268,15 @@ export default function ValueGrid({
                   <span
                     className={cn(
                       'inline-flex h-11 w-11 items-center justify-center rounded-lg',
-                      accentBg,
+                      'bg-magenta/10',
                     )}
                   >
-                    <Icon aria-hidden="true" className={cn('h-5 w-5', accent)} />
+                    <Icon aria-hidden="true" className="h-5 w-5 text-magenta" />
                   </span>
                   <span
                     className={cn(
                       'font-mono text-xs',
-                      invert ? 'text-onband/75' : 'text-ink/25',
+                      'text-ink/30',
                     )}
                   >
                     {String(i + 1).padStart(2, '0')}
@@ -291,28 +286,22 @@ export default function ValueGrid({
                 <span
                   className={cn(
                     'inline-flex h-11 w-11 items-center justify-center rounded-lg',
-                    accentBg,
+                    'bg-magenta/10',
                   )}
                 >
-                  <Icon aria-hidden="true" className={cn('h-5 w-5', accent)} />
+                  <Icon aria-hidden="true" className="h-5 w-5 text-magenta" />
                 </span>
               )}
 
               <ItemTitle
-                className={cn(
-                  'mt-6 text-base font-semibold leading-snug',
-                  invert ? 'text-onband' : 'text-ink',
-                )}
+                className="mt-6 text-base font-semibold leading-snug text-ink"
               >
                 {item.title}
               </ItemTitle>
 
               {item.text && (
                 <p
-                  className={cn(
-                    'mt-3.5 text-sm leading-relaxed',
-                    invert ? 'text-onband/75' : 'text-graphite',
-                  )}
+                  className="mt-3.5 text-left text-sm leading-relaxed text-graphite"
                 >
                   {item.text}
                 </p>
