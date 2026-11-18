@@ -88,7 +88,7 @@ export default function Hero({
                     value={s.value}
                     className="block font-display text-xl font-bold text-onband md:text-2xl"
                   />
-                  <span className="eyebrow mt-1 block text-onband/45">{s.label}</span>
+                  <span className="eyebrow mt-1 block text-onband/75">{s.label}</span>
                 </dd>
               </div>
             ))}

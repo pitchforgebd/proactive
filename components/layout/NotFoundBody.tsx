@@ -14,7 +14,7 @@ const links = [
 /** The 404 artwork, shared by both not-found boundaries. */
 export default function NotFoundBody() {
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-70px)] items-center overflow-hidden bg-band text-onband">
+    <section className="relative isolate flex min-h-[calc(100svh-70px)] items-center overflow-hidden band-surface text-onband">
       <HalftoneBg grid fade={false} className="opacity-60" />
 
       <div className="container-page relative py-24">
@@ -33,7 +33,7 @@ export default function NotFoundBody() {
           register.
         </RegistrationHero>
 
-        <p className="mt-7 max-w-lg text-base leading-relaxed text-onband/65">
+        <p className="mt-7 max-w-lg text-base leading-relaxed text-onband/80">
           This page is not on the sheet. It may have moved, or the address may be
           mistyped. Pick a route below and carry on.
         </p>

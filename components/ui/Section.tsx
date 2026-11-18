@@ -10,7 +10,7 @@ const toneClass: Record<Tone, string> = {
   /** Pale sky wash — separates a light section from its paper / white
    *  neighbours without adding another dark-navy band. */
   tint: 'bg-cyan/[0.08] text-ink',
-  ink: 'bg-band text-onband',
+  ink: 'band-surface text-onband',
 };
 
 interface SectionProps {

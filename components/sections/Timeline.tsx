@@ -68,7 +68,7 @@ export default function Timeline({
               <p
                 className={cn(
                   'mt-3 max-w-2xl text-base leading-relaxed',
-                  invert ? 'text-onband/65' : 'text-graphite',
+                  invert ? 'text-onband/80' : 'text-graphite',
                 )}
               >
                 {entry.text}

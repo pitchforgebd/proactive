@@ -97,7 +97,7 @@ export default function ValueGrid({
                   className={cn(
                     'flex h-full flex-col items-center rounded-2xl p-8 text-center transition-shadow duration-300 md:p-9',
                     featured
-                      ? 'bg-band text-onband shadow-[0_28px_60px_-28px_rgb(var(--ink-rgb)/0.5)] lg:py-11'
+                      ? 'band-surface text-onband shadow-[0_28px_60px_-28px_rgb(var(--ink-rgb)/0.5)] lg:py-11'
                       : 'bg-ink/[0.03] text-ink hover:bg-ink/[0.05]',
                   )}
                 >
@@ -139,7 +139,7 @@ export default function ValueGrid({
              part, so the grid stays quiet at rest. */
           if (isProof) {
             const corner = invert
-              ? 'border-onband/25 group-hover:border-cyan'
+              ? 'border-onband/40 group-hover:border-cyan'
               : 'border-ink/20 group-hover:border-magenta';
 
             return (
@@ -147,7 +147,12 @@ export default function ValueGrid({
                 as="li"
                 key={item.title}
                 delay={i * 70}
-                className="group relative p-6 md:p-7"
+                className={cn(
+                  'group relative p-6 md:p-7',
+                  // Soft glass plate on dark: gives each value a surface, so the
+                  // copy sits on a lifted panel instead of floating on the gradient.
+                  invert && 'rounded-xl bg-ice/[0.08]',
+                )}
               >
                 {(
                   [
@@ -183,7 +188,7 @@ export default function ValueGrid({
                   <p
                     className={cn(
                       'mt-3 text-sm leading-relaxed',
-                      invert ? 'text-onband/55' : 'text-graphite',
+                      invert ? 'text-onband/90' : 'text-graphite',
                     )}
                   >
                     {item.text}
@@ -240,7 +245,7 @@ export default function ValueGrid({
                   <p
                     className={cn(
                       'mt-2.5 text-sm leading-relaxed',
-                      invert ? 'text-onband/55' : 'text-graphite',
+                      invert ? 'text-onband/75' : 'text-graphite',
                     )}
                   >
                     {item.text}
@@ -258,7 +263,7 @@ export default function ValueGrid({
               className={cn(
                 'group relative overflow-hidden rounded-xl border p-7 transition-shadow duration-300 md:p-8',
                 invert
-                  ? 'border-line bg-band-2/60 hover:border-cyan/40 hover:shadow-[0_20px_50px_-32px_rgba(0,174,239,0.45)]'
+                  ? 'border-line bg-ice/[0.08] hover:border-cyan/40 hover:shadow-[0_20px_50px_-32px_rgba(0,174,239,0.45)]'
                   : 'border-ink/10 bg-paper-2 hover:border-magenta/30 hover:shadow-[0_20px_50px_-32px_rgba(14,17,22,0.35)]',
                 variant === 'numbered' && 'p-8',
               )}
@@ -276,7 +281,7 @@ export default function ValueGrid({
                   <span
                     className={cn(
                       'font-mono text-xs',
-                      invert ? 'text-onband/25' : 'text-ink/25',
+                      invert ? 'text-onband/75' : 'text-ink/25',
                     )}
                   >
                     {String(i + 1).padStart(2, '0')}
@@ -306,7 +311,7 @@ export default function ValueGrid({
                 <p
                   className={cn(
                     'mt-3.5 text-sm leading-relaxed',
-                    invert ? 'text-onband/55' : 'text-graphite',
+                    invert ? 'text-onband/75' : 'text-graphite',
                   )}
                 >
                   {item.text}

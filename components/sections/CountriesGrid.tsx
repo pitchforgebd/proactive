@@ -36,7 +36,7 @@ export default function CountriesGrid({
             <div
               className={
                 invert
-                  ? 'flex h-full gap-4 rounded-xl border border-line bg-band-2/60 p-5'
+                  ? 'flex h-full gap-4 rounded-xl border border-line bg-ice/[0.08] p-5'
                   : 'flex h-full gap-4 rounded-xl border border-ink/10 bg-paper-2 p-5 shadow-[0_1px_0_rgba(14,17,22,0.04)]'
               }
             >
@@ -51,7 +51,7 @@ export default function CountriesGrid({
                   <p
                     className={
                       invert
-                        ? 'mt-1.5 text-sm leading-relaxed text-onband/60'
+                        ? 'mt-1.5 text-sm leading-relaxed text-onband/80'
                         : 'mt-1.5 text-sm leading-relaxed text-graphite'
                     }
                   >

@@ -35,8 +35,8 @@ export default async function VideoGalleryPage() {
       <Section tone="ink" halftone>
         {videos.length === 0 ? (
           <div className="rounded-xl border border-dashed border-line p-10 text-center">
-            <p className="eyebrow text-onband/60">No videos yet</p>
-            <p className="mx-auto mt-4 max-w-md text-base text-onband/60">
+            <p className="eyebrow text-onband/80">No videos yet</p>
+            <p className="mx-auto mt-4 max-w-md text-base text-onband/80">
               Videos published to our YouTube channel will appear here.
             </p>
           </div>
@@ -52,7 +52,7 @@ export default async function VideoGalleryPage() {
                 {v.publishedAt && (
                   <time
                     dateTime={isoDate(v.publishedAt)}
-                    className="eyebrow mt-2 block text-onband/40"
+                    className="eyebrow mt-2 block text-onband/75"
                   >
                     {formatDate(v.publishedAt)}
                   </time>

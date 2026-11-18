@@ -27,6 +27,7 @@ const config: Config = {
         band: 'rgb(var(--band-rgb) / <alpha-value>)',
         'band-2': 'rgb(var(--band-2-rgb) / <alpha-value>)',
         onband: 'rgb(var(--onband-rgb) / <alpha-value>)',
+        ice: 'rgb(var(--ice-rgb) / <alpha-value>)',
         paper: 'rgb(var(--paper-rgb) / <alpha-value>)',
         'paper-2': 'rgb(var(--paper-2-rgb) / <alpha-value>)',
         graphite: 'rgb(var(--graphite-rgb) / <alpha-value>)',

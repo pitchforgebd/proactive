@@ -66,11 +66,11 @@ export default function MapEmbed({
         <button
           type="button"
           onClick={() => setLoad(true)}
-          className="halftone flex h-full w-full flex-col items-center justify-center gap-2 text-onband/70 transition-colors hover:text-cyan"
+          className="halftone flex h-full w-full flex-col items-center justify-center gap-2 text-onband/80 transition-colors hover:text-cyan"
         >
           <MapPin aria-hidden="true" className="h-6 w-6" />
           <span className="eyebrow">Load map</span>
-          <span className="max-w-xs px-6 text-center text-xs text-onband/45">{query}</span>
+          <span className="max-w-xs px-6 text-center text-xs text-onband/75">{query}</span>
         </button>
       )}
     </div>

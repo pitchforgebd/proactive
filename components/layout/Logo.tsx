@@ -110,7 +110,7 @@ export default function Logo({
         <span
           className={cn(
             'font-mono text-[9px] uppercase',
-            invert ? 'text-onband/55' : 'text-graphite',
+            invert ? 'text-onband/75' : 'text-graphite',
           )}
         >
           {subtitleLine}

@@ -56,7 +56,7 @@ export default function SectionHeading({
           <p
             className={cn(
               'mt-4 max-w-xl text-sm leading-relaxed sm:mt-5 sm:text-base',
-              invert ? 'text-onband/65' : 'text-graphite',
+              invert ? 'text-onband/80' : 'text-graphite',
             )}
           >
             {lede}
@@ -69,7 +69,7 @@ export default function SectionHeading({
           href={link.href}
           className={cn(
             'group inline-flex shrink-0 items-center gap-2 font-mono text-xs uppercase transition-colors',
-            invert ? 'text-onband/70 hover:text-cyan' : 'text-graphite hover:text-magenta',
+            invert ? 'text-onband/80 hover:text-cyan' : 'text-graphite hover:text-magenta',
           )}
         >
           {link.label}

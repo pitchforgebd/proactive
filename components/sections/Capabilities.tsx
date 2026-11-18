@@ -95,7 +95,7 @@ export default function Capabilities({
 
         {/* Method ----------------------------------------------------------- */}
         <RevealOnView delay={80} className="lg:col-span-6">
-          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-xl bg-band p-8 text-onband md:p-10">
+          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-xl band-surface p-8 text-onband md:p-10">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 halftone opacity-60"
@@ -138,7 +138,7 @@ export default function Capabilities({
                             className="h-px w-0 bg-cyan/60 transition-[width] duration-500 ease-press group-hover:w-10"
                           />
                         </span>
-                        <span className="mt-1.5 block text-sm leading-relaxed text-onband/55">
+                        <span className="mt-1.5 block text-sm leading-relaxed text-onband/75">
                           {a.detail}
                         </span>
                       </span>

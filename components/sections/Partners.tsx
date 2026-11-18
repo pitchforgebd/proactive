@@ -18,7 +18,7 @@ export default async function Partners({ title, tone }: PartnersData) {
         <p
           className={cn(
             'eyebrow text-center',
-            tone === 'ink' ? 'text-onband/55' : 'text-graphite',
+            tone === 'ink' ? 'text-onband/75' : 'text-graphite',
           )}
         >
           {title}

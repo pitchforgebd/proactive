@@ -43,7 +43,7 @@ export default function VisionMission({
         delay={delay}
         className={cn(
           'group relative overflow-hidden p-8 md:p-12',
-          isVision ? 'bg-paper-2' : 'bg-band text-onband',
+          isVision ? 'bg-paper-2' : 'band-surface text-onband',
         )}
       >
         {/* Accent bar. The dark panel takes cyan — navy on navy is invisible. */}

@@ -180,7 +180,7 @@ export default async function ProductPage({
             {category && (
               <Link
                 href={`/products/${category.slug}`}
-                className="eyebrow shrink-0 text-onband/60 transition-colors hover:text-cyan"
+                className="eyebrow shrink-0 text-onband/80 transition-colors hover:text-cyan"
               >
                 All in {category.name}
               </Link>

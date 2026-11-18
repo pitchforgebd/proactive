@@ -34,7 +34,7 @@ export default async function Footer() {
   const footerLogo = settings.logoFooter || settings.logo || undefined;
 
   return (
-    <footer className="relative overflow-hidden bg-band text-onband">
+    <footer className="band-surface relative overflow-hidden text-onband">
       {/* Signature rule across the top edge — sky-blue into navy. */}
       <div
         aria-hidden="true"
@@ -52,7 +52,7 @@ export default async function Footer() {
               title={settings.logoTitle}
               subtitle={settings.logoSubtitle}
             />
-            <p className="footer-tagline mt-5 max-w-sm text-sm leading-relaxed text-onband/55">
+            <p className="footer-tagline mt-5 max-w-sm text-sm leading-relaxed text-onband/75">
               {settings.footerTagline}
             </p>
 
@@ -66,7 +66,7 @@ export default async function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-onband/[0.04] text-onband/70 transition-colors hover:border-cyan hover:text-cyan"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-onband/[0.04] text-onband/80 transition-colors hover:border-cyan hover:text-cyan"
                     >
                       <Icon aria-hidden="true" className="h-4 w-4" />
                     </a>
@@ -84,7 +84,7 @@ export default async function Footer() {
                 <li key={c.slug} className="w-auto max-w-[15rem]">
                   <Link
                     href={`/products/${c.slug}`}
-                    className="inline-block text-left text-[15px] font-medium leading-snug text-onband/65 transition-colors hover:text-cyan"
+                    className="inline-block text-left text-[15px] font-medium leading-snug text-onband/80 transition-colors hover:text-cyan"
                   >
                     {c.name}
                   </Link>
@@ -99,10 +99,10 @@ export default async function Footer() {
             <ul className="mt-6 flex flex-col gap-4">
               <li className="flex items-start gap-3">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
-                  <Mail aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                  <Mail aria-hidden="true" className="h-4 w-4 text-onband/80" />
                 </span>
                 <span>
-                  <span className="eyebrow block text-onband/40">Email Us</span>
+                  <span className="eyebrow block text-onband/75">Email Us</span>
                   <a
                     href={`mailto:${settings.email}`}
                     className="mt-0.5 block text-sm font-semibold text-onband transition-colors hover:text-cyan"
@@ -113,10 +113,10 @@ export default async function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
-                  <Phone aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                  <Phone aria-hidden="true" className="h-4 w-4 text-onband/80" />
                 </span>
                 <span>
-                  <span className="eyebrow block text-onband/40">Call Us</span>
+                  <span className="eyebrow block text-onband/75">Call Us</span>
                   <a
                     href={`tel:${settings.phone.replace(/\s/g, '')}`}
                     className="mt-0.5 block text-sm font-semibold text-onband transition-colors hover:text-cyan"
@@ -127,10 +127,10 @@ export default async function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-onband/[0.04]">
-                  <MapPin aria-hidden="true" className="h-4 w-4 text-onband/70" />
+                  <MapPin aria-hidden="true" className="h-4 w-4 text-onband/80" />
                 </span>
                 <span>
-                  <span className="eyebrow block text-onband/40">Head Office</span>
+                  <span className="eyebrow block text-onband/75">Head Office</span>
                   <address className="mt-0.5 max-w-[15rem] text-sm font-semibold not-italic leading-relaxed text-onband">
                     {settings.address}
                   </address>
@@ -161,7 +161,7 @@ export default async function Footer() {
                     className="h-32 w-32 rounded-md object-contain sm:h-[152px] sm:w-[152px]"
                   />
                 </div>
-                <p className="max-w-[10rem] text-xs leading-snug text-onband/55">
+                <p className="max-w-[10rem] text-xs leading-snug text-onband/75">
                   {settings.qrCodeCaption || 'Scan to chat with us instantly'}
                 </p>
               </div>
@@ -179,7 +179,7 @@ export default async function Footer() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="text-[15px] font-semibold text-onband/70 transition-colors hover:text-cyan"
+                  className="text-[15px] font-semibold text-onband/80 transition-colors hover:text-cyan"
                 >
                   {l.label}
                 </Link>
@@ -188,7 +188,7 @@ export default async function Footer() {
           </ul>
         </nav>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-xs text-onband/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-xs text-onband/75 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-start">© 2026 Proactive Trade International. All rights reserved.</p>
           <p className="text-start">DHAKA · BANGLADESH</p>
         </div>

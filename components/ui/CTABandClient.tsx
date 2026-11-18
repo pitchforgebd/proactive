@@ -32,7 +32,7 @@ export default function CTABandClient({
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-band text-onband">
+    <section className="band-surface relative overflow-hidden text-onband">
       <HalftoneBg grid fade={false} className="opacity-70" />
       <PressAtmosphere intensity="normal" />
 
@@ -53,7 +53,7 @@ export default function CTABandClient({
               {title}
             </h2>
             {lede && (
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-onband/65">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-onband/80">
                 {lede}
               </p>
             )}
@@ -77,7 +77,7 @@ export default function CTABandClient({
               </Link>
             </motion.div>
 
-            <div className="flex flex-col gap-2 rounded-xl border border-line bg-band-2/50 px-5 py-4 font-mono text-xs text-onband/55 backdrop-blur-sm">
+            <div className="flex flex-col gap-2 rounded-xl border border-line bg-ice/[0.08] px-5 py-4 font-mono text-xs text-onband/75 backdrop-blur-sm">
               <a
                 href={`tel:${phone.replace(/\s/g, '')}`}
                 className="inline-flex items-center gap-2 transition-colors hover:text-cyan"

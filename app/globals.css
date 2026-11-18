@@ -33,6 +33,14 @@
   --band-2-rgb: 18 42 99;
   --onband-rgb: 242 247 255;
 
+  /* Light sky — small mono labels on dark bands, where the full-strength
+     sky-blue is too dim to read at 12px. */
+  --ice-rgb: 125 207 246;
+
+  /* Band gradient stops: navy → royal → bright blue. Deeper in the dark theme. */
+  --band-mid-rgb: 23 59 138;
+  --band-end-rgb: 26 106 200;
+
   /* Ready-made colours for hand-written CSS (`stroke: var(--cyan)` etc.). */
   --ink: rgb(var(--ink-rgb));
   --ink-2: rgb(var(--ink-2-rgb));
@@ -46,7 +54,7 @@
   --band-2: rgb(var(--band-2-rgb));
   --onband: rgb(var(--onband-rgb));
 
-  --line: rgba(180, 208, 255, 0.12); /* hairline on dark */
+  --line: rgba(190, 215, 255, 0.2); /* hairline on dark */
   --line-ink: rgba(23, 59, 138, 0.14); /* hairline on paper */
 
   --halftone-on-paper: rgba(23, 59, 138, 0.08);
@@ -82,6 +90,8 @@
   /* Bands sit deeper than the page so the alternation survives. */
   --band-rgb: 5 15 38;
   --band-2-rgb: 11 29 69;
+  --band-mid-rgb: 13 40 96;
+  --band-end-rgb: 16 70 140;
 
   --halftone-on-paper: rgba(180, 208, 255, 0.07);
 
@@ -274,6 +284,33 @@
     --reg-y: 12px;
     animation-delay: 120ms;
     opacity: 0.6;
+  }
+
+  /* ---- Band surface ------------------------------------------------------
+     The dark section ground. A flat #0B1F4D slab read as heavy and harsh
+     against the white sections around it, so it is built from the brand duo
+     instead: navy lifting toward royal blue, a soft sky glow top-right and a
+     royal-blue bloom bottom-left. Derived from the tokens, so the deeper dark
+     theme follows automatically. Text on it stays white (see --onband). */
+  .band-surface {
+    background-color: rgb(var(--band-rgb));
+    background-image:
+      radial-gradient(
+        820px 440px at 94% -6%,
+        rgb(var(--cyan-rgb) / 0.38),
+        transparent 64%
+      ),
+      radial-gradient(
+        640px 380px at 0% 105%,
+        rgb(var(--band-end-rgb) / 0.55),
+        transparent 68%
+      ),
+      linear-gradient(
+        135deg,
+        rgb(var(--band-rgb)) 0%,
+        rgb(var(--band-mid-rgb)) 58%,
+        rgb(var(--band-end-rgb)) 118%
+      );
   }
 
   /* ---- Nav dropdown open --------------------------------------------------

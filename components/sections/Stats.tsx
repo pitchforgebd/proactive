@@ -13,7 +13,7 @@ export default function Stats({ items, tone }: StatsData) {
     <section
       className={cn(
         'relative py-10 md:py-12',
-        invert ? 'bg-band text-onband' : 'bg-paper text-ink',
+        invert ? 'band-surface text-onband' : 'bg-paper text-ink',
       )}
     >
       <div className="container-page">
@@ -21,7 +21,7 @@ export default function Stats({ items, tone }: StatsData) {
           <dl
             className={cn(
               'grid grid-cols-2 gap-3 overflow-hidden rounded-xl border p-2 sm:gap-4 sm:p-3 lg:grid-cols-4',
-              invert ? 'border-line bg-band-2/80' : 'border-ink/10 bg-paper-2',
+              invert ? 'border-line bg-ice/[0.08]' : 'border-ink/10 bg-paper-2',
             )}
           >
             {items.map((s, i) => (
@@ -45,7 +45,7 @@ export default function Stats({ items, tone }: StatsData) {
                 <dt
                   className={cn(
                     'eyebrow',
-                    invert ? 'text-onband/50' : 'text-graphite',
+                    invert ? 'text-onband/75' : 'text-graphite',
                   )}
                 >
                   {s.label}

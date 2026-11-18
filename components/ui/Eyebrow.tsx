@@ -20,11 +20,11 @@ export default function Eyebrow({
       ? 'text-magenta dark:text-cyan'
       : tone === 'muted'
         ? 'text-graphite'
-        : 'text-cyan';
+        : 'text-ice';
 
   return (
     <p className={cn('eyebrow flex items-center gap-2', color, className)}>
-      {index && <span className="opacity-60">{index}</span>}
+      {index && <span className="opacity-80">{index}</span>}
       <span>{children}</span>
     </p>
   );

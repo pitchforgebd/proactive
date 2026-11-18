@@ -226,7 +226,7 @@ async function FeaturedCategoriesGrid({
                   aria-hidden="true"
                   className="mt-3.5 block h-px w-8 bg-cyan transition-[width] duration-500 ease-press group-hover:w-20"
                 />
-                <p className="mt-3.5 max-w-md text-left text-sm leading-relaxed text-onband/60 line-clamp-2">
+                <p className="mt-3.5 max-w-md text-left text-sm leading-relaxed text-onband/80 line-clamp-2">
                   {stripHtml(c.description, 110)}
                 </p>
               </div>
