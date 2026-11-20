@@ -23,7 +23,7 @@ export default function ProductGallery({
   if (images.length === 0) return null;
 
   return (
-    <div>
+    <div className="min-w-0">
       <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-ink/10 bg-band">
         {images.map((src, i) => (
           <Image

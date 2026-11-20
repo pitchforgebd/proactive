@@ -11,8 +11,20 @@ const columnClass: Record<ValueGridData['columns'], string> = {
   '2': 'sm:grid-cols-2',
   '3': 'md:grid-cols-2 lg:grid-cols-3',
   '4': 'sm:grid-cols-2 lg:grid-cols-4',
-  '5': 'sm:grid-cols-2 lg:grid-cols-5',
+  // Five across needs ~1280px to breathe; below that it is three + two.
+  '5': 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5',
 };
+
+/**
+ * Column classes for a given item count. A 4-up grid holding 5, 6 or 9 items
+ * leaves a lonely half-row of empty cells, so those count as 3-up instead.
+ */
+function gridColumns(columns: ValueGridData['columns'], count: number): string {
+  if (columns === '4' && (count === 5 || count === 6 || count === 9)) {
+    return 'sm:grid-cols-2 lg:grid-cols-3';
+  }
+  return columnClass[columns];
+}
 
 /**
  * Feature / value grid — Framer reveals + hover lift on hairline/numbered cards.
@@ -62,7 +74,7 @@ export default function ValueGrid({
       <ul
         className={cn(
           'grid',
-          columnClass[columns],
+          gridColumns(columns, items.length),
           hasHeading ? 'mt-14' : '',
           // Open layouts need room around them; the corner frames especially,
           // or adjacent brackets read as one broken box. Showcase needs room
@@ -238,8 +250,8 @@ export default function ValueGrid({
                 {item.text && (
                   <p
                     className={cn(
-                      'mt-2.5 text-sm leading-relaxed',
-                      invert ? 'text-onband/75' : 'text-graphite',
+                      'mt-2.5 text-left text-sm leading-relaxed',
+                      invert ? 'text-onband/85' : 'text-graphite',
                     )}
                   >
                     {item.text}

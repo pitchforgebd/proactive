@@ -101,10 +101,10 @@ export default async function ProductPage({
       </Section>
 
       <Section tone="paper-2" className="pt-10 md:pt-12">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
           <ProductGallery images={product.images} name={product.name} />
 
-          <div>
+          <div className="min-w-0">
             {category && (
               <Eyebrow tone="magenta">{category.name}</Eyebrow>
             )}
@@ -173,14 +173,14 @@ export default async function ProductPage({
 
       {related.length > 0 && (
         <Section tone="ink" halftone>
-          <div className="flex items-end justify-between gap-6">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
             <h2 className="text-xl font-bold text-onband md:text-2xl">
               Related products
             </h2>
             {category && (
               <Link
                 href={`/products/${category.slug}`}
-                className="eyebrow shrink-0 text-onband/80 transition-colors hover:text-cyan"
+                className="eyebrow max-w-full text-onband/80 transition-colors hover:text-cyan"
               >
                 All in {category.name}
               </Link>

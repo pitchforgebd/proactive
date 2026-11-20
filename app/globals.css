@@ -147,6 +147,10 @@
   footer address {
     text-align: justify;
     text-justify: inter-word;
+    /* Justified text in narrow columns opens rivers between words; breaking
+       long words at syllables keeps the gaps small. */
+    hyphens: auto;
+    -webkit-hyphens: auto;
   }
 
   main .prose h2,
@@ -563,6 +567,8 @@
     font-size: 1rem;
     line-height: 1.75;
     color: color-mix(in srgb, var(--ink) 86%, transparent);
+    /* Pasted content (URLs, part numbers) must wrap, never widen the page. */
+    overflow-wrap: anywhere;
   }
 
   .prose > * + * {
@@ -644,13 +650,30 @@
     color: var(--graphite);
   }
 
-  .prose img {
-    width: 100%;
+  .prose img,
+  .prose video,
+  .prose iframe {
+    max-width: 100%;
     height: auto;
   }
 
-  .prose table {
+  .prose iframe {
+    aspect-ratio: 16 / 9;
     width: 100%;
+  }
+
+  .prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 0.875rem;
+  }
+
+  /* Wide tables scroll inside their own box instead of widening the page. */
+  .prose table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
     border-collapse: collapse;
     font-size: 0.875rem;
   }
